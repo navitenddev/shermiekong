@@ -1,0 +1,92 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Shermie-Kong</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    
+<script type="text/javascript">
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 300 },
+                debug: false
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            //update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+    
+    function preload ()
+    {
+        this.load.image('sky', 'background.png');
+    }
+
+    function create ()
+    {
+        this.add.image(800, 600, 'sky');
+    }
+
+    class Entity {
+        constructor(scene, x, y, spriteKey) {
+        this.scene = scene;
+        this.position = new Phaser.Math.Vector2(x, y);
+        this.velocity = new Phaser.Math.Vector2(0, 0);
+        this.sprite = scene.physics.add.sprite(x, y, spriteKey);
+    
+        // Call the init method to set up additional configurations
+        this.init();
+        }
+    
+        init() {
+        // Additional initialization code can go here - set up animations or physics properties
+        }
+    
+        update() {
+        // Update method can be used for continuous updates (e.g., movement)
+        this.sprite.x += this.velocity.x;
+        this.sprite.y += this.velocity.y;
+        }
+    
+        onCollision(otherEntity) {
+        // Define behavior when this entity collides with another entity
+        // This method can be overridden by subclasses
+        }
+    
+        destroy() {
+        // Clean up resources and remove the sprite from the scene
+        this.sprite.destroy();
+        }
+    }
+    
+    // Example usage:
+    // Create a player entity
+    const player = new Entity(scene, 100, 200, 'playerSpriteKey');
+    
+    // Update the player's position in the game loop
+    function update() {
+        player.update();
+    }
+
+</script>
+
+</body>
+</html>
