@@ -38,11 +38,22 @@
     function preload ()
     {
         this.load.image('sky', 'background.png');
+        this.load.image('wolf', 'wolf.png');
     }
 
     function create ()
     {
         this.add.image(800, 600, 'sky');
+
+        //i am just testing image placement and scaling
+        let wolf = this.add.image(300, 200, 'wolf');
+        wolf.setScale(0.12);
+
+        this.physics.add.collider(player.sprite, barrel.sprite, (playerSprite, barrelSprite) => {
+            let playerEntity = playerSprite.entity;
+            let barrelEntity = barrelSprite.entity;
+            barrelEntity.onCollision(playerEntity);
+        });
     }
 
     class Entity {
@@ -76,7 +87,37 @@
         this.sprite.destroy();
         }
     }
-    
+
+    class Barrel extends Entity {
+        constructor(scene, x, y) {
+            super(scene, x, y, 'barrelSpriteKey');
+            this.sprite.setCollideWorldBounds(true);
+            this.sprite.setBounce(1);
+        }
+
+        init() {
+            // Set up animations
+            this.scene.physics.world.enable(this.sprite);
+            this.sprite.body.setGravityY(300);
+        }
+
+        update() {
+            // Update method can be used for continuous updates such as movement for example
+            super.update();
+
+            // Add barrel movement logic here
+
+        }
+
+        onCollision(otherEntity) {
+            // Define behavior when this entity collides with another entity
+            if (otherEntity instanceof Player) {
+                // Player loses a life or game over depending on our game structure for health
+                console.log('Player hit by a barrel!');
+            }
+        }
+    }
+
     // Example usage:
     // Create a player entity
     const player = new Entity(scene, 100, 200, 'playerSpriteKey');
