@@ -22,38 +22,71 @@
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 300 },
+                gravity: { y: 500 },
                 debug: false
             }
         },
         scene: {
             preload: preload,
             create: create,
-            //update: update
+            update: update
         }
     };
 
     var game = new Phaser.Game(config);
+    //TODO: extend player to create class
+    var player;
+    //keyboard input
+    var cursors;
     
     function preload ()
     {
         this.load.image('sky', 'background.png');
         this.load.image('wolf', 'wolf.png');
+        this.load.image('ground', 'ground.png');
+        this.load.image('player', 'shermie.png');
     }
 
     function create ()
     {
+        cursors = this.input.keyboard.createCursorKeys();
         this.add.image(800, 600, 'sky');
-
         //i am just testing image placement and scaling
         let wolf = this.add.image(300, 200, 'wolf');
         wolf.setScale(0.12);
 
-        this.physics.add.collider(player.sprite, barrel.sprite, (playerSprite, barrelSprite) => {
-            let playerEntity = playerSprite.entity;
-            let barrelEntity = barrelSprite.entity;
-            barrelEntity.onCollision(playerEntity);
-        });
+        player = this.physics.add.sprite(400, 400, 'player');
+        player.setScale(0.5);
+        player.setCollideWorldBounds(true);
+
+        // this.physics.add.collider(player.sprite, barrel.sprite, (playerSprite, barrelSprite) => {
+        //     let playerEntity = playerSprite.entity;
+        //     let barrelEntity = barrelSprite.entity;
+        //     barrelEntity.onCollision(playerEntity);
+        // });
+
+        
+    }
+
+    function update ()
+    {
+        if (cursors.left.isDown)
+        {
+            player.setVelocityX(-200);
+        }
+        else if (cursors.right.isDown)
+        {
+            player.setVelocityX(200);
+        }
+        else
+        {
+            player.setVelocityX(0);
+        }
+
+        if (cursors.up.isDown && player.body.checkWorldBounds())
+        {
+            player.setVelocityY(-250);
+        }
     }
 
     class Entity {
@@ -118,14 +151,19 @@
         }
     }
 
-    // Example usage:
-    // Create a player entity
-    const player = new Entity(scene, 100, 200, 'playerSpriteKey');
-    
-    // Update the player's position in the game loop
-    function update() {
-        player.update();
-    }
+    // class Player extends Entity{
+    //     update(){
+    //         if(cursors.left.isDown){
+    //             this.setVelocityX(-100);
+    //         }
+    //         else if(cursors.right.isDown){
+    //             this.setVelocityX(100);
+    //         }
+    //         if(cursors.up.isDown && this.body.touching.down){
+    //             this.setVelocityY(-100);
+    //         }
+    //     }
+    // }
 
 </script>
 
