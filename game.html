@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Shermie-Kong</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="entity.js" type="text/javascript"></script>
+    <script src="player.js" type="text/javascript"></script>
+    <script src="level.js" type="text/javascript"></script>
+    <script src="level1.js" type="text/javascript"></script>
+    <script src="level2.js" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 500 },
+                debug: false
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+    var currentLevel;
+
+    function preload() {
+        // Level Backgrounds
+        this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
+        this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
+
+        // Level Entities
+        this.load.image('wolf', 'assets/wolf.png');
+        this.load.image('platform', 'assets/platform.png');
+        this.load.image('player', 'assets/shermie.png');
+    }
+
+    function create() {
+        currentLevel = new Level2(this);
+        currentLevel.buildLevel();
+
+        // Set up collision between player and the barrel
+        //this.physics.add.collider(player.sprite, barrel.sprite, handleCollision, null, this);
+    }
+
+    function update() {
+        // Update logic
+        currentLevel.player.update();
+    }
+
+
+    function handleCollision(player, otherEntity) {
+        // Perform specific actions when the player collides with another entity
+        console.log(otherEntity);
+    }
+</script>
+
+</body>
+</html>
