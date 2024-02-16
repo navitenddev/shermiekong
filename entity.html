@@ -1,0 +1,171 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Shermie-Kong</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    
+<script type="text/javascript">
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 500 },
+                debug: false
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+    //TODO: extend player to create class
+    var player;
+    //keyboard input
+    var cursors;
+    
+    function preload ()
+    {
+        this.load.image('sky', 'background.png');
+        this.load.image('wolf', 'wolf.png');
+        this.load.image('ground', 'ground.png');
+        this.load.image('player', 'shermie.png');
+    }
+
+    function create ()
+    {
+        cursors = this.input.keyboard.createCursorKeys();
+        this.add.image(800, 600, 'sky');
+        //i am just testing image placement and scaling
+        let wolf = this.add.image(300, 200, 'wolf');
+        wolf.setScale(0.12);
+
+        player = this.physics.add.sprite(400, 400, 'player');
+        player.setScale(0.5);
+        player.setCollideWorldBounds(true);
+
+        // this.physics.add.collider(player.sprite, barrel.sprite, (playerSprite, barrelSprite) => {
+        //     let playerEntity = playerSprite.entity;
+        //     let barrelEntity = barrelSprite.entity;
+        //     barrelEntity.onCollision(playerEntity);
+        // });
+
+        
+    }
+
+    function update ()
+    {
+        if (cursors.left.isDown)
+        {
+            player.setVelocityX(-200);
+        }
+        else if (cursors.right.isDown)
+        {
+            player.setVelocityX(200);
+        }
+        else
+        {
+            player.setVelocityX(0);
+        }
+
+        if (cursors.up.isDown && player.body.checkWorldBounds())
+        {
+            player.setVelocityY(-250);
+        }
+    }
+
+    class Entity {
+        constructor(scene, x, y, spriteKey) {
+        this.scene = scene;
+        this.position = new Phaser.Math.Vector2(x, y);
+        this.velocity = new Phaser.Math.Vector2(0, 0);
+        this.sprite = scene.physics.add.sprite(x, y, spriteKey);
+    
+        // Call the init method to set up additional configurations
+        this.init();
+        }
+    
+        init() {
+        // Additional initialization code can go here - set up animations or physics properties
+        }
+    
+        update() {
+        // Update method can be used for continuous updates (e.g., movement)
+        this.sprite.x += this.velocity.x;
+        this.sprite.y += this.velocity.y;
+        }
+    
+        onCollision(otherEntity) {
+        // Define behavior when this entity collides with another entity
+        // This method can be overridden by subclasses
+        }
+    
+        destroy() {
+        // Clean up resources and remove the sprite from the scene
+        this.sprite.destroy();
+        }
+    }
+
+    class Barrel extends Entity {
+        constructor(scene, x, y) {
+            super(scene, x, y, 'barrelSpriteKey');
+            this.sprite.setCollideWorldBounds(true);
+            this.sprite.setBounce(1);
+        }
+
+        init() {
+            // Set up animations
+            this.scene.physics.world.enable(this.sprite);
+            this.sprite.body.setGravityY(300);
+        }
+
+        update() {
+            // Update method can be used for continuous updates such as movement for example
+            super.update();
+
+            // Add barrel movement logic here
+
+        }
+
+        onCollision(otherEntity) {
+            // Define behavior when this entity collides with another entity
+            if (otherEntity instanceof Player) {
+                // Player loses a life or game over depending on our game structure for health
+                console.log('Player hit by a barrel!');
+            }
+        }
+    }
+
+    // class Player extends Entity{
+    //     update(){
+    //         if(cursors.left.isDown){
+    //             this.setVelocityX(-100);
+    //         }
+    //         else if(cursors.right.isDown){
+    //             this.setVelocityX(100);
+    //         }
+    //         if(cursors.up.isDown && this.body.touching.down){
+    //             this.setVelocityY(-100);
+    //         }
+    //     }
+    // }
+
+</script>
+
+</body>
+</html>
