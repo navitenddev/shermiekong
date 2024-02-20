@@ -41,3 +41,11 @@ class Barrel extends Entity {
         console.log('Player hit by a barrel!');
     }
 }
+
+class Girder{
+    constructor(scene, x, y) {
+        this.scene = scene;
+        this.position = new Phaser.Math.Vector2(x, y);
+        this.sprite = scene.add.sprite(x, y, 'girder');
+    }
+}
