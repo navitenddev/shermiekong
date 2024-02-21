@@ -21,10 +21,8 @@ class Minigame1 extends Level{
     }
 
     createEntities() {
-        this.createNotes();
+        this.player = new Player(this.scene, 400, 400);
     }
 
-    createNotes(){
-
-    }
+    
 }
