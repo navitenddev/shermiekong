@@ -25,36 +25,47 @@ class Minigame1 extends Level{
 
     update(){
         this.handlePlayerInput();
+
     }
 
     /* the controls for this game spawn colliders on each string depending on which
-    * arrow key is pressed.  
-    const rect = new Phaser.Geom.Rectangle(250, 200, 300, 200);
-            const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } });
-            graphics.fillRectShape(rect);
+    * arrow key is pressed. 
     */
     handlePlayerInput(){
         
         if (this.player.cursors.left.isDown) {
-            const string1 = new Phaser.Geom.Rectangle(285, 525, 50, 50);
+            var string1 = new Phaser.Geom.Rectangle(285, 525, 50, 50);
             const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } });
             graphics.fillRectShape(string1);
+            this.scene.physics.add.existing(string1);
+            this.scene.tweens.add({
+                targets: string1,
+                duration: 100,
+                onComplete: () => {
+                    
+                    
+                }
+            });
         }
         if (this.player.cursors.right.isDown) {
-            const string2 = new Phaser.Geom.Rectangle(345, 525, 50, 50);
+            var string2 = new Phaser.Geom.Rectangle(345, 525, 50, 50);
             const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
             graphics.fillRectShape(string2);
         }
         if (this.player.cursors.up.isDown) {
-            const string3 = new Phaser.Geom.Rectangle(405, 525, 50, 50);
+            var string3 = new Phaser.Geom.Rectangle(405, 525, 50, 50);
             const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
             graphics.fillRectShape(string3);
         }
         if (this.player.cursors.down.isDown) {
-            const string4 = new Phaser.Geom.Rectangle(465, 525, 50, 50);
+            var string4 = new Phaser.Geom.Rectangle(465, 525, 50, 50);
             const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
             graphics.fillRectShape(string4);
         }
+    }
+
+    debug(){
+
     }
     
 }
