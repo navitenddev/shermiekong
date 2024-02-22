@@ -21,51 +21,67 @@ class Minigame1 extends Level{
 
     createEntities() {
         this.player = new Player(this.scene, 400, 400);
+        this.strings = this.scene.physics.add.staticGroup();
     }
 
     update(){
         this.handlePlayerInput();
-
     }
 
     /* the controls for this game spawn colliders on each string depending on which
     * arrow key is pressed. 
     */
     handlePlayerInput(){
-        
         if (this.player.cursors.left.isDown) {
-            var string1 = new Phaser.Geom.Rectangle(285, 525, 50, 50);
-            const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } });
-            graphics.fillRectShape(string1);
+            let string1 = this.scene.add.circle(285, 525, 15, 0x0380fc);
             this.scene.physics.add.existing(string1);
             this.scene.tweens.add({
                 targets: string1,
+                scale: 2,
                 duration: 100,
                 onComplete: () => {
-                    
-                    
+                    string1.destroy();
                 }
             });
         }
         if (this.player.cursors.right.isDown) {
-            var string2 = new Phaser.Geom.Rectangle(345, 525, 50, 50);
-            const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
-            graphics.fillRectShape(string2);
+            let string2 = this.scene.add.circle(345, 525, 15, 0x0380fc);
+            this.scene.physics.add.existing(string2);
+            this.scene.tweens.add({
+                targets: string2,
+                scale: 2,
+                duration: 100,
+                onComplete: () => {
+                    string2.destroy();
+                }
+            });
         }
         if (this.player.cursors.up.isDown) {
-            var string3 = new Phaser.Geom.Rectangle(405, 525, 50, 50);
-            const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
-            graphics.fillRectShape(string3);
+            let string3 = this.scene.add.circle(405, 525, 15, 0x0380fc);
+            this.scene.physics.add.existing(string3);
+            this.scene.tweens.add({
+                targets: string3,
+                scale: 2,
+                duration: 100,
+                onComplete: () => {
+                    string3.destroy();
+                }
+            });
         }
         if (this.player.cursors.down.isDown) {
-            var string4 = new Phaser.Geom.Rectangle(465, 525, 50, 50);
-            const graphics = this.scene.add.graphics({ fillStyle: { color: 0x0000ff } })
-            graphics.fillRectShape(string4);
+            let string4 = this.scene.add.circle(465, 525, 15, 0x0380fc);
+            this.scene.physics.add.existing(string4);
+            this.scene.tweens.add({
+                targets: string4,
+                scale: 2,
+                duration: 100,
+                onComplete: () => {
+                    string4.destroy();
+                }
+            });
         }
     }
-
-    debug(){
-
+    stringTimer(){
+        this.strings.destroy();
     }
-    
 }
