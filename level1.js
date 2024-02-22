@@ -16,7 +16,7 @@ class Level1 extends Level {
 
     createEntities() {
         this.player = new Player(this.scene, 100, 450);
-        this.barrel = new Barrel(this.scene, 700, 300);
+        this.barrel = new Barrel(this.scene, 600, 200);
 
         var floor = this.scene.physics.add.staticGroup();
         floor.create(24, 756, 'girder');
@@ -118,5 +118,6 @@ class Level1 extends Level {
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
+        this.scene.physics.add.collider(this.barrel.sprite, floor);
     }
 }
