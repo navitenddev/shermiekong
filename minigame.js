@@ -47,7 +47,7 @@ class GameScene {
     this.player.setSize(80,15).setOffset(10,70);
 
     this.target = this.physics.add.image(0, 0, 'apple').setScale(0.9);;
-    this.target.setMaxVelocity(0, Phaser.Math.Between(400, 600));
+    this.target.setMaxVelocity(0, Phaser.Math.Between(400, 800));
     this.physics.add.overlap(this.target, this.player, this.score, null, this);
 
     this.cursors = this.input.keyboard.createCursorKeys();
