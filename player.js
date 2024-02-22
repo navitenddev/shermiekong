@@ -5,8 +5,11 @@ class Player extends Entity {
         super(scene, x, y, 'player');
 
         // Set up any additional configurations (specific to the Player class)
-        this.sprite.setScale(0.3);
+        this.sprite.setScale(0.25);
         this.sprite.setCollideWorldBounds(true);
+
+        this.scene.physics.world.enable(this.sprite);
+        this.sprite.body.setGravityY(300);
 
         // Setup input handling for player movement
         this.cursors = scene.input.keyboard.createCursorKeys();
@@ -35,11 +38,16 @@ class Player extends Entity {
             this.sprite.setVelocityX(0);
         }
 
-        if (this.cursors.up.isDown && this.sprite.body.checkWorldBounds()) {
-            this.sprite.setVelocityY(-250);
+        if (this.cursors.up.isDown && this.sprite.body.blocked.down) {
+            this.sprite.setVelocityY(-350);
         }
     }
 
+    onCollision(otherEntity) {
+        console.log('Player hit by a barrel!');
+        this.sprite.destroy();
+    }
+  
     handleClimbing() {
         // Stop any horizontal movement
         //this.sprite.setVelocityX(0);
@@ -60,6 +68,5 @@ class Player extends Entity {
             this.isClimbing = false;
             this.scene.physics.world.colliders._active[0].active = true;
         }
-        
     }
 }
