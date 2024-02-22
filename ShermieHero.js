@@ -10,13 +10,13 @@ class ShermieHero extends Level{
 
     createBackground() {
         this.scene.add.image(400, 300, 'minigame1_bg');
-        this.scene.add.image(400, 300, 'bass');
-        this.scene.add.image(310, 300, 'string');
-        this.scene.add.image(370, 300, 'string');
-        this.scene.add.image(430, 300, 'string');
-        this.scene.add.image(490, 300, 'string');
+        this.scene.add.image(672/2, 300, 'bass');
+        this.scene.add.image(245, 300, 'string'); // diff of 60 between strings
+        this.scene.add.image(305, 300, 'string');
+        this.scene.add.image(365, 300, 'string');
+        this.scene.add.image(425, 300, 'string');
         //marks where player should hit notes
-        this.scene.add.image(400, 550, 'noteline');
+        this.scene.add.image(400, 700, 'noteline');
     }
 
     createEntities() {
