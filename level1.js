@@ -7,7 +7,6 @@ class Level1 extends Level {
     buildLevel() {
         this.createBackground();
         this.createEntities();
-        this.buildFloor();
     }
 
     // Override createBackground method for Level 1
@@ -16,94 +15,95 @@ class Level1 extends Level {
     }
 
     createEntities() {
-        this.player = new Player(this.scene, 500, 400);
+        this.player = new Player(this.scene, 100, 450);
         this.barrel = new Barrel(this.scene, 700, 300);
-    }
 
-    buildFloor() {
-        this.girder = new Girder(this.scene, 24, 756)
-        this.girder = new Girder(this.scene, 72, 756)
-        this.girder = new Girder(this.scene, 120, 756)
-        this.girder = new Girder(this.scene, 168, 756)
-        this.girder = new Girder(this.scene, 216, 756)
-        this.girder = new Girder(this.scene, 264, 756)
-        this.girder = new Girder(this.scene, 312, 756)
-        this.girder = new Girder(this.scene, 360, 753)
-        this.girder = new Girder(this.scene, 408, 750)
-        this.girder = new Girder(this.scene, 456, 747)
-        this.girder = new Girder(this.scene, 504, 744)
-        this.girder = new Girder(this.scene, 552, 741)
-        this.girder = new Girder(this.scene, 600, 738)
-        this.girder = new Girder(this.scene, 648, 735)
+        var floor = this.scene.physics.add.staticGroup();
+        floor.create(24, 756, 'girder');
+        floor.create(72, 756, 'girder');
+        floor.create(120, 756, 'girder');
+        floor.create(168, 756, 'girder');
+        floor.create(216, 756, 'girder');
+        floor.create(264, 756, 'girder');
+        floor.create(312, 756, 'girder');
+        floor.create(360, 753, 'girder');
+        floor.create(408, 750, 'girder');
+        floor.create(456, 747, 'girder');
+        floor.create(504, 744, 'girder');
+        floor.create(552, 741, 'girder');
+        floor.create(600, 738, 'girder');
+        floor.create(648, 735, 'girder');
 
-        this.girder = new Girder(this.scene, 600, 669)
-        this.girder = new Girder(this.scene, 552, 666)
-        this.girder = new Girder(this.scene, 504, 663)
-        this.girder = new Girder(this.scene, 456, 660)
-        this.girder = new Girder(this.scene, 408, 657)
-        this.girder = new Girder(this.scene, 360, 654)
-        this.girder = new Girder(this.scene, 312, 651)
-        this.girder = new Girder(this.scene, 264, 648)
-        this.girder = new Girder(this.scene, 216, 645)
-        this.girder = new Girder(this.scene, 168, 642)
-        this.girder = new Girder(this.scene, 120, 639)
-        this.girder = new Girder(this.scene, 72, 636)
-        this.girder = new Girder(this.scene, 24, 633)
+        floor.create(600, 669, 'girder');
+        floor.create(552, 666, 'girder');
+        floor.create(504, 663, 'girder');
+        floor.create(456, 660, 'girder');
+        floor.create(408, 657, 'girder');
+        floor.create(360, 654, 'girder');
+        floor.create(312, 651, 'girder');
+        floor.create(264, 648, 'girder');
+        floor.create(216, 645, 'girder');
+        floor.create(168, 642, 'girder');
+        floor.create(120, 639, 'girder');
+        floor.create(72, 636, 'girder');
+        floor.create(24, 633, 'girder');
 
-        this.girder = new Girder(this.scene, 72, 567)
-        this.girder = new Girder(this.scene, 120, 564)
-        this.girder = new Girder(this.scene, 168, 561)
-        this.girder = new Girder(this.scene, 216, 558)
-        this.girder = new Girder(this.scene, 264, 555)
-        this.girder = new Girder(this.scene, 312, 552)
-        this.girder = new Girder(this.scene, 360, 549)
-        this.girder = new Girder(this.scene, 408, 546)
-        this.girder = new Girder(this.scene, 456, 543)
-        this.girder = new Girder(this.scene, 504, 540)
-        this.girder = new Girder(this.scene, 552, 537)
-        this.girder = new Girder(this.scene, 600, 534)
-        this.girder = new Girder(this.scene, 648, 531)
-        
-        this.girder = new Girder(this.scene, 600, 465)
-        this.girder = new Girder(this.scene, 552, 462)
-        this.girder = new Girder(this.scene, 504, 459)
-        this.girder = new Girder(this.scene, 456, 456)
-        this.girder = new Girder(this.scene, 408, 453)
-        this.girder = new Girder(this.scene, 360, 450)
-        this.girder = new Girder(this.scene, 312, 447)
-        this.girder = new Girder(this.scene, 264, 444)
-        this.girder = new Girder(this.scene, 216, 441)
-        this.girder = new Girder(this.scene, 168, 438)
-        this.girder = new Girder(this.scene, 120, 435)
-        this.girder = new Girder(this.scene, 72, 432)
-        this.girder = new Girder(this.scene, 24, 429)
+        floor.create(72, 567, 'girder');
+        floor.create(120, 564, 'girder');
+        floor.create(168, 561, 'girder');
+        floor.create(216, 558, 'girder');
+        floor.create(264, 555, 'girder');
+        floor.create(312, 552, 'girder');
+        floor.create(360, 549, 'girder');
+        floor.create(408, 546, 'girder');
+        floor.create(456, 543, 'girder');
+        floor.create(504, 540, 'girder');
+        floor.create(552, 537, 'girder');
+        floor.create(600, 534, 'girder');
+        floor.create(648, 531, 'girder');
 
-        this.girder = new Girder(this.scene, 72, 363)
-        this.girder = new Girder(this.scene, 120, 360)
-        this.girder = new Girder(this.scene, 168, 357)
-        this.girder = new Girder(this.scene, 216, 354)
-        this.girder = new Girder(this.scene, 264, 351)
-        this.girder = new Girder(this.scene, 312, 348)
-        this.girder = new Girder(this.scene, 360, 345)
-        this.girder = new Girder(this.scene, 408, 342)
-        this.girder = new Girder(this.scene, 456, 339)
-        this.girder = new Girder(this.scene, 504, 336)
-        this.girder = new Girder(this.scene, 552, 333)
-        this.girder = new Girder(this.scene, 600, 330)
-        this.girder = new Girder(this.scene, 648, 327)
+        floor.create(600, 465, 'girder');
+        floor.create(552, 462, 'girder');
+        floor.create(504, 459, 'girder');
+        floor.create(456, 456, 'girder');
+        floor.create(408, 453, 'girder');
+        floor.create(360, 450, 'girder');
+        floor.create(312, 447, 'girder');
+        floor.create(264, 444, 'girder');
+        floor.create(216, 441, 'girder');
+        floor.create(168, 438, 'girder');
+        floor.create(120, 435, 'girder');
+        floor.create(72, 432, 'girder');
+        floor.create(24, 429, 'girder');
 
-        this.girder = new Girder(this.scene, 600, 261)
-        this.girder = new Girder(this.scene, 552, 258)
-        this.girder = new Girder(this.scene, 504, 255)
-        this.girder = new Girder(this.scene, 456, 252)
-        this.girder = new Girder(this.scene, 408, 249)
-        this.girder = new Girder(this.scene, 360, 249)
-        this.girder = new Girder(this.scene, 312, 249)
-        this.girder = new Girder(this.scene, 264, 249)
-        this.girder = new Girder(this.scene, 216, 249)
-        this.girder = new Girder(this.scene, 168, 249)
-        this.girder = new Girder(this.scene, 120, 249)
-        this.girder = new Girder(this.scene, 72, 249)
-        this.girder = new Girder(this.scene, 24, 249)
+        floor.create(72, 363, 'girder');
+        floor.create(120, 360, 'girder');
+        floor.create(168, 357, 'girder');
+        floor.create(216, 354, 'girder');
+        floor.create(264, 351, 'girder');
+        floor.create(312, 348, 'girder');
+        floor.create(360, 345, 'girder');
+        floor.create(408, 342, 'girder');
+        floor.create(456, 339, 'girder');
+        floor.create(504, 336, 'girder');
+        floor.create(552, 333, 'girder');
+        floor.create(600, 330, 'girder');
+        floor.create(648, 327, 'girder');
+
+        floor.create(600, 261, 'girder');
+        floor.create(552, 258, 'girder');
+        floor.create(504, 255, 'girder');
+        floor.create(456, 252, 'girder');
+        floor.create(408, 249, 'girder');
+        floor.create(360, 249, 'girder');
+        floor.create(312, 249, 'girder');
+        floor.create(264, 249, 'girder');
+        floor.create(216, 249, 'girder');
+        floor.create(168, 249, 'girder');
+        floor.create(120, 249, 'girder');
+        floor.create(72, 249, 'girder');
+        floor.create(24, 249, 'girder');
+
+        this.scene.physics.add.collider(this.player.sprite, floor);
     }
 }

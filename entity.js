@@ -4,7 +4,7 @@ class Entity {
         this.scene = scene;
         this.position = new Phaser.Math.Vector2(x, y);
         this.velocity = new Phaser.Math.Vector2(0, 0);
-        this.sprite = scene.physics.add.sprite(x, y, spriteKey);
+        this.sprite = this.scene.physics.add.sprite(x, y, spriteKey);
     }
 
     update() {
@@ -39,13 +39,5 @@ class Barrel extends Entity {
 
     onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
-    }
-}
-
-class Girder{
-    constructor(scene, x, y) {
-        this.scene = scene;
-        this.position = new Phaser.Math.Vector2(x, y);
-        this.sprite = scene.add.sprite(x, y, 'girder');
     }
 }
