@@ -1,4 +1,4 @@
-class Minigame1 extends Level{
+class ShermieHero extends Level{
     constructor(scene) {
         super(scene);
     }
