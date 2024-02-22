@@ -33,7 +33,7 @@ class Minigame1 extends Level{
     */
     handlePlayerInput(){
         if (this.player.cursors.left.isDown) {
-            let string1 = this.scene.add.circle(285, 525, 15, 0x0380fc);
+            let string1 = this.scene.add.circle(310, 550, 15, 0x0380fc);
             this.scene.physics.add.existing(string1);
             this.scene.tweens.add({
                 targets: string1,
@@ -45,7 +45,7 @@ class Minigame1 extends Level{
             });
         }
         if (this.player.cursors.right.isDown) {
-            let string2 = this.scene.add.circle(345, 525, 15, 0x0380fc);
+            let string2 = this.scene.add.circle(370, 550, 15, 0x0380fc);
             this.scene.physics.add.existing(string2);
             this.scene.tweens.add({
                 targets: string2,
@@ -57,7 +57,7 @@ class Minigame1 extends Level{
             });
         }
         if (this.player.cursors.up.isDown) {
-            let string3 = this.scene.add.circle(405, 525, 15, 0x0380fc);
+            let string3 = this.scene.add.circle(430, 550, 15, 0x0380fc);
             this.scene.physics.add.existing(string3);
             this.scene.tweens.add({
                 targets: string3,
@@ -69,7 +69,7 @@ class Minigame1 extends Level{
             });
         }
         if (this.player.cursors.down.isDown) {
-            let string4 = this.scene.add.circle(465, 525, 15, 0x0380fc);
+            let string4 = this.scene.add.circle(490, 550, 15, 0x0380fc);
             this.scene.physics.add.existing(string4);
             this.scene.tweens.add({
                 targets: string4,
