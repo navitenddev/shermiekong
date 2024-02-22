@@ -64,8 +64,8 @@ class Player extends Entity {
             this.scene.physics.world.colliders._active[0].active = true;
         }
     }
-    onCollision(otherEntity) {
+    /*onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
         this.sprite.destroy();
-    }
+    }*/
 }

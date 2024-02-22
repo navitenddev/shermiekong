@@ -32,8 +32,8 @@ class Barrel extends Entity {
         }
     }   
 
-    onCollision(otherEntity) {
+    /*onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
         otherEntity.destroy();
-    }
+    }*/
 }

@@ -105,6 +105,7 @@ class Level1 extends Level {
         floor.create(24, 249, 'girder');
 
         this.scene.physics.add.collider(this.player.sprite, floor);
+        this.scene.physics.add.collider(this.barrel.sprite, floor);
 
         var ladders = this.scene.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
@@ -118,6 +119,5 @@ class Level1 extends Level {
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
-        this.scene.physics.add.collider(this.barrel.sprite, floor);
     }
 }
