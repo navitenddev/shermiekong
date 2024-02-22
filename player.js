@@ -5,7 +5,7 @@ class Player extends Entity {
         super(scene, x, y, 'player');
 
         // Set up any additional configurations (specific to the Player class)
-        this.sprite.setScale(0.5);
+        this.sprite.setScale(0.3);
         this.sprite.setCollideWorldBounds(true);
 
         // Setup input handling for player movement
