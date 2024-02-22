@@ -13,12 +13,18 @@ class Player extends Entity {
 
         // Setup input handling for player movement
         this.cursors = scene.input.keyboard.createCursorKeys();
+        this.isClimbing = false;
     }
 
     update() {
         super.update();
 
-        this.handlePlayerMovement();
+        if (this.isClimbing) {
+            this.handleClimbing();
+        } 
+        else {
+            this.handlePlayerMovement();
+        }
     }
 
     handlePlayerMovement() {
@@ -40,5 +46,27 @@ class Player extends Entity {
     onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
         this.sprite.destroy();
+    }
+  
+    handleClimbing() {
+        // Stop any horizontal movement
+        //this.sprite.setVelocityX(0);
+
+        this.scene.physics.world.colliders._active[0].active = false;
+
+        if (this.cursors.up.isDown) {
+            this.sprite.setVelocityY(-200);
+        }
+        else if (this.cursors.down.isDown) {
+            this.sprite.setVelocityY(200);
+        }
+        else {
+            this.sprite.setVelocityY(0);
+        }
+
+        if (!this.cursors.up.isDown && !this.cursors.down.isDown){
+            this.isClimbing = false;
+            this.scene.physics.world.colliders._active[0].active = true;
+        }
     }
 }
