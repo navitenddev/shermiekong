@@ -54,15 +54,26 @@ class ShermieHero extends Level{
         this.string3Press = [];
         this.string4Press = [];
 
-        this.createNote(1);
-        this.createNote(2);
-        this.createNote(3);
-        this.createNote(4);
+        // this.createNote(1);
+        // this.createNote(2);
+        // this.createNote(3);
+        // this.createNote(4); 
+        this.timedEvent = this.scene.time.addEvent({
+            delay: 1000,
+            callback: this.createNotes,
+            callbackScope: this,
+            loop: true
+        });
+    }
+
+    createTimedEvents(delay){
+
     }
 
     createNotes(){
         //the notes will spawn on random strings
-        
+        let randString = Math.floor(Math.random() * 4 + 1);
+        this.createNote(randString);
     }
 
     createNote(stringNum){
@@ -98,7 +109,6 @@ class ShermieHero extends Level{
 
     update(){
         this.handlePlayerInput();
-        this.createNotes();
         this.checkNoteCollisions();
     }
 
