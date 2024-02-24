@@ -19,6 +19,10 @@ class ShermieHero extends Level{
         this.scene.add.image(425, 300, 'string');
         //marks where player should hit notes
         this.scene.add.image(400, 700, 'noteline');
+
+        this.song = this.scene.sound.add("shermieHero");
+        this.song.volume = 0.1;
+        this.song.play();
     }
 
     createEntities() {
@@ -39,9 +43,9 @@ class ShermieHero extends Level{
     create(){
         this.lastNote = 0;
 
-        this.noteTimings = [4000, 5000, 3000, 3400, 2000, 1000, 3000];
+        this.noteTimings = [2908, 3307, 3889, 4468, 5230, 5852, 6221, 6567, 6945, 7314, 7605, 7977, 8597, 9214, 9846, 10453, 11049, 11254, 11433, 11609, 12273, 12948, 13257, 13554, 13776, 13967, 14163, 14405, 14712, 14973, 15277, 15588, 15936, 16629, 17244, 17950, 18569, 19151, 19542, 19808, 20189, 20380, 20536, 21170, 21727, 22522, 22892, 23067, 23247, 23950, 24623, 24959, 25508, 26273, 26558, 27199, 27763, 28149, 28641, 29111, 29303, 29937, 30557, 31188, 31840, 32166, 32545, 32906, 33251, 33594, 33979, 34497, 35147, 35869];
 
-        this.noteTime = 10000;
+        this.noteTime = 1000;
 
         //groups for collision checking
         this.notesString1 = [];
@@ -54,20 +58,18 @@ class ShermieHero extends Level{
         this.string3Press = [];
         this.string4Press = [];
 
-        // this.createNote(1);
-        // this.createNote(2);
-        // this.createNote(3);
-        // this.createNote(4); 
-        this.timedEvent = this.scene.time.addEvent({
-            delay: 1000,
-            callback: this.createNotes,
-            callbackScope: this,
-            loop: true
-        });
+        for(var i = 0; i < this.noteTimings.length; i++){
+            this.createTimedEvents(this.noteTimings[i] - this.noteTime);
+        }
     }
 
-    createTimedEvents(delay){
-
+    createTimedEvents(timeDelay){
+        this.timedEvent = this.scene.time.addEvent({
+            delay: timeDelay,
+            callback: this.createNotes,
+            callbackScope: this,
+            loop: false
+        });
     }
 
     createNotes(){
