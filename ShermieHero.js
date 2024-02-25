@@ -21,7 +21,7 @@ class ShermieHero extends Level{
         this.scene.add.image(400, 700, 'noteline');
 
         this.song = this.scene.sound.add("shermieHero");
-        this.song.volume = 0.1;
+        this.song.volume = 1;
         this.song.play();
     }
 
@@ -41,10 +41,7 @@ class ShermieHero extends Level{
     }
 
     create(){
-        this.lastNote = 0;
-
         this.noteTimings = [2908, 3307, 3889, 4468, 5230, 5852, 6221, 6567, 6945, 7314, 7605, 7977, 8597, 9214, 9846, 10453, 11049, 11254, 11433, 11609, 12273, 12948, 13257, 13554, 13776, 13967, 14163, 14405, 14712, 14973, 15277, 15588, 15936, 16629, 17244, 17950, 18569, 19151, 19542, 19808, 20189, 20380, 20536, 21170, 21727, 22522, 22892, 23067, 23247, 23950, 24623, 24959, 25508, 26273, 26558, 27199, 27763, 28149, 28641, 29111, 29303, 29937, 30557, 31188, 31840, 32166, 32545, 32906, 33251, 33594, 33979, 34497, 35147, 35869];
-
         this.noteTime = 1000;
 
         //groups for collision checking
@@ -82,25 +79,25 @@ class ShermieHero extends Level{
         let note;
         switch(stringNum){
             case 1:
-                note = this.scene.add.circle(245, 0, 20, 0x03fc03);
+                note = this.scene.add.image(245, 0, 'left');
                 this.notesString1.push(note);
                 this.scene.physics.add.existing(note);
                 this.scene.physics.moveTo(note, 245, 768, null, this.noteTime);
                 break;
             case 2:
-                note = this.scene.add.circle(305, 0, 20, 0x03fc03);
+                note = this.scene.add.image(305, 0, 'up');
                 this.notesString2.push(note);
                 this.scene.physics.add.existing(note);
                 this.scene.physics.moveTo(note, 305, 768, null, this.noteTime);
                 break;
             case 3:
-                note = this.scene.add.circle(365, 0, 20, 0x03fc03);
+                note = this.scene.add.image(365, 0, 'down');
                 this.notesString3.push(note);
                 this.scene.physics.add.existing(note);
                 this.scene.physics.moveTo(note, 365, 768, null, this.noteTime);
                 break;
             case 4:
-                note = this.scene.add.circle(425, 0, 20, 0x03fc03);
+                note = this.scene.add.image(425, 0, 'right');
                 this.notesString4.push(note);
                 this.scene.physics.add.existing(note);
                 this.scene.physics.moveTo(note, 425, 768, null, this.noteTime);
