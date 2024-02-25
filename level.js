@@ -7,7 +7,6 @@ class Level {
     buildLevel() {
         this.createBackground();
         this.createEntities();
-        this.buildFloor();
     }
 
     createBackground() {
