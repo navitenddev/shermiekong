@@ -30,5 +30,6 @@ class Level2 extends Level {
         floor.create(648, 735, 'girder');
 
         this.scene.physics.add.collider(this.player.sprite, floor);
+        this.scene.physics.add.collider(this.barrel.sprite, floor);
     }
 }

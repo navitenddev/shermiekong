@@ -16,7 +16,7 @@ class Level1 extends Level {
 
     createEntities() {
         this.player = new Player(this.scene, 100, 450);
-        this.barrel = new Barrel(this.scene, 700, 300);
+        this.barrel = new Barrel(this.scene, 600, 200);
 
         var floor = this.scene.physics.add.staticGroup();
         floor.create(24, 756, 'girder');
@@ -105,5 +105,19 @@ class Level1 extends Level {
         floor.create(24, 249, 'girder');
 
         this.scene.physics.add.collider(this.player.sprite, floor);
+        this.scene.physics.add.collider(this.barrel.sprite, floor);
+
+        var ladders = this.scene.physics.add.staticGroup();
+        ladders.create(425, 700, 'ladder');
+        ladders.create(225, 500, 'ladder');
+
+        this.scene.physics.add.collider(ladders, floor);
+
+        // Add an overlap event to detect when the player is on the ladder
+        this.scene.physics.add.overlap(this.player.sprite, ladders, this.handlePlayerClimbing, null, this);
+    }
+
+    handlePlayerClimbing() {
+        this.player.isClimbing = true;
     }
 }
