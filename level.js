@@ -2,6 +2,9 @@
 class Level {
     constructor(scene) {
         this.scene = scene;
+        this.score = 0;
+        this.scoreText = this.scene.add.text(672 - 10, 10, 'Score: 0', { fontSize: '40px', fill: '#ff0000' }).setOrigin(1, 0);        
+        this.scoreText.setScrollFactor(0); // Make sure it stays in place when the camera moves
     }
 
     buildLevel() {
@@ -17,6 +20,21 @@ class Level {
     update() {
         this.player.update();
         this.barrel.update();
+    }
+
+    updateScore(points) {
+        this.score += points;
+        this.scoreText.setText('Score: ' + this.score);
+    }
+
+    awardPointsForJumpingBarrel() {
+        const points = 50; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForClimbingLadder() {
+        const points = 20; // Adjust the points as needed
+        this.updateScore(points);
     }
 
     createBackground() {

@@ -17,6 +17,36 @@ class Level1 extends Level {
     update() {
         this.player.update();
         this.barrel.update();
+
+        /*if (this.scene.physics.overlap(this.player.sprite, this.barrel.sprite)) {
+            this.awardPointsForJumpingBarrel();
+        }*/
+
+        //check if the player is climbing the ladder
+        if (this.player.isClimbing) {
+            this.awardPointsForClimbingLadder();
+        }
+    }
+
+    checkForCollision() {
+        // Check if the up arrow key is pressed
+        const verticalThreshold = 90;
+        const horizontalThreshold = 40;
+        
+        if (this.player.cursors.up.isDown) {
+            //console.log("y: ");
+            //console.log(this.player.sprite.y);
+            //console.log("y2");
+            //console.log(this.barrel.sprite.y);
+
+            if (
+                Math.abs(this.player.sprite.y - this.barrel.sprite.y) <= verticalThreshold &&
+                Math.abs(this.player.sprite.x - this.barrel.sprite.x) <= horizontalThreshold
+            ) {
+                // Increase points for jumping on the barrel
+                this.awardPointsForJumpingBarrel();
+            }
+        }
     }
 
     // Override createBackground method for Level 1
@@ -27,8 +57,9 @@ class Level1 extends Level {
     createEntities() {
         this.player = new Player(this.scene, 100, 450);
         this.barrel = new Barrel(this.scene, 600, 200);
-
+        this.scene.events.on('update', this.checkForCollision, this);
         var floor = this.scene.physics.add.staticGroup();
+
         floor.create(24, 756, 'girder');
         floor.create(72, 756, 'girder');
         floor.create(120, 756, 'girder');
