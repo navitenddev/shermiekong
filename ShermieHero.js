@@ -7,7 +7,6 @@ class ShermieHero extends Level{
         this.createBackground();
         this.createEntities();
         this.createKeys();
-        this.create();
     }
 
     createBackground() {
