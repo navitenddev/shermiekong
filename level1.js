@@ -9,6 +9,16 @@ class Level1 extends Level {
         this.createEntities();
     }
 
+    create() {
+        // Set up collision between player and the barrel
+        this.scene.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
+    }
+
+    update() {
+        this.player.update();
+        this.barrel.update();
+    }
+
     // Override createBackground method for Level 1
     createBackground() {
         //this.scene.add.image(400, 300, 'lvl_1_bg');
@@ -119,5 +129,11 @@ class Level1 extends Level {
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
+    }
+
+    handleCollision(player, barrel) {
+        // Perform specific actions when the player collides with a barrel
+        barrel.onCollision(player);
+        player.onCollision(barrel);
     }
 }

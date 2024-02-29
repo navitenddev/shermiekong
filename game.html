@@ -62,22 +62,13 @@
     function create() {
         currentLevel = new Level1(this);
         currentLevel.buildLevel();
-
-        // Set up collision between player and the barrel
-        this.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, handleCollision, null, this);
+        currentLevel.create();
     }
 
     function update() {
         // Update logic
-        currentLevel.player.update();
-        currentLevel.barrel.update(); // Update the barrel
-    }
+        currentLevel.update();
 
-
-    function handleCollision(player) {
-        // Perform specific actions when the player collides with a barrel
-        barrel.onCollision(player);
-        //player.onCollision(barrel);
     }
 </script>
 

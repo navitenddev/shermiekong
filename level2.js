@@ -9,6 +9,16 @@ class Level2 extends Level {
         this.createEntities();
     }
 
+    create() {
+        // Set up collision between player and the barrel
+        this.scene.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
+    }
+
+    update() {
+        this.player.update();
+        this.barrel.update();
+    }
+
     createEntities() {
         this.player = new Player(this.scene, 100, 400);
         this.barrel = new Barrel(this.scene, 600, 300);
@@ -31,5 +41,12 @@ class Level2 extends Level {
 
         this.scene.physics.add.collider(this.player.sprite, floor);
         this.scene.physics.add.collider(this.barrel.sprite, floor);
+    }
+
+    
+    handleCollision(player, barrel) {
+        // Perform specific actions when the player collides with a barrel
+        barrel.onCollision(player);
+        player.onCollision(barrel);
     }
 }

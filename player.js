@@ -43,6 +43,11 @@ class Player extends Entity {
         }
     }
 
+    onCollision(otherEntity) {
+        console.log('Player hit by a barrel!');
+        this.sprite.destroy();
+    }
+  
     handleClimbing() {
         // Stop any horizontal movement
         //this.sprite.setVelocityX(0);
