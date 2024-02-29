@@ -75,23 +75,14 @@
 
         currentLevel = new ShermieHero(this);
         currentLevel.buildLevel();
-        // Set up collision between player and the barrel
-        //this.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, handleCollision, null, this);
+        currentLevel.create();
     }
 
     function update() {
         // Update logic
-        currentLevel.player.update();
         currentLevel.update();
-        //currentLevel.barrel.update(); // Update the barrel
+
     }
-
-
-    // function handleCollision(player, barrel) {
-    //     // Perform specific actions when the player collides with a barrel
-    //     barrel.onCollision(player);
-    //     player.onCollision(barrel);
-    // }
 </script>
 
 </body>
