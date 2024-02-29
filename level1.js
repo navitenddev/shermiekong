@@ -1,7 +1,8 @@
 // level1.js
 class Level1 extends Level {
-    constructor(scene) {
+    constructor(scene, healthManager) {
         super(scene);
+        this.healthManager = healthManager; // Save healthManager reference
     }
 
     buildLevel() {
@@ -12,11 +13,23 @@ class Level1 extends Level {
     create() {
         // Set up collision between player and the barrel
         this.scene.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
+
+        // Create a group to hold hearts
+        this.hearts = this.scene.physics.add.group();
+
+        // Display hearts at the top of the screen
+        for (let i = 0; i < this.healthManager.maxHealth; i++) {
+            let heart = this.hearts.create(20 + i * 30, 20, 'heart');
+            heart.setScrollFactor(0);  // Make sure hearts stay in place when the camera moves
+            heart.setScale(0.01);
+            heart.setDisplaySize(20, 20);  // Set the display size to make the hearts smaller
+        }
     }
 
     update() {
         this.player.update();
         this.barrel.update();
+        this.updateHearts(); // Update the hearts
     }
 
     // Override createBackground method for Level 1
@@ -24,8 +37,14 @@ class Level1 extends Level {
         //this.scene.add.image(400, 300, 'lvl_1_bg');
     }
 
+    updateHearts() {
+        this.hearts.children.iterate(function (heart, index) {
+            heart.visible = index < currentLevel.healthManager.currentHealth;
+        });
+    }
+
     createEntities() {
-        this.player = new Player(this.scene, 100, 450);
+        this.player = new Player(this.scene, 100, 450, this.healthManager); // Pass healthManager to Player
         this.barrel = new Barrel(this.scene, 600, 200);
 
         var floor = this.scene.physics.add.staticGroup();
@@ -131,10 +150,24 @@ class Level1 extends Level {
         this.player.isClimbing = true;
     }
 
-    
     handleCollision(player, barrel) {
-        // Perform specific actions when the player collides with a barrel
-        barrel.onCollision(player);
-        player.onCollision(barrel);
+        // Reduce player health
+        this.healthManager.loseHealth();
+
+        // Check if the player is out of health
+        if (this.healthManager.health === 0) {
+            // Perform any game over logic here
+            console.log("Game Over");
+
+            // Reset the game or perform other actions
+            this.resetGame();
+        }
+        this.player.resetPosition();
+    }
+
+    resetGame() {
+        // Reset player's position
+        this.player.resetPosition();
+        this.healthManager.resetHealth();
     }
 }

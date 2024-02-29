@@ -5,6 +5,7 @@
     <title>Shermie-Kong</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
     <script src="entity.js" type="text/javascript"></script>
+    <script src="healthManager.js" type="text/javascript"></script>
     <script src="player.js" type="text/javascript"></script>
     <script src="barrel.js" type="text/javascript"></script>
     <script src="level.js" type="text/javascript"></script>
@@ -45,6 +46,7 @@
 
     var game = new Phaser.Game(config);
     var currentLevel;
+    var healthManager;
 
     function preload() {
         // Level Backgrounds
@@ -57,10 +59,15 @@
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+
+        // Level systems
+        this.load.image('heart', 'assets/heart.png');
     }
 
     function create() {
-        currentLevel = new Level1(this);
+        healthManager = new HealthManager(this, 3);
+
+        currentLevel = new Level1(this, healthManager);
         currentLevel.buildLevel();
         currentLevel.create();
     }

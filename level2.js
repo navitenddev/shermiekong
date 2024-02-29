@@ -20,7 +20,7 @@ class Level2 extends Level {
     }
 
     createEntities() {
-        this.player = new Player(this.scene, 100, 400);
+        this.player = new Player(this.scene, 100, 400, this.healthManager); // Pass healthManager to Player
         this.barrel = new Barrel(this.scene, 600, 300);
 
         var floor = this.scene.physics.add.staticGroup();

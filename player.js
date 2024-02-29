@@ -1,6 +1,5 @@
-// player.js
 class Player extends Entity {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, healthManager) {
         // Call the parent constructor (aka inherit from Entity)
         super(scene, x, y, 'player');
 
@@ -14,6 +13,9 @@ class Player extends Entity {
         // Setup input handling for player movement
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
+
+        //health system for the player
+        this.healthManager = healthManager;
     }
 
     update() {
@@ -27,6 +29,12 @@ class Player extends Entity {
         }
     }
 
+    resetPosition() {
+        // Set the player's position to the initial position
+        this.sprite.x = 100;
+        this.sprite.y = 450;
+    }
+    
     handlePlayerMovement() {
         if (this.cursors.left.isDown) {
             this.sprite.setVelocityX(-200);
@@ -45,7 +53,9 @@ class Player extends Entity {
 
     onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
-        this.sprite.destroy();
+        if (otherEntity instanceof Barrel) {
+            this.healthManager.loseHealth();
+        }
     }
   
     handleClimbing() {
