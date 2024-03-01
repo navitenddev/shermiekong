@@ -27,8 +27,7 @@ class Level {
         this.player = new Player(this.scene, 400, 400);
         this.barrel = new Barrel(this.scene, 600, 300);
     }
-
-    
+  
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
