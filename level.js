@@ -1,5 +1,5 @@
 // level.js
-class Level {
+class Level extends Phaser.Scene{
     constructor(scene) {
         this.scene = scene;
     }

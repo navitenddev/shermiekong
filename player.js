@@ -1,12 +1,12 @@
 // player.js
-class Player extends Entity {
+class Player extends Phaser.Physics.Arcade.Sprite {
+
     constructor(scene, x, y) {
-        // Call the parent constructor (aka inherit from Entity)
         super(scene, x, y, 'player');
 
         // Set up any additional configurations (specific to the Player class)
-        this.sprite.setScale(0.25);
-        this.sprite.setCollideWorldBounds(true);
+        this.setScale(0.25);
+        this.setCollideWorldBounds(true);
 
         this.scene.physics.world.enable(this.sprite);
         this.sprite.body.setGravityY(300);
@@ -16,8 +16,7 @@ class Player extends Entity {
         this.isClimbing = false;
     }
 
-    update() {
-        super.update();
+    playerClimbing() {
 
         if (this.isClimbing) {
             this.handleClimbing();
@@ -40,6 +39,13 @@ class Player extends Entity {
 
         if (this.cursors.up.isDown && this.sprite.body.blocked.down) {
             this.sprite.setVelocityY(-350);
+        }
+        
+        if (this.isClimbing) {
+            this.handleClimbing();
+        } 
+        else {
+            this.handlePlayerMovement();
         }
     }
 
