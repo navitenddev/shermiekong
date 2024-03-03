@@ -4,11 +4,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'player');
 
+        this.scene.physics.world.enable(this.sprite);
         // Set up any additional configurations (specific to the Player class)
         this.setScale(0.25);
         this.setCollideWorldBounds(true);
 
-        this.scene.physics.world.enable(this.sprite);
+        
         this.sprite.body.setGravityY(300);
 
         // Setup input handling for player movement
@@ -17,7 +18,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playerClimbing() {
-
         if (this.isClimbing) {
             this.handleClimbing();
         } 
@@ -39,13 +39,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if (this.cursors.up.isDown && this.sprite.body.blocked.down) {
             this.sprite.setVelocityY(-350);
-        }
-        
-        if (this.isClimbing) {
-            this.handleClimbing();
-        } 
-        else {
-            this.handlePlayerMovement();
         }
     }
 
