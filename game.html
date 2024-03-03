@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Shermie-Kong</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
+    <script src="entity.js" type="text/javascript"></script>
+    <script src="player.js" type="text/javascript"></script>
+    <script src="barrel.js" type="text/javascript"></script>
+    <script src="level.js" type="text/javascript"></script>
+    <script src="level1.js" type="text/javascript"></script>
+    <script src="level2.js" type="text/javascript"></script>
+    <script src="ShermieHero.js" type="text/javascript"></script>
+    <script src="ShermieHeroIntro.js" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 672,
+        height: 768,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 500 },
+                debug: false
+            }
+        },
+        scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+    var currentLevel;
+
+    function preload() {
+        // Level Backgrounds
+        this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
+        this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
+        //minigame assets
+        this.load.image('minigame1_bg', 'assets/minigame1-bg.png');
+        this.load.image('bass', 'assets/bass.png');
+        this.load.image('string', 'assets/string.png');
+        this.load.image('noteline', 'assets/noteline.png');
+        this.load.audio('shermieHero', 'assets/shermie_hero.ogg');
+        this.load.image('left', 'assets/left_arrow.png');
+        this.load.image('right', 'assets/right_arrow.png');
+        this.load.image('down', 'assets/down_arrow.png');
+        this.load.image('up', 'assets/up_arrow.png');
+
+        // Level Entities
+        this.load.image('wolf', 'assets/wolf.png');
+        this.load.image('platform', 'assets/platform.png');
+        this.load.image('player', 'assets/shermie.png');
+        this.load.image('girder', 'assets/girder.png');
+        this.load.image('ladder', 'assets/ladder.png');
+    }
+
+    function create() {
+
+        currentLevel = new ShermieHero(this);
+        currentLevel.buildLevel();
+        currentLevel.create();
+    }
+
+    function update() {
+        // Update logic
+        currentLevel.update();
+
+    }
+</script>
+
+</body>
+</html>
