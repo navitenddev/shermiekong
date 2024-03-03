@@ -18,13 +18,14 @@ class Level1 extends Phaser.Scene {
     }
 
     create() {
-        this.buildLevel();
+        this.createBackground();
+        this.createEntities();
         // Set up collision between player and the barrel
         //this.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
     }
 
     update() {
-        this.player.handlePlayerMovement();
+        //this.player.handlePlayerMovement();
         // this.barrel.update();
     }
 
@@ -39,7 +40,7 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
 
-        this.player = this.physics.add.existing(new Player(this, 100, 450));
+        //this.player = this.physics.add.existing(new Player(this, 100, 450));
         // this.barrel = new Barrel(this.scene, 600, 200);
 
         var floor = this.physics.add.staticGroup();
@@ -128,7 +129,7 @@ class Level1 extends Phaser.Scene {
         floor.create(72, 249, 'girder');
         floor.create(24, 249, 'girder');
 
-        this.physics.add.collider(this.player.sprite, floor);
+        //this.physics.add.collider(this.player.sprite, floor);
         // this.scene.physics.add.collider(this.barrel.sprite, floor);
 
         var ladders = this.physics.add.staticGroup();
@@ -142,7 +143,7 @@ class Level1 extends Phaser.Scene {
     }
 
     handlePlayerClimbing() {
-        this.player.isClimbing = true;
+        //this.player.isClimbing = true;
     }
 
     

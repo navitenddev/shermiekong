@@ -33,7 +33,7 @@ class MainMenu extends Phaser.Scene{
     
     update(){
         if(Phaser.Input.Keyboard.JustDown(this.space)){
-            this.scene.start("levelOne");
+            this.scene.start("level1");
         }
     }
 
