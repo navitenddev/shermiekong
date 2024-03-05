@@ -39,7 +39,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 200, 300);
+        this.player = new Player(this, 100, 700);
 
         // this.barrel = new Barrel(this.scene, 600, 200);
 
