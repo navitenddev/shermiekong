@@ -1,20 +1,16 @@
-//import Phaser from "phaser";
-
-const gameStartDiv = document.querySelector("#gameStartDiv");
-const gameStartBtn = document.querySelector("#gameStartBtn");
-const gameEndDiv = document.querySelector("#gameEndDiv");
-const gameWinLoseSpan = document.querySelector("#gameWinLoseSpan");
-const gameEndScoreSpan = document.querySelector("#gameEndScoreSpan");
-
-let game;
-
-gameStartBtn.addEventListener("click", () => {
-  gameStartDiv.style.display = "none";
-  game = new Phaser.Game(config);
-});
-
-class GameScene {
+class AppleGame extends Phaser.Scene {
   constructor(){
+    super('AppleGame');
+  }
+
+  preload() {
+    this.load.image('orchard', 'assets/orchard.png');
+    this.load.image('shermie_basket', 'assets/shermie_basket.png');
+    this.load.image('apple', 'assets/apple.png');
+    this.load.audio('ding', 'assets/public_assets_coin.mp3');
+  }
+
+  create() {
     this.player;
     this.cursors;
     this.playerSpeed = 300;
@@ -26,16 +22,7 @@ class GameScene {
     this.remainingTime;
     this.coinMusic;
     this.bgMusic;
-  }
 
-  preload() {
-    this.load.image('orchard', 'assets/orchard.png');
-    this.load.image('shermie_basket', 'assets/shermie_basket.png');
-    this.load.image('apple', 'assets/apple.png');
-    this.load.audio('ding', 'assets/public_assets_coin.mp3');
-  }
-
-  create() {
     this.scene.pause("scene-game");
     this.coinMusic = this.sound.add('ding');
 
@@ -116,23 +103,4 @@ class GameScene {
   }
 }
 
-const config = {
-  type: Phaser.WEBGL,
-  width: 672,
-  height: 768,
-  canvas: gameCanvas,
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 300 },
-      debug: true,
-    },
-  },
-  scene: [GameScene],
-};
 
-/*const game = new Phaser.Game(config);
-gameStartBtn.addEventListener("click", () => {
-  gameStartDiv.style.display="none"
-  game.scene.resume("scene-game")
-});*/
