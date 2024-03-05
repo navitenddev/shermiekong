@@ -25,7 +25,7 @@ class Level1 extends Phaser.Scene {
     }
 
     update() {
-        //this.player.handlePlayerMovement();
+        this.player.handlePlayerMovement();
         // this.barrel.update();
     }
 
