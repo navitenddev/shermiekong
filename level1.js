@@ -129,7 +129,7 @@ class Level1 extends Phaser.Scene {
         floor.create(72, 249, 'girder');
         floor.create(24, 249, 'girder');
 
-        //this.physics.add.collider(this.player.sprite, floor);
+        this.physics.add.collider(this.player, floor);
         // this.scene.physics.add.collider(this.barrel.sprite, floor);
 
         var ladders = this.physics.add.staticGroup();
