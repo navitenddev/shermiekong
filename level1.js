@@ -139,7 +139,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
-        //this.physics.add.overlap(this.player.sprite, ladders, this.handlePlayerClimbing, null, this);
+        this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
     }
 
     handlePlayerClimbing() {
