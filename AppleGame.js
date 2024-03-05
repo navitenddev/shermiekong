@@ -93,13 +93,13 @@ class AppleGame extends Phaser.Scene {
       }
   
       if (this.points >= 10) {
-          gameWinLoseSpan.textContent = "Win!";
+          this.add.text(300, 300, "Win!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       } else {
-          gameWinLoseSpan.textContent = "Lose!";
+          this.add.text(100, 300, "Better luck next time!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       }
   
-      gameEndScoreSpan.textContent = this.points;
-      gameEndDiv.style.display = "flex";
+      // gameEndScoreSpan.textContent = this.points;
+      // gameEndDiv.style.display = "flex";
   }
 }
 
