@@ -17,6 +17,8 @@ class MainMenu extends Phaser.Scene{
         this.load.image('right', 'assets/right_arrow.png');
         this.load.image('down', 'assets/down_arrow.png');
         this.load.image('up', 'assets/up_arrow.png');
+        this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
+        {frameWidth: 256, frameHeight: 256});
 
         // Level Entities
         this.load.image('wolf', 'assets/wolf.png');

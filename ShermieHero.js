@@ -27,6 +27,7 @@ class ShermieHero extends Phaser.Scene{
     update(){
         this.handlePlayerInput();
         this.checkNoteCollisions();
+        this.shermieBass.anims.play('strum', true);
     }
 
     buildLevel() {
@@ -45,6 +46,18 @@ class ShermieHero extends Phaser.Scene{
         this.add.image(400, 700, 'noteline');
         this.add.image(400, 1150, 'lvl_default_bg');
 
+        //animated background
+        this.shermieBass = this.add.sprite(70, 500, 'shermie_bass').setScale(0.8);
+        
+        this.anims.create(
+            {
+                key: 'strum',
+                frames: this.anims.generateFrameNumbers('shermie_bass', {start: 0, end: 2}),
+                framerate: 1,
+                duration: 400,
+            }
+        );
+
         this.song = this.sound.add("shermieHero");
         this.song.volume = 1;
         this.song.play();
@@ -61,8 +74,6 @@ class ShermieHero extends Phaser.Scene{
         this.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
-
-
 
     createTimedEvents(timeDelay){
         this.timedEvent = this.time.addEvent({
@@ -109,7 +120,6 @@ class ShermieHero extends Phaser.Scene{
         }
         
     }
-
 
     /* the controls for this game spawn colliders on each string depending on which
     * arrow key is pressed. 
