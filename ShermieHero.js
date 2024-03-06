@@ -43,6 +43,7 @@ class ShermieHero extends Phaser.Scene{
         this.add.image(425, 300, 'string');
         //marks where player should hit notes
         this.add.image(400, 700, 'noteline');
+        this.add.image(400, 1150, 'lvl_default_bg');
 
         this.song = this.sound.add("shermieHero");
         this.song.volume = 1;
