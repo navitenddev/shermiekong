@@ -1,0 +1,79 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensure consistent box model */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#gameCanvas {
+  border: 1px solid blue;
+  margin: 0;
+}
+
+.gameUI {
+  width: 672px;
+  height: 768px; /* Set the height to match the gameCanvas */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center content horizontally */
+  position: absolute;
+  top: 50%; /* Adjusted from top: 0 */
+  transform: translateY(-50.25%); /* Center vertically using translateY */
+  z-index: 2;
+  text-align: center;
+  background-color: white;
+  border-left: 1px solid blue
+}
+
+.gameUI * {
+  margin-top: 5px;
+  box-sizing: border-box; /* Ensure consistent box model for children elements */
+}
+
+#gameStartDiv,
+#gameEndDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally within the UI */
+  justify-content: center; /* Center content vertically within the UI */
+  height: 768px; /* Set the height to match the gameCanvas */
+}
+
+#gameStartBtn {
+  display: inline-block;
+  width: 100px;
+  padding: 8px 15px;
+  margin: 20px 0;
+  text-align: center;
+  font-family: inherit;
+  border-radius: 10px;
+}
+
+#gameStartBtn p {
+  margin-top: 0;
+}
+
+#gameStartBtn:hover {
+  background-color: green;
+  border: 0.5px black;
+  cursor: pointer;
+}

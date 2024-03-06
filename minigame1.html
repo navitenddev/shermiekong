@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Shermie-Kong</title>
+    <link rel="icon" type="image/svg+xml" href="assets/apple.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="entity.js" type="text/javascript"></script>
+    <script src="player.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <canvas id="gameCanvas" width="672" height="768"></canvas>
+        <div id="gameStartDiv" class="gameUI">
+        <h1>Oh no! Shermie is dying of starvation! </h1>
+            <p>Shermie NEEDS apples. You have 30 seconds to catch apples!</p>
+            <p>If you catch more than 10 apples you win.</p>
+            <p>If you catch less than 10 apples you lose.</p>
+            <p>Click the start button to begin</p>
+            <button id="gameStartBtn" style="margin-left: 20px;">
+                <p>Start</p>
+            </button>
+        </div>
+        <div id="gameEndDiv" class="gameUI" style="display: none;">
+            <p>Game Over</p>
+            <h1>You <span id="gameWinLoseSpan"></span></h1>
+            <h1>Final Score: <span id="gameEndScoreSpan"></span></h1>
+            <p>Refresh the Page to play again</p>
+        </div>
+    </main>
+    <script type="module" src="minigame.js"></script>
+
+</body>
+</html>
