@@ -1,20 +1,16 @@
-//import Phaser from "phaser";
-
-const gameStartDiv = document.querySelector("#gameStartDiv");
-const gameStartBtn = document.querySelector("#gameStartBtn");
-const gameEndDiv = document.querySelector("#gameEndDiv");
-const gameWinLoseSpan = document.querySelector("#gameWinLoseSpan");
-const gameEndScoreSpan = document.querySelector("#gameEndScoreSpan");
-
-let game;
-
-gameStartBtn.addEventListener("click", () => {
-  gameStartDiv.style.display = "none";
-  game = new Phaser.Game(config);
-});
-
-class GameScene {
+class AppleGame extends Phaser.Scene {
   constructor(){
+    super('AppleGame');
+  }
+
+  preload() {
+    this.load.image('orchard', 'assets/orchard.png');
+    this.load.image('shermie_basket', 'assets/shermie_basket.png');
+    this.load.image('apple', 'assets/apple.png');
+    this.load.audio('ding', 'assets/public_assets_coin.mp3');
+  }
+
+  create() {
     this.player;
     this.cursors;
     this.playerSpeed = 300;
@@ -26,16 +22,7 @@ class GameScene {
     this.remainingTime;
     this.coinMusic;
     this.bgMusic;
-  }
 
-  preload() {
-    this.load.image('orchard', 'assets/orchard.png');
-    this.load.image('shermie_basket', 'assets/shermie_basket.png');
-    this.load.image('apple', 'assets/apple.png');
-    this.load.audio('ding', 'assets/public_assets_coin.mp3');
-  }
-
-  create() {
     this.scene.pause("scene-game");
     this.coinMusic = this.sound.add('ding');
 
@@ -106,33 +93,14 @@ class GameScene {
       }
   
       if (this.points >= 10) {
-          gameWinLoseSpan.textContent = "Win!";
+          this.add.text(300, 300, "Win!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       } else {
-          gameWinLoseSpan.textContent = "Lose!";
+          this.add.text(100, 300, "Better luck next time!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       }
   
-      gameEndScoreSpan.textContent = this.points;
-      gameEndDiv.style.display = "flex";
+      // gameEndScoreSpan.textContent = this.points;
+      // gameEndDiv.style.display = "flex";
   }
 }
 
-const config = {
-  type: Phaser.WEBGL,
-  width: 672,
-  height: 768,
-  canvas: gameCanvas,
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 300 },
-      debug: true,
-    },
-  },
-  scene: [GameScene],
-};
 
-/*const game = new Phaser.Game(config);
-gameStartBtn.addEventListener("click", () => {
-  gameStartDiv.style.display="none"
-  game.scene.resume("scene-game")
-});*/

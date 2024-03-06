@@ -27,13 +27,20 @@ class MainMenu extends Phaser.Scene{
     }
 
     create(){
-        this.add.text(20, 20, "Press SPACE to start");
+        this.add.text(20, 20, "Shermie Kong");
+
+        this.add.text(20, 50, "START").setInteractive()
+        .on('pointerdown', () => {this.scene.start("level1")});
+
+        this.add.text(20, 80, "LEVELS").setInteractive()
+        .on('pointerdown', () => {this.scene.start("LevelSelect")});
+
         this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
     
     update(){
         if(Phaser.Input.Keyboard.JustDown(this.space)){
-            this.scene.start("level1");
+            this.scene.start("ShermieHero");
         }
     }
 
