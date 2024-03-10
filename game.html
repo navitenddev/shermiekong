@@ -11,6 +11,10 @@
     <script src="level.js" type="text/javascript"></script>
     <script src="level1.js" type="text/javascript"></script>
     <script src="level2.js" type="text/javascript"></script>
+    <script src="ShermieHero.js" type="text/javascript"></script>
+    <script src="AppleGame.js" type="text/javascript"></script>
+    <script src="LevelSelect.js" type="text/javascript"></script>
+    <script src="MainMenu.js" type="text/javascript"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -37,43 +41,11 @@
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
         },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
-        }
+        scene: [MainMenu, LevelSelect, Level1, ShermieHero, AppleGame]
     };
 
     var game = new Phaser.Game(config);
-    var currentLevel;
 
-    function preload() {
-        // Level Backgrounds
-        this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
-        this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
-
-        // Level Entities
-        this.load.image('wolf', 'assets/wolf.png');
-        this.load.image('platform', 'assets/platform.png');
-        this.load.image('player', 'assets/shermie.png');
-        this.load.image('girder', 'assets/girder.png');
-        this.load.image('girder_blue', 'assets/girder_blue.png');
-        this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
-        this.load.image('spikes', 'assets/spikes.png');
-        this.load.image('ladder', 'assets/ladder.png');
-    }
-
-    function create() {
-        currentLevel = new Level2(this);
-        currentLevel.buildLevel();
-        currentLevel.create();
-    }
-
-    function update() {
-        // Update logic
-        currentLevel.update();
-
-    }
 </script>
 
 </body>
