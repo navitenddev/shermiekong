@@ -40,10 +40,60 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700);
+        //this.barrel = new Barrel(this, 600, 200);
 
-        // this.barrel = new Barrel(this.scene, 600, 200);
+        var floor = this.physics.add.staticGroup();
+        // 1st floor
+        var x = 24;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, 756, 'girder');
+            x = x + 48
+        }
+        x = 360;
+        var y = 753;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
 
+        // 2nd floor
+        x = 600;
+        y = 669;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x - 48;
+            y = y - 3;
+        }
 
+        // 3rd floor
+        x = 72;
+        y = 567;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
+
+        // 4th floor
+        x = 600;
+        y = 465;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x - 48;
+            y = y - 3;
+        }
+
+        // 5th floor
+        x = 72;
+        y = 363;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
+
+        // 6th floor
         floor.create(600, 261, 'girder');
         floor.create(552, 258, 'girder');
         floor.create(504, 255, 'girder');
@@ -54,8 +104,8 @@ class Level1 extends Phaser.Scene {
             x = x - 48;
         }
 
-        this.physics.add.collider(this.player, floor);
-        // this.scene.physics.add.collider(this.barrel.sprite, floor);
+        this.physics.add.collider(this.player.sprite, floor);
+        //this.physics.add.collider(this.barrel.sprite, floor);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
@@ -64,7 +114,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
-        this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+        this.physics.add.overlap(this.player.sprite, ladders, this.handlePlayerClimbing, null, this);
     }
 
     handlePlayerClimbing() {
