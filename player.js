@@ -21,9 +21,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.isClimbing) {
             this.handleClimbing();
         } 
-        else {
-            this.handlePlayerMovement();
-        }
     }
 
     handlePlayerMovement() {
@@ -79,4 +76,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.physics.world.colliders._active[0].active = true;
         }
     }
+    /*onCollision(otherEntity) {
+        console.log('Player hit by a barrel!');
+        this.sprite.destroy();
+    }*/
 }

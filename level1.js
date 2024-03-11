@@ -9,11 +9,12 @@ class Level1 extends Phaser.Scene {
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
         // Level Entities
-        this.load.image('wolf', 'assets/wolf.png');
         this.load.image('platform', 'assets/platform.png');
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('wolf', 'assets/wolf.png');
+        this.load.image('fireball', 'assets/fireball.png');
         this.load.image('jettpack', 'assets/jettpack.png');
     }
 
@@ -21,12 +22,18 @@ class Level1 extends Phaser.Scene {
         this.createBackground();
         this.createEntities();
         // Set up collision between player and the barrel
-        this.physics.add.collider(this.player, this.barrel.sprite, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
     }
 
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
+        this.fireball.update();
+    }
+
+    buildLevel() {
+        this.createBackground();
+        this.createEntities();
     }
 
     createBackground() {
@@ -34,32 +41,10 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        var floor = this.physics.add.staticGroup();
-        // 1st floor
-        var x = 24;
-        for (let i = 0; i < 7; i++){
-            floor.create(x, 756, 'girder');
-            x = x + 48
-        }
-        x = 360;
-        var y = 753;
-        for (let i = 0; i < 7; i++){
-            floor.create(x, y, 'girder');
-            x = x + 48;
-            y = y - 3;
-        }
-
-        // 2nd floor
-        x = 600;
-        y = 669;
-        for (let i = 0; i < 13; i++){
-            floor.create(x, y, 'girder');
-            x = x - 48;
-            y = y - 3;
-        }
         this.player = new Player(this, 100, 700);
-        this.barrel = new Barrel(this, 600, 200);
-        
+        this.barrel = new Barrel(this, 750, 400);
+        this.fireball = new Fireball(this, 750, 300);
+
         var floor = this.physics.add.staticGroup();
         // 1st floor
         var x = 24;
@@ -123,10 +108,11 @@ class Level1 extends Phaser.Scene {
         }
 
         this.physics.add.collider(this.player, floor);
-        this.physics.add.collider(this.barrel.sprite, floor);
+        this.physics.add.collider(this.barrel, floor);
+
         var ladders = this.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
-        ladders.create(225, 500, 'ladder');
+        ladders.create(225, 485, 'ladder');
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
@@ -139,6 +125,11 @@ class Level1 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+    }
+
+    handlePlayerClimbing() {
+        this.player.isClimbing = true;
+        this.player.playerClimbing();
     }
 
     collectJettpack(player, jettpack) {
@@ -166,5 +157,6 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+        this.fireball.onCollision(player);
     }
 }
