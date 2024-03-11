@@ -14,6 +14,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('jettpack', 'assets/jettpack.png');
     }
 
     create() {
@@ -33,6 +34,29 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
+        var floor = this.physics.add.staticGroup();
+        // 1st floor
+        var x = 24;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, 756, 'girder');
+            x = x + 48
+        }
+        x = 360;
+        var y = 753;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
+
+        // 2nd floor
+        x = 600;
+        y = 669;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x - 48;
+            y = y - 3;
+        }
         this.player = new Player(this, 100, 700);
         this.barrel = new Barrel(this, 600, 200);
         
@@ -107,6 +131,31 @@ class Level1 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        // Create Jettpack powerup
+        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack'); // Adjust the position as needed
+        this.jettpackPowerup.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+    }
+
+    collectJettpack(player, jettpack) {
+        // Disable the powerup temporarily
+        jettpack.disableBody(true, true);
+        
+        player.hasJettpack = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        console.log('Jettpack collected!');
+    }
+
+    resetPlayerVelocity(player) {
+        player.hasJettpack = false;
+        player.VelocityX = 200;
+        player.VelocityY = 350;
     }
 
     handlePlayerClimbing() {
