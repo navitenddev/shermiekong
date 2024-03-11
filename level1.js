@@ -8,7 +8,6 @@ class Level1 extends Phaser.Scene {
         // Level Backgrounds
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
-
         // Level Entities
         this.load.image('platform', 'assets/platform.png');
         this.load.image('player', 'assets/shermie.png');
@@ -16,6 +15,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
+        this.load.image('jettpack', 'assets/jettpack.png');
     }
 
     create() {
@@ -46,90 +46,66 @@ class Level1 extends Phaser.Scene {
         this.fireball = new Fireball(this, 750, 300);
 
         var floor = this.physics.add.staticGroup();
-        floor.create(24, 756, 'girder');
-        floor.create(72, 756, 'girder');
-        floor.create(120, 756, 'girder');
-        floor.create(168, 756, 'girder');
-        floor.create(216, 756, 'girder');
-        floor.create(264, 756, 'girder');
-        floor.create(312, 756, 'girder');
-        floor.create(360, 753, 'girder');
-        floor.create(408, 750, 'girder');
-        floor.create(456, 747, 'girder');
-        floor.create(504, 744, 'girder');
-        floor.create(552, 741, 'girder');
-        floor.create(600, 738, 'girder');
-        floor.create(648, 735, 'girder');
+        // 1st floor
+        var x = 24;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, 756, 'girder');
+            x = x + 48
+        }
+        x = 360;
+        var y = 753;
+        for (let i = 0; i < 7; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
 
-        floor.create(600, 669, 'girder');
-        floor.create(552, 666, 'girder');
-        floor.create(504, 663, 'girder');
-        floor.create(456, 660, 'girder');
-        floor.create(408, 657, 'girder');
-        floor.create(360, 654, 'girder');
-        floor.create(312, 651, 'girder');
-        floor.create(264, 648, 'girder');
-        floor.create(216, 645, 'girder');
-        floor.create(168, 642, 'girder');
-        floor.create(120, 639, 'girder');
-        floor.create(72, 636, 'girder');
-        floor.create(24, 633, 'girder');
+        // 2nd floor
+        x = 600;
+        y = 669;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x - 48;
+            y = y - 3;
+        }
 
-        floor.create(72, 567, 'girder');
-        floor.create(120, 564, 'girder');
-        floor.create(168, 561, 'girder');
-        floor.create(216, 558, 'girder');
-        floor.create(264, 555, 'girder');
-        floor.create(312, 552, 'girder');
-        floor.create(360, 549, 'girder');
-        floor.create(408, 546, 'girder');
-        floor.create(456, 543, 'girder');
-        floor.create(504, 540, 'girder');
-        floor.create(552, 537, 'girder');
-        floor.create(600, 534, 'girder');
-        floor.create(648, 531, 'girder');
+        // 3rd floor
+        x = 72;
+        y = 567;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
 
-        floor.create(600, 465, 'girder');
-        floor.create(552, 462, 'girder');
-        floor.create(504, 459, 'girder');
-        floor.create(456, 456, 'girder');
-        floor.create(408, 453, 'girder');
-        floor.create(360, 450, 'girder');
-        floor.create(312, 447, 'girder');
-        floor.create(264, 444, 'girder');
-        floor.create(216, 441, 'girder');
-        floor.create(168, 438, 'girder');
-        floor.create(120, 435, 'girder');
-        floor.create(72, 432, 'girder');
-        floor.create(24, 429, 'girder');
+        // 4th floor
+        x = 600;
+        y = 465;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x - 48;
+            y = y - 3;
+        }
 
-        floor.create(72, 363, 'girder');
-        floor.create(120, 360, 'girder');
-        floor.create(168, 357, 'girder');
-        floor.create(216, 354, 'girder');
-        floor.create(264, 351, 'girder');
-        floor.create(312, 348, 'girder');
-        floor.create(360, 345, 'girder');
-        floor.create(408, 342, 'girder');
-        floor.create(456, 339, 'girder');
-        floor.create(504, 336, 'girder');
-        floor.create(552, 333, 'girder');
-        floor.create(600, 330, 'girder');
-        floor.create(648, 327, 'girder');
+        // 5th floor
+        x = 72;
+        y = 363;
+        for (let i = 0; i < 13; i++){
+            floor.create(x, y, 'girder');
+            x = x + 48;
+            y = y - 3;
+        }
 
+        // 6th floor
         floor.create(600, 261, 'girder');
         floor.create(552, 258, 'girder');
         floor.create(504, 255, 'girder');
         floor.create(456, 252, 'girder');
-        floor.create(408, 249, 'girder');
-        floor.create(360, 249, 'girder');
-        floor.create(312, 249, 'girder');
-        floor.create(264, 249, 'girder');
-        floor.create(216, 249, 'girder');
-        floor.create(168, 249, 'girder');
-        floor.create(120, 249, 'girder');
-        floor.create(72, 249, 'girder');
-        floor.create(24, 249, 'girder');
+        x = 408;
+        for (let i = 0; i < 9; i++){
+            floor.create(x, 249, 'girder');
+            x = x - 48;
+        }
 
         this.physics.add.collider(this.player, floor);
         this.physics.add.collider(this.barrel, floor);
@@ -137,11 +113,18 @@ class Level1 extends Phaser.Scene {
         var ladders = this.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
         ladders.create(225, 485, 'ladder');
-
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        // Create Jettpack powerup
+        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack'); // Adjust the position as needed
+        this.jettpackPowerup.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
     }
 
     handlePlayerClimbing() {
@@ -149,6 +132,27 @@ class Level1 extends Phaser.Scene {
         this.player.playerClimbing();
     }
 
+    collectJettpack(player, jettpack) {
+        // Disable the powerup temporarily
+        jettpack.disableBody(true, true);
+        
+        player.hasJettpack = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        console.log('Jettpack collected!');
+    }
+
+    resetPlayerVelocity(player) {
+        player.hasJettpack = false;
+        player.VelocityX = 200;
+        player.VelocityY = 350;
+    }
+
+    handlePlayerClimbing() {
+        this.player.isClimbing = true;
+    }
+    
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
