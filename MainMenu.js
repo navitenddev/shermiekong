@@ -17,6 +17,8 @@ class MainMenu extends Phaser.Scene{
         this.load.image('right', 'assets/right_arrow.png');
         this.load.image('down', 'assets/down_arrow.png');
         this.load.image('up', 'assets/up_arrow.png');
+        this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
+        {frameWidth: 256, frameHeight: 256});
 
         // Level Entities
         this.load.image('wolf', 'assets/wolf.png');
@@ -24,15 +26,23 @@ class MainMenu extends Phaser.Scene{
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+
+        //Menu screen assets
+        this.load.image('logo', 'assets/logo.png');
+        this.load.image('start', 'assets/start_button.png');
+        this.load.image('levels', 'assets/levels_button.png');
     }
 
     create(){
-        this.add.text(20, 20, "Shermie Kong");
+        this.add.image(336, 200, "logo");
+        this.add.image(330, 340, "player");
 
-        this.add.text(20, 50, "START").setInteractive()
+        this.add.image(336, 470, "start")
+        .setScale(.8)
+        .setInteractive()
         .on('pointerdown', () => {this.scene.start("level1")});
 
-        this.add.text(20, 80, "LEVELS").setInteractive()
+        this.add.image(336, 600, "levels").setInteractive()
         .on('pointerdown', () => {this.scene.start("LevelSelect")});
 
         this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
