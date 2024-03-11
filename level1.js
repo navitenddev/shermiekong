@@ -3,6 +3,7 @@ class Level1 extends Phaser.Scene {
     constructor() {
         super("level1");
     }
+
     preload() {
         // Level Backgrounds
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
@@ -14,26 +15,27 @@ class Level1 extends Phaser.Scene {
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
     }
+
     create() {
         this.createBackground();
         this.createEntities();
         // Set up collision between player and the barrel
-        //this.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.barrel.sprite, this.handleCollision, null, this);
     }
+
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
     }
-    buildLevel() {
-        this.createBackground();
-        this.createEntities();
-    }
+
     createBackground() {
         this.add.image(400, 300, 'lvl_default_bg');
     }
+
     createEntities() {
         this.player = new Player(this, 100, 700);
         this.barrel = new Barrel(this, 600, 200);
+        
         var floor = this.physics.add.staticGroup();
         // 1st floor
         var x = 24;

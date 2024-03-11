@@ -1,39 +1,46 @@
 // level2.js
-class Level2 extends Level {
-    constructor(scene) {
-        super(scene);
+class Level2 extends Phaser.Scene {
+    constructor() {
+        super("level2");
     }
 
-    buildLevel() {
+    preload() {
+        // Level Backgrounds
+        this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
+        this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
+        // Level Entities
+        this.load.image('platform', 'assets/platform.png');
+        this.load.image('player', 'assets/shermie.png');
+        this.load.image('girder_blue', 'assets/girder_blue.png');
+        this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
+        this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('spikes', 'assets/spikes.png');
+    }
+
+    create() {
         this.createBackground();
         this.createEntities();
     }
 
-    create() {
-        // Set up collision between player and the barrel
-        //this.scene.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
-    }
-
     update() {
-        this.player.update();
-        //this.barrel.update();
+        this.player.handlePlayerMovement();
 
-        currentLevel.brokenfloor.update();
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor.sprite, fc1, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor2.sprite, fc2, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor3.sprite, fc3, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor4.sprite, fc4, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor5.sprite, fc5, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor6.sprite, fc6, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor7.sprite, fc7, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor8.sprite, fc8, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor9.sprite, fc9, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor10.sprite, fc10, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor11.sprite, fc11, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor12.sprite, fc12, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor13.sprite, fc13, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor14.sprite, fc14, null, this);
-        this.scene.physics.add.collider(this.player.sprite, this.brokenfloor15.sprite, fc15, null, this);
+        this.brokenfloor.update();
+        this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor2.sprite, fc2, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor3.sprite, fc3, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor4.sprite, fc4, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor5.sprite, fc5, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor6.sprite, fc6, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor7.sprite, fc7, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor8.sprite, fc8, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor9.sprite, fc9, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor10.sprite, fc10, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor11.sprite, fc11, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor12.sprite, fc12, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor13.sprite, fc13, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor14.sprite, fc14, null, this);
+        this.physics.add.collider(this.player, this.brokenfloor15.sprite, fc15, null, this);
 
         function fc1(player, floor) {
             this.brokenfloor.onCollision(player);
@@ -96,11 +103,15 @@ class Level2 extends Level {
         }
     }
 
+    createBackground() {
+        this.add.image(400, 300, 'lvl_default_bg');
+    }
+
     createEntities() {
-        this.player = new Player(this.scene, 40, 600);
+        this.player = new Player(this, 40, 600);
 
         // Ground floor
-        var floor = this.scene.physics.add.staticGroup();
+        var floor = this.physics.add.staticGroup();
         var x = 24;
         for (let i = 0; i < 12; i++){
             floor.create(x, 756, 'girder_blue');
@@ -112,8 +123,8 @@ class Level2 extends Level {
         // Starting platform
         floor.create(24, 669, 'girder_blue');
         floor.create(72, 669, 'girder_blue');
-        this.brokenfloor = new BrokenFloor(this.scene, 120, 669);
-        this.brokenfloor2 = new BrokenFloor(this.scene, 168, 669);
+        this.brokenfloor = new BrokenFloor(this, 120, 669);
+        this.brokenfloor2 = new BrokenFloor(this, 168, 669);
         floor.create(216, 669, 'girder_blue');
 
         // Middle spikes
@@ -125,7 +136,7 @@ class Level2 extends Level {
 
         // Lower-right platforms
         floor.create(648, 669, 'girder_blue');
-        this.brokenfloor3 = new BrokenFloor(this.scene, 600, 669);
+        this.brokenfloor3 = new BrokenFloor(this, 600, 669);
         floor.create(552, 669, 'girder_blue');
         floor.create(504, 669, 'girder_blue');
 
@@ -137,16 +148,16 @@ class Level2 extends Level {
         floor.create(552, 495, 'girder_blue');
         floor.create(504, 495, 'girder_blue');
 
-        this.brokenfloor4 = new BrokenFloor(this.scene, 408, 495);
-        this.brokenfloor5 = new BrokenFloor(this.scene, 312, 517);
+        this.brokenfloor4 = new BrokenFloor(this, 408, 495);
+        this.brokenfloor5 = new BrokenFloor(this, 312, 517);
 
         // Middle-left platforms
         floor.create(24, 539, 'girder_blue');
-        this.brokenfloor6 = new BrokenFloor(this.scene, 72, 539);
+        this.brokenfloor6 = new BrokenFloor(this, 72, 539);
         floor.create(72, 539, 'girder_blue_broken');
-        this.brokenfloor7 = new BrokenFloor(this.scene, 120, 539);
+        this.brokenfloor7 = new BrokenFloor(this, 120, 539);
         floor.create(168, 539, 'girder_blue');
-        this.brokenfloor8 = new BrokenFloor(this.scene, 216, 539);
+        this.brokenfloor8 = new BrokenFloor(this, 216, 539);
 
         floor.create(24, 452, 'girder_blue');
         floor.create(72, 452, 'girder_blue');
@@ -155,19 +166,19 @@ class Level2 extends Level {
         floor.create(24, 365, 'girder_blue');
         floor.create(168, 365, 'girder_blue');
         floor.create(216, 365, 'girder_blue');
-        this.brokenfloor9 = new BrokenFloor(this.scene, 264, 365);
+        this.brokenfloor9 = new BrokenFloor(this, 264, 365);
 
         // Top-right platforms
-        this.brokenfloor10 = new BrokenFloor(this.scene, 456, 365);
+        this.brokenfloor10 = new BrokenFloor(this, 456, 365);
         floor.create(408, 365, 'girder_blue');
-        this.brokenfloor11 = new BrokenFloor(this.scene, 360, 365);
+        this.brokenfloor11 = new BrokenFloor(this, 360, 365);
 
         floor.create(648, 365, 'spikes');
         floor.create(600, 365, 'spikes');
         floor.create(552, 365, 'girder_blue');
 
-        this.brokenfloor12 = new BrokenFloor(this.scene, 648, 278);
-        this.brokenfloor13 = new BrokenFloor(this.scene, 600, 278);
+        this.brokenfloor12 = new BrokenFloor(this, 648, 278);
+        this.brokenfloor13 = new BrokenFloor(this, 600, 278);
         floor.create(552, 278, 'girder_blue');
 
         floor.create(648, 191, 'girder_blue');
@@ -177,22 +188,22 @@ class Level2 extends Level {
         // Top floor
         floor.create(24, 249, 'girder_blue');
         floor.create(72, 249, 'girder_blue');
-        this.brokenfloor14 = new BrokenFloor(this.scene, 120, 249);
+        this.brokenfloor14 = new BrokenFloor(this, 120, 249);
         floor.create(168, 249, 'girder_blue');
         floor.create(216, 249, 'girder_blue');
         floor.create(264, 249, 'girder_blue');
         floor.create(312, 249, 'girder_blue');
         floor.create(360, 249, 'girder_blue');
-        this.brokenfloor15 = new BrokenFloor(this.scene, 408, 249);
+        this.brokenfloor15 = new BrokenFloor(this, 408, 249);
 
         // Top platform
         floor.create(216, 162, 'girder_blue');
         floor.create(264, 162, 'girder_blue');
         floor.create(312, 162, 'girder_blue');
 
-        this.scene.physics.add.collider(this.player.sprite, floor);
+        this.physics.add.collider(this.player, floor);
 
-        var ladders = this.scene.physics.add.staticGroup();
+        var ladders = this.physics.add.staticGroup();
         ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
         ladders.create(26, 710, 'ladder').setScale(0.6, 0.6);
         ladders.create(500, 710, 'ladder').setScale(0.6, 0.6);
@@ -205,19 +216,13 @@ class Level2 extends Level {
         ladders.create(213, 205, 'ladder').setScale(0.6, 0.6);
         ladders.create(309, 205, 'ladder').setScale(0.6, 0.6);
 
-        this.scene.physics.add.collider(ladders, floor);
+        this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
-        this.scene.physics.add.overlap(this.player.sprite, ladders, this.handlePlayerClimbing, null, this);
+        this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
     }
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
-    }
-    
-    handleCollision(player, barrel) {
-        // Perform specific actions when the player collides with a barrel
-        barrel.onCollision(player);
-        player.onCollision(barrel);
     }
 }
