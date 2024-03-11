@@ -35,7 +35,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         if (this.cursors.up.isDown && this.body.blocked.down) {
-            this.setVelocityY(-230);
+            this.setVelocityY(-500);
         }
     }
 

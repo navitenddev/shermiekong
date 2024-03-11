@@ -17,15 +17,45 @@ class Level1 extends Phaser.Scene {
     }
 
     create() {
+        console.log("Creating Level1 scene...");
+        // Ensure gameState exists and create it if not
+        this.game.gameState = this.game.gameState || {};
+
+        // Create and associate the scoring system with the scene
+        this.scoringSystem = new ScoringSystem(this);
+
         this.createBackground();
         this.createEntities();
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel.sprite, this.handleCollision, null, this);
+
+        // Access the scoring system from the Game class
+        this.game.gameState.scoringSystem = this.scoringSystem;
     }
 
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        this.checkForCollision();
+    }
+
+    checkForCollision() {
+        // Check if the up arrow key is pressed
+        const verticalThreshold = 40;
+        const horizontalThreshold = 20;
+
+        if (this.player.cursors.up.isDown) {
+            if (
+                Math.abs(this.player.y - this.barrel.sprite.y) <= verticalThreshold &&
+                Math.abs(this.player.x - this.barrel.sprite.x) <= horizontalThreshold
+            ) {
+                // Increase points for jumping over the barrel
+                this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
+            }
+        }
     }
 
     createBackground() {
