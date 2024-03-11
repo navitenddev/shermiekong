@@ -10,23 +10,25 @@ class Level1 extends Phaser.Scene {
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
 
         // Level Entities
-        this.load.image('wolf', 'assets/wolf.png');
         this.load.image('platform', 'assets/platform.png');
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('wolf', 'assets/wolf.png');
+        this.load.image('fireball', 'assets/fireball.png');
     }
 
     create() {
         this.createBackground();
         this.createEntities();
         // Set up collision between player and the barrel
-        //this.physics.add.collider(currentLevel.player.sprite, currentLevel.barrel.sprite, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
     }
 
     update() {
         this.player.handlePlayerMovement();
-        // this.barrel.update();
+        this.barrel.update();
+        this.fireball.update();
     }
 
     buildLevel() {
@@ -40,8 +42,8 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700);
-
-        // this.barrel = new Barrel(this.scene, 600, 200);
+        this.barrel = new Barrel(this, 750, 400);
+        this.fireball = new Fireball(this, 750, 300);
 
         var floor = this.physics.add.staticGroup();
         floor.create(24, 756, 'girder');
@@ -130,11 +132,11 @@ class Level1 extends Phaser.Scene {
         floor.create(24, 249, 'girder');
 
         this.physics.add.collider(this.player, floor);
-        // this.scene.physics.add.collider(this.barrel.sprite, floor);
+        this.physics.add.collider(this.barrel, floor);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
-        ladders.create(225, 500, 'ladder');
+        ladders.create(225, 485, 'ladder');
 
         this.physics.add.collider(ladders, floor);
 
@@ -143,12 +145,14 @@ class Level1 extends Phaser.Scene {
     }
 
     handlePlayerClimbing() {
-        //this.player.isClimbing = true;
+        this.player.isClimbing = true;
+        this.player.playerClimbing();
     }
 
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+        this.fireball.onCollision(player);
     }
 }

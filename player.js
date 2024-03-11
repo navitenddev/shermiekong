@@ -18,9 +18,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.isClimbing) {
             this.handleClimbing();
         } 
-        else {
-            this.handlePlayerMovement();
-        }
     }
 
     handlePlayerMovement() {

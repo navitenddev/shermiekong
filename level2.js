@@ -16,7 +16,7 @@ class Level2 extends Level {
 
     update() {
         this.player.update();
-        this.barrel.update();
+        //this.barrel.update();
     }
 
     createEntities() {
