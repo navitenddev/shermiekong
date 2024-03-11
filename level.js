@@ -16,7 +16,7 @@ class Level{
 
     update() {
         this.player.update();
-        this.barrel.update();
+        //this.barrel.update();
     }
 
     createBackground() {
@@ -25,7 +25,7 @@ class Level{
 
     createEntities() {
         this.player = new Player(this.scene, 400, 400);
-        this.barrel = new Barrel(this.scene, 600, 300);
+        //this.barrel = new Barrel(this.scene, 600, 300);
     }
   
     handleCollision(player, barrel) {

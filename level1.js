@@ -9,11 +9,13 @@ class Level1 extends Phaser.Scene {
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
         // Level Entities
-        this.load.image('wolf', 'assets/wolf.png');
         this.load.image('platform', 'assets/platform.png');
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('wolf', 'assets/wolf.png');
+        this.load.image('fireball', 'assets/fireball.png');
+        this.load.image('jettpack', 'assets/jettpack.png');
     }
 
     create() {
@@ -25,7 +27,7 @@ class Level1 extends Phaser.Scene {
         this.createBackground();
         this.createEntities();
         // Set up collision between player and the barrel
-        this.physics.add.collider(this.player, this.barrel.sprite, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
         // Access the scoring system from the Game class
         this.game.gameState.scoringSystem = this.scoringSystem;
@@ -34,26 +36,6 @@ class Level1 extends Phaser.Scene {
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
-        if (this.player.isClimbing) {
-            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
-        }
-        this.checkForCollision();
-    }
-
-    checkForCollision() {
-        // Check if the up arrow key is pressed
-        const verticalThreshold = 40;
-        const horizontalThreshold = 20;
-
-        if (this.player.cursors.up.isDown) {
-            if (
-                Math.abs(this.player.y - this.barrel.sprite.y) <= verticalThreshold &&
-                Math.abs(this.player.x - this.barrel.sprite.x) <= horizontalThreshold
-            ) {
-                // Increase points for jumping over the barrel
-                this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
-            }
-        }
     }
 
     createBackground() {
@@ -62,8 +44,9 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700);
-        this.barrel = new Barrel(this, 600, 200);
-        
+        this.barrel = new Barrel(this, 750, 400);
+        this.fireball = new Fireball(this, 750, 300);
+
         var floor = this.physics.add.staticGroup();
         // 1st floor
         var x = 24;
@@ -127,14 +110,45 @@ class Level1 extends Phaser.Scene {
         }
 
         this.physics.add.collider(this.player, floor);
-        this.physics.add.collider(this.barrel.sprite, floor);
+        this.physics.add.collider(this.barrel, floor);
+
         var ladders = this.physics.add.staticGroup();
         ladders.create(425, 700, 'ladder');
-        ladders.create(225, 500, 'ladder');
+        ladders.create(225, 485, 'ladder');
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        // Create Jettpack powerup
+        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack'); // Adjust the position as needed
+        this.jettpackPowerup.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+    }
+
+    handlePlayerClimbing() {
+        this.player.isClimbing = true;
+        this.player.playerClimbing();
+    }
+
+    collectJettpack(player, jettpack) {
+        // Disable the powerup temporarily
+        jettpack.disableBody(true, true);
+        
+        player.hasJettpack = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        console.log('Jettpack collected!');
+    }
+
+    resetPlayerVelocity(player) {
+        player.hasJettpack = false;
+        player.VelocityX = 200;
+        player.VelocityY = 350;
     }
 
     handlePlayerClimbing() {
@@ -145,5 +159,6 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+        this.fireball.onCollision(player);
     }
 }
