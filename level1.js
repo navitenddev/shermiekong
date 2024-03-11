@@ -153,6 +153,7 @@ class Level1 extends Phaser.Scene {
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
+        this.player.playerClimbing();
     }
     
     handleCollision(player, barrel) {
