@@ -154,7 +154,6 @@ class Level2 extends Phaser.Scene {
         // Middle-left platforms
         floor.create(24, 539, 'girder_blue');
         this.brokenfloor6 = new BrokenFloor(this, 72, 539);
-        floor.create(72, 539, 'girder_blue_broken');
         this.brokenfloor7 = new BrokenFloor(this, 120, 539);
         floor.create(168, 539, 'girder_blue');
         this.brokenfloor8 = new BrokenFloor(this, 216, 539);
