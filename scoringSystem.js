@@ -1,21 +1,22 @@
 //scoringSystem.js
 
 class ScoringSystem {
-    constructor(scene) {
-        console.log("ScoringSystem created!");
+    constructor(scene, initialScore = 0) {
         this.scene = scene;
-        this.score = 0;
-        console.log("Score Text Object:", this.scene.add.text);
+        this.score = initialScore;
+        //this.create();
+
         this.scoreText = this.scene.add.text(672-150, 10, 'Score: 0', { fontSize: '40px', fill: '#ff0000' }).setOrigin(0.5, 0);
         this.scoreText.setVisible(true);
         this.scoreText.setDepth(1); // Use a value that ensures it's above other elements
         this.scoreText.setScrollFactor(0);
-    }      
+    } 
+    getScore() {
+        return this.score;
+    }     
     updateScore(points) {
-        console.log("Updating score with points:", points);
         this.score += points;
         this.scoreText.setText('Score: ' + this.score);
-        console.log("Score text object:", this.scoreText);
     }
     awardPointsForJumpingBarrel() {
         const points = 50; // Adjust the points as needed

@@ -18,11 +18,9 @@ class Level1 extends Phaser.Scene {
 
     create() {
         console.log("Creating Level1 scene...");
-        // Ensure gameState exists and create it if not
-        this.game.gameState = this.game.gameState || {};
-
         // Create and associate the scoring system with the scene
         this.scoringSystem = new ScoringSystem(this);
+        this.scoringSystem = this.game.gameState.scoringSystem || new ScoringSystem(this);
 
         this.createBackground();
         this.createEntities();

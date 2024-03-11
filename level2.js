@@ -18,12 +18,46 @@ class Level2 extends Phaser.Scene {
     }
 
     create() {
+        this.game.gameState = this.game.gameState || {};
+        // Create and associate the scoring system with the scene
+        this.scoringSystem = new ScoringSystem(this);
+        
+        const scoreFromLevel1 = this.game.gameState.scoringSystem ? this.game.gameState.scoringSystem.getScore() : 0;
+
+        console.log(scoreFromLevel1);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel1);
+
+        console.log(scoreFromLevel1);
+
         this.createBackground();
         this.createEntities();
+        this.game.gameState.scoringSystem = this.scoringSystem;
     }
 
+    checkForCollision() {
+        // Check if the up arrow key is pressed
+        const verticalThreshold = 40;
+        const horizontalThreshold = 20;
+
+        if (this.player.cursors.up.isDown) {
+            if (
+                Math.abs(this.player.y - this.barrel.sprite.y) <= verticalThreshold &&
+                Math.abs(this.player.x - this.barrel.sprite.x) <= horizontalThreshold
+            ) {
+                // Increase points for jumping over the barrel
+                this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
+            }
+        }
+    }
+    
     update() {
         this.player.handlePlayerMovement();
+        
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        this.checkForCollision();
 
         this.brokenfloor.update();
         this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);

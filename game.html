@@ -41,7 +41,10 @@
         },
         scene: [MainMenu, LevelSelect, Level1, Level2, ShermieHero, AppleGame]
     };
-    var game = new Phaser.Game(config);
+    game = new Phaser.Game(config);
+    if (!game.gameState) {
+        game.gameState = {};
+    }
 </script>
 </body>
 </html>
