@@ -10,14 +10,12 @@ class LevelSelect extends Phaser.Scene{
 
         if (this.game.gameState && this.game.gameState.scoringSystem) {
             scoreFromLevel1 = this.game.gameState.scoringSystem.getScore();
-            // ...
-        } else {
-            // Handle the case where scoringSystem is not properly initialized
-            console.error("Scoring system not properly initialized.");
-            console.log(scoreFromLevel1);
+        } 
+        else {
+            // Create a new scoring system instance if not initialized
+            this.game.gameState.scoringSystem = new ScoringSystem(this);
+            console.log("Scoring system initialized.");
         }
-        // Get the score from Level1
-        //const scoreFromLevel1 = this.game.gameState.scoringSystem.getScore();
 
         this.add.text(20, 80, "Level 2").setInteractive()
         .on('pointerdown', () => { this.scene.start("level2", { score: scoreFromLevel1 }) });
