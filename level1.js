@@ -35,6 +35,7 @@ class Level1 extends Phaser.Scene {
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
+        this.fireball.update();
         if (this.player.isClimbing) {
             this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
         }
