@@ -181,11 +181,6 @@ class Level1 extends Phaser.Scene {
         // Award points for jumping on top of the barrel
         this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
         
-        // Award points for climbing the ladder
-        if (player.isClimbing) {
-            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
-        }
-
         this.fireball.onCollision(player);
     }
 }
