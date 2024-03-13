@@ -23,6 +23,10 @@ class Level1 extends Phaser.Scene {
         this.createEntities();
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+        
+        this.song = this.sound.add("chiptune1");
+        this.song.volume = 0.8;
+        this.song.play();
     }
 
     update() {

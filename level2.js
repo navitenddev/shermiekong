@@ -20,6 +20,10 @@ class Level2 extends Phaser.Scene {
     create() {
         this.createBackground();
         this.createEntities();
+
+        this.song = this.sound.add("chiptune3");
+        this.song.volume = 1;
+        this.song.play();
     }
 
     update() {
