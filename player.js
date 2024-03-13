@@ -1,7 +1,7 @@
 // player.js
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y) {
+    constructor(scene, x, y, healthManager) {
         super(scene, x, y, 'player');
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -15,12 +15,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hasJettpack = false;
         this.VelocityX = 200;
         this.VelocityY = 350;
+
+        this.healthManager = healthManager;
+
+        this.startingX = x;
+        this.startingY = y;
     }
 
     playerClimbing() {
         if (this.isClimbing) {
             this.handleClimbing();
         } 
+    }
+
+    respawn() {
+        this.x = this.startingX;
+        this.y = this.startingY;
+        this.healthManager.resetHealth();
     }
 
     handlePlayerMovement() {
@@ -52,7 +63,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
-        this.sprite.destroy();
+        //this.sprite.destroy();
+        if (this.healthManager) {
+            this.healthManager.loseHealth();
+        }
     }
   
     handleClimbing() {
@@ -80,4 +94,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         console.log('Player hit by a barrel!');
         this.sprite.destroy();
     }*/
+
+    update() {
+        if (this.healthManager && this.healthManager.health <= 0) {
+            // Player has no more lives, perform game over logic or reset the level
+            this.respawn();
+        }
+    }    
 }

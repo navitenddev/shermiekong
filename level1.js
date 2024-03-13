@@ -2,6 +2,7 @@
 class Level1 extends Phaser.Scene {
     constructor() {
         super("level1");
+        this.healthManager = new HealthManager(this, 3, 3); // Assuming 3 as both initialHealth and maxHealth
     }
 
     preload() {
@@ -16,6 +17,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
         this.load.image('jettpack', 'assets/jettpack.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
@@ -23,11 +25,21 @@ class Level1 extends Phaser.Scene {
         this.createEntities();
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+        this.hearts = this.scene.physics.add.group();
+
+        // Display hearts at the top of the screen
+        for (let i = 0; i < this.healthManager.maxHealth; i++) {
+            let heart = this.hearts.create(20 + i * 30, 20, 'heart');
+            heart.setScrollFactor(0);  // Make sure hearts stay in place when the camera moves
+            heart.setScale(0.01);
+            heart.setDisplaySize(20, 20);  // Set the display size to make the hearts smaller
+        }
     }
 
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
+        this.updateHearts(); // Update the hearts
         this.fireball.update();
     }
 
@@ -41,7 +53,8 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700);
+        //this.player = new Player(this, 100, 700);
+        this.player = new Player(this, 100, 700, this.healthManager); // Pass the HealthManager instance
         this.barrel = new Barrel(this, 750, 400);
         this.fireball = new Fireball(this, 750, 300);
 
@@ -158,6 +171,10 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+        // Reduce health and perform game over or respawn logic
+        if (player.healthManager) {
+            player.healthManager.loseHealth();
+        }
         this.fireball.onCollision(player);
     }
 }
