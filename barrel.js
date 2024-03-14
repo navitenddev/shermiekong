@@ -60,6 +60,10 @@ class Barrel extends Phaser.Physics.Arcade.Sprite {
 
     onCollision(otherEntity) {
         console.log('Player hit by a barrel!');
-        otherEntity.destroy();
+        //otherEntity.destroy();
+    }
+
+    isDestroyed() {
+        return this.destroyed;
     }
 }
