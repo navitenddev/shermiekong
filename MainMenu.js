@@ -32,6 +32,9 @@ class MainMenu extends Phaser.Scene{
         this.load.image('logo', 'assets/logo.png');
         this.load.image('start', 'assets/start_button.png');
         this.load.image('levels', 'assets/levels_button.png');
+
+        // Level end marker
+        this.load.image('flag', 'assets/flag.png');
     }
 
     create(){

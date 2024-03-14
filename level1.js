@@ -126,6 +126,10 @@ class Level1 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+
+        // Ending flag level transition
+        this.flag = this.physics.add.staticSprite(50, 205, 'flag');
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     handlePlayerClimbing() {
@@ -163,5 +167,9 @@ class Level1 extends Phaser.Scene {
         if (barrel.isDestroyed()) {
             this.fireball.onCollision(player);
         }
+    }
+
+    nextLevel(player, flag){
+        this.scene.start("level2");
     }
 }
