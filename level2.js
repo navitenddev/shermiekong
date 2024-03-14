@@ -22,6 +22,7 @@ class Level2 extends Phaser.Scene {
         this.createEntities();
 
         this.song = this.sound.add("chiptune3");
+        this.song.loop = true;
         this.song.volume = 1;
         this.song.play();
     }

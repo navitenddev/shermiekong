@@ -25,6 +25,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
         
         this.song = this.sound.add("chiptune1");
+        this.song.loop = true;
         this.song.volume = 0.8;
         this.song.play();
     }
