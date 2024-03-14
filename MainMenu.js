@@ -39,6 +39,9 @@ class MainMenu extends Phaser.Scene{
         this.load.image('up', 'assets/up_arrow.png');
         this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
         {frameWidth: 256, frameHeight: 256});
+
+        // Level end marker
+        this.load.image('flag', 'assets/flag.png');
     }
 
     create(){
