@@ -12,30 +12,41 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Setup input handling for player movement
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
+        this.hasJettpack = false;
+        this.VelocityX = 200;
+        this.VelocityY = 350;
     }
 
     playerClimbing() {
         if (this.isClimbing) {
             this.handleClimbing();
         } 
-        else {
-            this.handlePlayerMovement();
-        }
     }
 
     handlePlayerMovement() {
-        if (this.cursors.left.isDown) {
-            this.setVelocityX(-120);
-        }
-        else if (this.cursors.right.isDown) {
-            this.setVelocityX(120);
+        if(this.hasJettpack) {
+            this.VelocityX = 400;
+            this.VelocityY = 400;
         }
         else {
-            this.setVelocityX(0);
+            this.VelocityX = 200;
+            this.VelocityY = 350;
+        }
+
+        if (this.cursors.left.isDown) {
+            this.setVelocityX(this.VelocityX * -1);
+        }
+        else if (this.cursors.right.isDown) {
+            this.setVelocityX(this.VelocityX);
+        }
+        else {
+            this.VelocityX = 0;
+            this.setVelocityX(this.VelocityX);
         }
 
         if (this.cursors.up.isDown && this.body.blocked.down) {
-            this.setVelocityY(-230);
+            this.setVelocityY(this.VelocityY * -1);
+
         }
     }
 
