@@ -4,6 +4,11 @@ class MainMenu extends Phaser.Scene{
     }
     //note: may need to move these to individual load screens before levels
     preload() {
+        //Shermie
+        this.load.spritesheet('player',
+        'assets/shermie_walk.png',
+        { frameWidth: 128, frameHeight: 128 });
+
         // Level Backgrounds
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
@@ -11,7 +16,7 @@ class MainMenu extends Phaser.Scene{
         // Level Entities
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('platform', 'assets/platform.png');
-        this.load.image('player', 'assets/shermie.png');
+        this.load.image('shermie', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
 
@@ -46,7 +51,7 @@ class MainMenu extends Phaser.Scene{
 
     create(){
         this.add.image(336, 200, "logo");
-        this.add.image(330, 340, "player");
+        this.add.image(330, 340, "shermie");
 
         this.add.image(336, 470, "start")
         .setScale(.8)
