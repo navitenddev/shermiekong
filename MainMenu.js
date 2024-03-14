@@ -19,6 +19,9 @@ class MainMenu extends Phaser.Scene{
         this.load.image('shermie', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.spritesheet('barrel',
+        'assets/barrel.png',
+        { frameWidth: 480, frameHeight: 480 });
 
         //Menu screen assets
         this.load.image('logo', 'assets/logo.png');
