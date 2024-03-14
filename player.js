@@ -23,11 +23,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     createHearts(scene) {
         // Display hearts on the top left of the screen
         this.heartsArray = [];
+        const heartSpacing = 40;
         for (let i = 0; i < this.hearts; i++) {
-            let heart = scene.add.image(20 + i * 30, 20, 'heart').setOrigin(0, 0);
+            let heart = scene.add.image(20 + i * heartSpacing, 20, 'heart').setOrigin(0, 0);
             heart.setScrollFactor(0);  // Make sure hearts stay in place when the camera moves
-            heart.setScale(0.5);
-            heart.setDisplaySize(20, 20); 
+            heart.setScale(0.8);
+            heart.setDisplaySize(50, 50); 
             this.heartsArray.push(heart);
         }
     }

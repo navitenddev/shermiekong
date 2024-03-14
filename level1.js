@@ -170,6 +170,7 @@ class Level1 extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
-        this.scene.start("level2");
+        console.log("next: " + this.player.hearts);
+        this.scene.start("level2", { previousHearts: this.player.hearts });
     }
 }

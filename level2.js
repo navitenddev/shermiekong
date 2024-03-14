@@ -21,7 +21,6 @@ class Level2 extends Phaser.Scene {
     create() {
         this.createBackground();
         this.createEntities();
-        this.player = new Player(this, 100, 700, previousHearts);
     }
 
     update() {
@@ -110,7 +109,9 @@ class Level2 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 40, 600);
+        const { previousHearts } = this.scene.settings.data;
+        console.log("prev: " + previousHearts);
+        this.player = new Player(this, 40, 600, previousHearts);
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
