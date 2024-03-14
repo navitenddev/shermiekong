@@ -7,7 +7,7 @@ class MainMenu extends Phaser.Scene{
         //Shermie
         this.load.spritesheet('player',
         'assets/shermie_walk.png',
-        { frameWidth: 128, frameHeight: 128 });
+        { frameWidth: 128, frameHeight: 84 });
 
         // Level Backgrounds
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
