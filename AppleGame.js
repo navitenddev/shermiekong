@@ -13,7 +13,7 @@ class AppleGame extends Phaser.Scene {
   create() {
     this.player;
     this.cursors;
-    this.playerSpeed = 300;
+    this.playerSpeed = 500;
     this.target;
     this.points = 0;
     this.playerscore;
@@ -34,7 +34,7 @@ class AppleGame extends Phaser.Scene {
     this.player.setSize(80,15).setOffset(10,70);
 
     this.target = this.physics.add.image(0, 0, 'apple').setScale(0.9);;
-    this.target.setMaxVelocity(0, Phaser.Math.Between(400, 800));
+    this.target.setMaxVelocity(0, 750);
     this.physics.add.overlap(this.target, this.player, this.score, null, this);
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -74,7 +74,7 @@ class AppleGame extends Phaser.Scene {
   }
   
   randomPos () {
-    return Math.floor(Math.random() * 480);
+    return Math.floor(Math.random() * 630);
   };
 
   score () {
@@ -95,7 +95,7 @@ class AppleGame extends Phaser.Scene {
       if (this.points >= 10) {
           this.add.text(300, 300, "Win!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       } else {
-          this.add.text(100, 300, "Better luck next time!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
+          this.add.text(100, 300, "Better luck next time!", {font: '40px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
       }
   
       // gameEndScoreSpan.textContent = this.points;
