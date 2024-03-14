@@ -171,6 +171,7 @@ class Level1 extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
+        this.song.stop();
         this.scene.start("level2");
     }
 }
