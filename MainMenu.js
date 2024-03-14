@@ -59,7 +59,7 @@ class MainMenu extends Phaser.Scene{
         this.add.image(336, 470, "start")
         .setScale(.8)
         .setInteractive()
-        .on('pointerdown', () => {this.scene.start("level1")});
+        .on('pointerdown', () => {this.scene.start("intro")});
 
         this.add.image(336, 600, "levels").setInteractive()
         .on('pointerdown', () => {this.scene.start("LevelSelect")});
