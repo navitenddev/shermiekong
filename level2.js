@@ -15,11 +15,13 @@ class Level2 extends Phaser.Scene {
         this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
         this.createBackground();
         this.createEntities();
+        this.player = new Player(this, 100, 700, previousHearts);
     }
 
     update() {

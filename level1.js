@@ -16,6 +16,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
         this.load.image('jettpack', 'assets/jettpack.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
@@ -41,7 +42,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700);
+        this.player = new Player(this, 100, 700, 3);
         this.barrel = new Barrel(this, 750, 400);
         this.fireball = new Fireball(this, 750, 300);
 
@@ -158,6 +159,9 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
-        this.fireball.onCollision(player);
+        //this.fireball.onCollision(player);
+        if (barrel.isDestroyed()) {
+            this.fireball.onCollision(player);
+        }
     }
 }
