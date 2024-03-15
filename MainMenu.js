@@ -35,19 +35,6 @@ class MainMenu extends Phaser.Scene{
         this.load.audio('song1', 'assets/song1.mp3');
         this.load.audio('song2', 'assets/song2.mp3');
 
-        //Shermie hero
-        this.load.image('minigame1_bg', 'assets/minigame1-bg.png');
-        this.load.image('bass', 'assets/bass.png');
-        this.load.image('string', 'assets/string.png');
-        this.load.image('noteline', 'assets/noteline.png');
-        this.load.audio('shermieHero', 'assets/shermie_hero.mp3');
-        this.load.image('left', 'assets/left_arrow.png');
-        this.load.image('right', 'assets/right_arrow.png');
-        this.load.image('down', 'assets/down_arrow.png');
-        this.load.image('up', 'assets/up_arrow.png');
-        this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
-        {frameWidth: 256, frameHeight: 256});
-
         // Level end marker
         this.load.image('flag', 'assets/flag.png');
     }

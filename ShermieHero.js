@@ -3,6 +3,21 @@ class ShermieHero extends Phaser.Scene{
         super("ShermieHero");
     }
 
+    preload(){
+        //Shermie hero
+        this.load.image('minigame1_bg', 'assets/minigame1-bg.png');
+        this.load.image('bass', 'assets/bass.png');
+        this.load.image('string', 'assets/string.png');
+        this.load.image('noteline', 'assets/noteline.png');
+        this.load.audio('shermieHero', 'assets/shermie_hero.mp3');
+        this.load.image('left', 'assets/left_arrow.png');
+        this.load.image('right', 'assets/right_arrow.png');
+        this.load.image('down', 'assets/down_arrow.png');
+        this.load.image('up', 'assets/up_arrow.png');
+        this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
+        {frameWidth: 256, frameHeight: 256});
+    }
+
     create(){
         this.buildLevel();
         this.noteTimings = [2695, 3357, 4079, 4724, 5407, 5731, 6100, 6455, 6767, 7090, 7405, 7725, 8073, 8779, 9438, 10080, 10725, 11084, 11284, 11494, 11754, 12060, 12715, 13422, 14094, 14375, 14749, 15400, 15711, 16099, 16778, 17429, 18070, 18764, 19101, 19442, 19751, 20101, 20421, 20733, 21075, 21406, 22036, 22227, 22528, 23073, 23420, 23661, 23983, 24676, 25383, 26159, 26745, 27108, 27418, 27752, 28074, 28399, 28698, 29006, 29409, 30078, 30711, 31317, 32100, 32725, 33388, 34041, 34692, 35074, 35413, 35730, 36073, 36396, 36734, 37049, 37386, 37972, 38671, 39301];
