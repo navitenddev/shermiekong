@@ -10,7 +10,7 @@ class Intro extends Phaser.Scene{
     create(){
         this.song = this.sound.add("song1");
         this.song.volume = 1;
-        this.song.loop = true; //remember to stop this at the end
+        this.song.loop = true;
         this.song.play();
 
         // dialogue should pop up after a moment
