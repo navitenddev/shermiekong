@@ -8,6 +8,10 @@ class Interlude1 extends Phaser.Scene{
     }
 
     create(){
+        const { previousHearts } = this.scene.settings.data;
+        console.log("interlude prev: " + previousHearts);
+        this.hearts = previousHearts;
+
         this.song = this.sound.add("song2");
         this.song.volume = 1;
         this.song.loop = true;
@@ -35,10 +39,10 @@ class Interlude1 extends Phaser.Scene{
     levelTransition(skip){
         this.song.stop();
         if(skip){
-            this.scene.start("level2");
+            this.scene.start("level2", { previousHearts: this.hearts });
         }
         else{
-            this.scene.start("ShermieHero");
+            this.scene.start("ShermieHero", { previousHearts: this.hearts });
         }
     }
 
