@@ -227,10 +227,20 @@ class Level2 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        //level end marker
+        this.flag = this.physics.add.staticSprite(275, 118, 'flag');
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+    nextLevel(player, flag){
+        this.song.stop();
+        console.log("next: " + this.player.hearts);
+        this.scene.start("interlude2", { previousHearts: this.player.hearts });
     }
 }
