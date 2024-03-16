@@ -152,11 +152,6 @@ class Level1 extends Phaser.Scene {
         player.VelocityX = 200;
         player.VelocityY = 350;
     }
-
-    handlePlayerClimbing() {
-        this.player.isClimbing = true;
-        this.player.playerClimbing();
-    }
     
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel

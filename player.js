@@ -17,6 +17,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.VelocityY = 350;
     }
 
+    update() {
+        // Check if the player is not touching the ladder
+        if (!this.body.touching.up && this.isClimbing) {
+            this.isClimbing = false;
+            this.scene.physics.world.colliders._active[0].active = true;
+        }
+        this.handlePlayerMovement();
+    }    
+
     playerClimbing() {
         if (this.isClimbing) {
             this.handleClimbing();
@@ -24,6 +33,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     handlePlayerMovement() {
+        // Check if the player is not touching the ladder
+        if (!this.body.touching.up && this.isClimbing) {
+            this.isClimbing = false;
+            this.scene.physics.world.colliders._active[0].active = true;
+        }
+        
         if(this.hasJettpack) {
             this.VelocityX = 400;
             this.VelocityY = 400;
@@ -51,8 +66,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onCollision(otherEntity) {
-        console.log('Player hit by a barrel!');
-        this.sprite.destroy();
+        if (otherEntity instanceof floor) {
+            this.scene.physics.world.colliders._active[0].active = true;
+        }
     }
   
     handleClimbing() {
@@ -76,8 +92,4 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.physics.world.colliders._active[0].active = true;
         }
     }
-    /*onCollision(otherEntity) {
-        console.log('Player hit by a barrel!');
-        this.sprite.destroy();
-    }*/
 }
