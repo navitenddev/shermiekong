@@ -23,6 +23,8 @@ class Level1 extends Phaser.Scene {
         this.createEntities();
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+        // Set up collision between player and the fireball
+        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
     }
 
     update() {
@@ -157,7 +159,7 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
-        this.fireball.onCollision(player);
+        fireball.onCollision(player);
     }
 
     nextLevel(player, flag){

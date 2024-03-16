@@ -57,9 +57,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onCollision(otherEntity) {
-        if (otherEntity instanceof floor) {
-            this.scene.physics.world.colliders._active[0].active = true;
-        }
+        this.body.destroy();
     }
   
     handleClimbing() {
