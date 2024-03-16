@@ -17,15 +17,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.VelocityY = 350;
     }
 
-    update() {
-        // Check if the player is not touching the ladder
-        if (!this.body.touching.up && this.isClimbing) {
-            this.isClimbing = false;
-            this.scene.physics.world.colliders._active[0].active = true;
-        }
-        this.handlePlayerMovement();
-    }    
-
     playerClimbing() {
         if (this.isClimbing) {
             this.handleClimbing();
