@@ -2,7 +2,7 @@
 class Barrel extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y) {
-        super(scene, x, y, 'wolf');
+        super(scene, x, y, 'barrel');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         // Set up any additional configurations (specific to the Barrel class)
@@ -11,6 +11,21 @@ class Barrel extends Phaser.Physics.Arcade.Sprite {
         this.body.setGravityY(300);
         // Add a property to keep track of the barrel's direction
         this.direction = -1; // -1 for left, 1 for right
+
+        //animations
+        this.barrel = this;
+        this.anims.create({
+            key: 'rollLeft',
+            frames: this.anims.generateFrameNumbers('barrel', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'rollRight',
+            frames: this.anims.generateFrameNumbers('barrel', { start: 5, end: 8 }),
+            frameRate: 10,
+            repeat: -1
+        });
     }
 
     update() {
@@ -33,6 +48,12 @@ class Barrel extends Phaser.Physics.Arcade.Sprite {
             this.direction = -1; // Change direction to left
         } else if (this.body.blocked.left) {
             this.direction = 1; // Change direction to right
+        }
+        if(this.direction == -1){
+            this.barrel.anims.play('rollLeft', true);
+        }
+        else{
+            this.barrel.anims.play('rollRight', true);
         }
     }
 
