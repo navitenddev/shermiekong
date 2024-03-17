@@ -98,7 +98,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 console.log('Player has destroy power-up');
                 otherEntity.destroy();
                 this.hasDestroyBarrelPowerup = false;
-                //this.score += 100;
+                //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
     }
