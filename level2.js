@@ -15,16 +15,35 @@ class Level2 extends Phaser.Scene {
         this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
+        const scoreFromLevel1 = this.game.gameState.scoringSystem.getScore();
+
+        console.log("score: "+ scoreFromLevel1);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel1);
+
         this.createBackground();
         this.createEntities();
-    }
 
+        this.song = this.sound.add("chiptune3");
+        this.song.loop = true;
+        this.song.volume = 1;
+        this.song.play();
+
+        this.game.gameState.scoringSystem = this.scoringSystem;
+
+    }
+    
     update() {
         this.player.handlePlayerMovement();
-
+        
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        
         this.brokenfloor.update();
         this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);
         this.physics.add.collider(this.player, this.brokenfloor2.sprite, fc2, null, this);
@@ -108,7 +127,9 @@ class Level2 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 40, 600);
+        const { previousHearts } = this.scene.settings.data;
+        console.log("prev: " + previousHearts);
+        this.player = new Player(this, 40, 600, previousHearts);
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
@@ -223,6 +244,10 @@ class Level2 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        //level end marker
+        this.flag = this.physics.add.staticSprite(275, 118, 'flag');
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     handlePlayerClimbing() {
@@ -230,7 +255,14 @@ class Level2 extends Phaser.Scene {
         this.player.playerClimbing();
     }
 
+
     handleCollision() {
         this.player.onCollision(spikes);
+
+    nextLevel(player, flag){
+        this.song.stop();
+        console.log("next: " + this.player.hearts);
+        this.scene.start("interlude2", { previousHearts: this.player.hearts });
+
     }
 }

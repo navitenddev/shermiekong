@@ -3,9 +3,38 @@ class ShermieHero extends Phaser.Scene{
         super("ShermieHero");
     }
 
+    preload(){
+        //Shermie hero
+        this.load.image('dialogue', 'assets/dialogue_box.png');
+        this.load.image('minigame1_bg', 'assets/minigame1-bg.png');
+        this.load.image('bass', 'assets/bass.png');
+        this.load.image('string', 'assets/string.png');
+        this.load.image('noteline', 'assets/noteline.png');
+        this.load.audio('shermieHero', 'assets/shermie_hero.mp3');
+        this.load.image('left', 'assets/left_arrow.png');
+        this.load.image('right', 'assets/right_arrow.png');
+        this.load.image('down', 'assets/down_arrow.png');
+        this.load.image('up', 'assets/up_arrow.png');
+        this.load.spritesheet('shermie_bass', 'assets/shermie-bass.png', 
+        {frameWidth: 256, frameHeight: 256});
+    }
+
     create(){
+        const { previousHearts } = this.scene.settings.data;
+        if(previousHearts == undefined){
+            this.hearts = 3;
+        }
+        else{
+            this.hearts = previousHearts;
+        }
+        console.log("Starting hearts: " + this.hearts);
+
+        this.heroScore = 0;
+        this.hitScore = 100; //pts for hitting a note
         this.buildLevel();
-        this.noteTimings = [2908, 3307, 3889, 4468, 5230, 5852, 6221, 6567, 6945, 7314, 7605, 7977, 8597, 9214, 9846, 10453, 11049, 11254, 11433, 11609, 12273, 12948, 13257, 13554, 13776, 13967, 14163, 14405, 14712, 14973, 15277, 15588, 15936, 16629, 17244, 17950, 18569, 19151, 19542, 19808, 20189, 20380, 20536, 21170, 21727, 22522, 22892, 23067, 23247, 23950, 24623, 24959, 25508, 26273, 26558, 27199, 27763, 28149, 28641, 29111, 29303, 29937, 30557, 31188, 31840, 32166, 32545, 32906, 33251, 33594, 33979, 34497, 35147, 35869];
+        this.scoreText = this.add.text(20, 20, 'Score ' + this.heroScore);
+        //80 notes
+        this.noteTimings = [2695, 3357, 4079, 4724, 5407, 5731, 6100, 6455, 6767, 7090, 7405, 7725, 8073, 8779, 9438, 10080, 10725, 11084, 11284, 11494, 11754, 12060, 12715, 13422, 14094, 14375, 14749, 15400, 15711, 16099, 16778, 17429, 18070, 18764, 19101, 19442, 19751, 20101, 20421, 20733, 21075, 21406, 22036, 22227, 22528, 23073, 23420, 23661, 23983, 24676, 25383, 26159, 26745, 27108, 27418, 27752, 28074, 28399, 28698, 29006, 29409, 30078, 30711, 31317, 32100, 32725, 33388, 34041, 34692, 35074, 35413, 35730, 36073, 36396, 36734, 37049, 37386, 37972, 38671, 39301];
         this.noteTime = 1000;
 
         //groups for collision checking
@@ -22,6 +51,14 @@ class ShermieHero extends Phaser.Scene{
         for(var i = 0; i < this.noteTimings.length; i++){
             this.createTimedEvents(this.noteTimings[i] - this.noteTime);
         }
+
+        //timed end of level
+        this.endOfLevel = this.time.addEvent({
+            delay: 40000,
+            callback: this.endLevel,
+            callbackScope: this,
+            loop: false
+        });
     }
 
     update(){
@@ -178,6 +215,10 @@ class ShermieHero extends Phaser.Scene{
             this.string4Press.push(string4);
         }
     }
+
+    updateScore(){
+        this.scoreText.setText('Score: ' + this.heroScore);
+    }
     
     checkNoteCollisions(){
         this.physics.overlap(this.string1Press, this.notesString1, (string1, note) => {
@@ -185,32 +226,50 @@ class ShermieHero extends Phaser.Scene{
             this.string1Press.splice(this.string1Press.indexOf(string1), 1);
             note.destroy();
             this.notesString1.splice(this.notesString1.indexOf(note), 1);
-
-            console.log("String 1 note hit");
+            this.heroScore += this.hitScore;
+            this.updateScore();
         });
         this.physics.overlap(this.string2Press, this.notesString2, (string2, note) => {
             string2.hit = true;
             this.string2Press.splice(this.string2Press.indexOf(string2), 1);
             note.destroy();
             this.notesString2.splice(this.notesString2.indexOf(note), 1);
-
-            console.log("String 2 note hit");
+            this.heroScore += this.hitScore;
+            this.updateScore();
         });
         this.physics.overlap(this.string3Press, this.notesString3, (string3, note) => {
             string3.hit = true;
             this.string3Press.splice(this.string3Press.indexOf(string3), 1);
             note.destroy();
             this.notesString3.splice(this.notesString3.indexOf(note), 1);
-
-            console.log("String 3 note hit");
+            this.heroScore += this.hitScore;
+            this.updateScore();
         });
         this.physics.overlap(this.string4Press, this.notesString4, (string4, note) => {
             string4.hit = true;
             this.string4Press.splice(this.string4Press.indexOf(string4), 1);
             note.destroy();
             this.notesString4.splice(this.notesString4.indexOf(note), 1);
-
-            console.log("String 4 note hit");
+            this.heroScore += this.hitScore;
+            this.updateScore();
         });
     }
+
+    endLevel(){
+        this.lineNum = 0;
+        if(this.heroScore >= 6000){
+            this.line = this.add.text(100, 620, "Way to go! Extra life earned.");
+            this.hearts += 1;
+            console.log("End life: " + this.hearts);
+        }
+        else{
+            this.line = this.add.text(100, 620, "Gotta keep practicing...");
+        }
+        this.line.setDepth(3);
+        this.box = this.add.image(336, 600, "dialogue")
+        .setInteractive()
+        .on('pointerdown', () => {this.scene.start("level2", { previousHearts: this.hearts })});
+    }
+
+
 }
