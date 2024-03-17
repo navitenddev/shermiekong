@@ -16,6 +16,8 @@ class Level1 extends Phaser.Scene {
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
         this.load.image('jettpack', 'assets/jettpack.png');
+        this.load.image('shield', 'assets/shield.png');
+        this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
         this.load.image('heart', 'assets/heart.png');
     }
 
@@ -120,12 +122,28 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
 
         // Create Jettpack powerup
-        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack'); // Adjust the position as needed
+        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack');
         this.jettpackPowerup.setScale(0.10);
         this.physics.add.collider(this.jettpackPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+
+        // Create Shield power-up
+        this.shieldPowerup = this.physics.add.sprite(600, 600, 'shield');
+        this.shieldPowerup.setScale(0.15); // Adjust scale as needed
+        this.physics.add.collider(this.shieldPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Shield power-up
+        this.physics.add.overlap(this.player, this.shieldPowerup, this.collectShield, null, this);
+
+        // Create Destroy Barrel power-up
+        this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel');
+        this.destroyBarrelPowerup.setScale(0.15); // Adjust scale as needed
+        this.physics.add.collider(this.destroyBarrelPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Destroy Barrel power-up
+        this.physics.add.overlap(this.player, this.destroyBarrelPowerup, this.collectDestroyBarrelPowerup, null, this);
 
         // Ending flag level transition
         this.flag = this.physics.add.staticSprite(50, 205, 'flag');
@@ -152,6 +170,32 @@ class Level1 extends Phaser.Scene {
         player.hasJettpack = false;
         player.VelocityX = 200;
         player.VelocityY = 350;
+    }
+
+    collectShield(player, shield) {
+        // Disable the power-up temporarily
+        shield.disableBody(true, true);
+        
+        // Activate shield effect for player
+        player.hasShield = true;
+    
+        // Timer for shield duration
+        this.time.delayedCall(30000, this.deactivateShield, [player], this);
+        console.log('Shield collected!');
+    }
+
+    deactivateShield(player) {
+        player.hasShield = false;
+        console.log('Shield deactivated!');
+    }
+
+    collectDestroyBarrelPowerup(player, destroyBarrelPowerup) {
+        // Disable the power-up temporarily
+        destroyBarrelPowerup.disableBody(true, true);
+        
+        // Activate effect for destroying barrels
+        player.hasDestroyBarrelPowerup = true;
+        console.log('Destroy Barrel Power-up collected!');
     }
 
     handlePlayerClimbing() {
