@@ -258,6 +258,7 @@ class Level2 extends Phaser.Scene {
 
     handleCollision() {
         this.player.onCollision(spikes);
+    }
 
     nextLevel(player, flag){
         this.song.stop();
