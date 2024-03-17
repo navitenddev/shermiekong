@@ -133,13 +133,15 @@ class Level2 extends Phaser.Scene {
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
+        var spikes = this.physics.add.staticGroup();
+
         var x = 24;
         for (let i = 0; i < 12; i++){
             floor.create(x, 756, 'girder_blue');
             x = x + 48
         }
-        floor.create(600, 756, 'spikes');
-        floor.create(648, 756, 'spikes');
+        spikes.create(600, 756, 'spikes');
+        spikes.create(648, 756, 'spikes');
 
         // Starting platform
         floor.create(24, 669, 'girder_blue');
@@ -149,11 +151,11 @@ class Level2 extends Phaser.Scene {
         floor.create(216, 669, 'girder_blue');
 
         // Middle spikes
-        floor.create(264, 669, 'spikes');
-        floor.create(312, 669, 'spikes');
-        floor.create(360, 669, 'spikes');
-        floor.create(408, 669, 'spikes');
-        floor.create(456, 669, 'spikes');
+        spikes.create(264, 669, 'spikes');
+        spikes.create(312, 669, 'spikes');
+        spikes.create(360, 669, 'spikes');
+        spikes.create(408, 669, 'spikes');
+        spikes.create(456, 669, 'spikes');
 
         // Lower-right platforms
         floor.create(648, 669, 'girder_blue');
@@ -193,8 +195,8 @@ class Level2 extends Phaser.Scene {
         floor.create(408, 365, 'girder_blue');
         this.brokenfloor11 = new BrokenFloor(this, 360, 365);
 
-        floor.create(648, 365, 'spikes');
-        floor.create(600, 365, 'spikes');
+        spikes.create(648, 365, 'spikes');
+        spikes.create(600, 365, 'spikes');
         floor.create(552, 365, 'girder_blue');
 
         this.brokenfloor12 = new BrokenFloor(this, 648, 278);
@@ -222,6 +224,8 @@ class Level2 extends Phaser.Scene {
         floor.create(312, 162, 'girder_blue');
 
         this.physics.add.collider(this.player, floor);
+        // Set up collision between player and the spikes
+        this.physics.add.collider(this.player, spikes, this.handleCollision, null, this);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
@@ -251,9 +255,14 @@ class Level2 extends Phaser.Scene {
         this.player.playerClimbing();
     }
 
+
+    handleCollision() {
+        this.player.onCollision(spikes);
+
     nextLevel(player, flag){
         this.song.stop();
         console.log("next: " + this.player.hearts);
         this.scene.start("interlude2", { previousHearts: this.player.hearts });
+
     }
 }

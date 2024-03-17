@@ -28,6 +28,10 @@ class Level1 extends Phaser.Scene {
         
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+
+        // Set up collision between player and the fireball
+        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
+
         
         this.song = this.sound.add("chiptune1");
         this.song.loop = true;
@@ -36,7 +40,6 @@ class Level1 extends Phaser.Scene {
 
         // Access the scoring system from the Game class
         this.game.gameState.scoringSystem = this.scoringSystem;
-
     }
 
     update() {
@@ -179,16 +182,12 @@ class Level1 extends Phaser.Scene {
         player.VelocityX = 200;
         player.VelocityY = 350;
     }
-
-    handlePlayerClimbing() {
-        this.player.isClimbing = true;
-        this.player.playerClimbing();
-    }
     
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+
         
         // Award points for jumping on top of the barrel
         this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
