@@ -19,6 +19,12 @@ class Level2 extends Phaser.Scene {
     }
 
     create() {
+        const scoreFromLevel1 = this.game.gameState.scoringSystem.getScore();
+
+        console.log("score: "+ scoreFromLevel1);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel1);
+
         this.createBackground();
         this.createEntities();
 
@@ -26,11 +32,18 @@ class Level2 extends Phaser.Scene {
         this.song.loop = true;
         this.song.volume = 1;
         this.song.play();
-    }
 
+        this.game.gameState.scoringSystem = this.scoringSystem;
+
+    }
+    
     update() {
         this.player.handlePlayerMovement();
-
+        
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        
         this.brokenfloor.update();
         this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);
         this.physics.add.collider(this.player, this.brokenfloor2.sprite, fc2, null, this);
