@@ -28,9 +28,15 @@ class Level1 extends Phaser.Scene {
         
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+        
+        this.song = this.sound.add("chiptune1");
+        this.song.loop = true;
+        this.song.volume = 0.8;
+        this.song.play();
 
         // Access the scoring system from the Game class
         this.game.gameState.scoringSystem = this.scoringSystem;
+
     }
 
     update() {
@@ -197,7 +203,9 @@ class Level1 extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
+        this.song.stop();
         console.log("next: " + this.player.hearts);
-        this.scene.start("level2", { previousHearts: this.player.hearts });
+        this.scene.start("interlude1", { previousHearts: this.player.hearts });
+        //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
     }
 }
