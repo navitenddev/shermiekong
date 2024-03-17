@@ -29,12 +29,15 @@ class Barrel extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.body.blocked.down) {
-            // If it is, make it move horizontally
-            this.handleHorizontalMovement();
-        } else {
-            // If it's not, make it fall down (like going down a ladder)
-            this.handleFalling();
+        // Check if the barrel is destroyed (aka has a body)
+        if(this.body) {
+            if (this.body.blocked.down) {
+                // If it is, make it move horizontally
+                this.handleHorizontalMovement();
+            } else {
+                // If it's not, make it fall down (like going down a ladder)
+                this.handleFalling();
+            }
         }
     }
 

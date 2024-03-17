@@ -13,6 +13,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
         this.hasJettpack = false;
+        this.hasShield = false;
+        this.hasDestroyBarrelPowerup = false;
         this.VelocityX = 200;
         this.VelocityY = 350;
         this.player = this;
@@ -125,15 +127,27 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         console.log('Player hit by a barrel!');
         
         if (otherEntity instanceof Barrel) {
-            this.hearts--; // Decrease player's health when colliding with a barrel
-            this.updateHearts();
-    
-            if (this.hearts <= 0) {
-                // Player is out of hearts, handle game over logic
-                this.handleGameOver();
-            } else {
-                // Player still has hearts, reset to starting position
-                this.resetPlayerPosition();
+            if(!this.hasDestroyBarrelPowerup)
+            {
+                console.log('Player does not have destroy power-up');
+                if(!this.hasShield){
+                    this.hearts--; // Decrease player's health when colliding with a barrel
+                    this.updateHearts();
+            
+                    if (this.hearts <= 0) {
+                        // Player is out of hearts, handle game over logic
+                        this.handleGameOver();
+                    } else {
+                        // Player still has hearts, reset to starting position
+                        this.resetPlayerPosition();
+                    }
+                }
+            }
+            else{
+                console.log('Player has destroy power-up');
+                otherEntity.destroy();
+                this.hasDestroyBarrelPowerup = false;
+                //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
     }
