@@ -20,21 +20,45 @@ class Level1 extends Phaser.Scene {
     }
 
     create() {
+        console.log("Creating Level1 scene...");
+        this.scoringSystem = this.game.gameState.scoringSystem || new ScoringSystem(this);
+        
         this.createBackground();
         this.createEntities();
+        
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+
+        // Access the scoring system from the Game class
+        this.game.gameState.scoringSystem = this.scoringSystem;
     }
 
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
         this.fireball.update();
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        this.checkForJump();
     }
 
-    buildLevel() {
-        this.createBackground();
-        this.createEntities();
+    checkForJump() {
+        const verticalThreshold = 90;
+        const horizontalThreshold = 50;
+        // console.log("x: " + this.player.x);
+        // console.log("y: " + this.player.y);
+        // console.log("x2: " + this.barrel.x);
+        // console.log("y2: " + this.barrel.y);
+        if (this.player.cursors.up.isDown) {
+            if (
+                Math.abs(this.player.y - this.barrel.y) <= verticalThreshold &&
+                Math.abs(this.player.x - this.barrel.x) <= horizontalThreshold
+            ) {
+                // Increase points for jumping over the barrel
+                this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
+            }
+        }
     }
 
     createBackground() {
@@ -132,11 +156,6 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
-    handlePlayerClimbing() {
-        this.player.isClimbing = true;
-        this.player.playerClimbing();
-    }
-
     collectJettpack(player, jettpack) {
         // Disable the powerup temporarily
         jettpack.disableBody(true, true);
@@ -145,6 +164,7 @@ class Level1 extends Phaser.Scene {
 
         // Timer for the powerup duration
         this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
         console.log('Jettpack collected!');
     }
 
@@ -163,10 +183,17 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
+        
+        // Award points for jumping on top of the barrel
+        this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
+        
+        this.fireball.onCollision(player);
+
         //this.fireball.onCollision(player);
         if (barrel.isDestroyed()) {
             this.fireball.onCollision(player);
         }
+
     }
 
     nextLevel(player, flag){
