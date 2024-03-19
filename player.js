@@ -13,6 +13,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
         this.hasJettpack = false;
+        this.hasShield = false;
+        this.hasDestroyBarrelPowerup = false;
         this.VelocityX = 200;
         this.VelocityY = 350;
         this.player = this;
@@ -76,6 +78,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     handlePlayerMovement() {
+        // Check if the player is not touching the ladder
+        if (!this.body.touching.up && this.isClimbing) {
+            this.isClimbing = false;
+            this.scene.physics.world.colliders._active[0].active = true;
+        }
+        
         if(this.hasJettpack) {
             this.VelocityX = 400;
             this.VelocityY = 400;
@@ -113,18 +121,33 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onCollision(otherEntity) {
+
+        this.body.destroy();
+
         console.log('Player hit by a barrel!');
         
         if (otherEntity instanceof Barrel) {
-            this.hearts--; // Decrease player's health when colliding with a barrel
-            this.updateHearts();
-    
-            if (this.hearts <= 0) {
-                // Player is out of hearts, handle game over logic
-                this.handleGameOver();
-            } else {
-                // Player still has hearts, reset to starting position
-                this.resetPlayerPosition();
+            if(!this.hasDestroyBarrelPowerup)
+            {
+                console.log('Player does not have destroy power-up');
+                if(!this.hasShield){
+                    this.hearts--; // Decrease player's health when colliding with a barrel
+                    this.updateHearts();
+            
+                    if (this.hearts <= 0) {
+                        // Player is out of hearts, handle game over logic
+                        this.handleGameOver();
+                    } else {
+                        // Player still has hearts, reset to starting position
+                        this.resetPlayerPosition();
+                    }
+                }
+            }
+            else{
+                console.log('Player has destroy power-up');
+                otherEntity.destroy();
+                this.hasDestroyBarrelPowerup = false;
+                //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
     }
@@ -156,6 +179,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.y = 700;
         
         // Additional reset logic, if needed
+
     }
     
   
@@ -180,8 +204,4 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.physics.world.colliders._active[0].active = true;
         }
     }
-    /*onCollision(otherEntity) {
-        console.log('Player hit by a barrel!');
-        this.sprite.destroy();
-    }*/
 }
