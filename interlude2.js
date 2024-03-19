@@ -12,6 +12,8 @@ class Interlude2 extends Phaser.Scene{
         console.log("interlude prev: " + previousHearts);
         this.hearts = previousHearts;
 
+        this.add.image(336, 384, 'day');
+
         this.song = this.sound.add("song1");
         this.song.volume = 1;
         this.song.loop = true;
