@@ -14,7 +14,7 @@ class Interlude2 extends Phaser.Scene{
 
         this.add.image(336, 384, 'day');
 
-        this.song = this.sound.add("song1");
+        this.song = this.sound.add("song3");
         this.song.volume = 1;
         this.song.loop = true;
         this.song.play();
@@ -39,8 +39,8 @@ class Interlude2 extends Phaser.Scene{
     }
 
     levelTransition(skip){
-        this.song.stop();
         if(skip){
+            //this.song.stop(); //this song should actually persist into lunch break
             this.add.text(20, 20, "Level 3 under construction. Go pick apples.");
             //this.scene.start("level3", { previousHearts: this.hearts });
         }
