@@ -163,7 +163,6 @@ class Level1 extends Phaser.Scene {
 
         // Create Shield power-up
         this.shieldPowerup = this.physics.add.sprite(600, 600, 'shield');
-        this.shieldPowerup.setScale(0.15); // Adjust scale as needed
         this.physics.add.collider(this.shieldPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Shield power-up
@@ -171,7 +170,6 @@ class Level1 extends Phaser.Scene {
 
         // Create Destroy Barrel power-up
         this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel');
-        this.destroyBarrelPowerup.setScale(0.15); // Adjust scale as needed
         this.physics.add.collider(this.destroyBarrelPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Destroy Barrel power-up
