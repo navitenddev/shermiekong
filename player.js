@@ -122,7 +122,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     onCollision(otherEntity) {
 
-        this.body.destroy();
+        //this.body.destroy();
 
         console.log('Player hit by a barrel!');
         
