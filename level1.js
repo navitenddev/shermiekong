@@ -238,9 +238,9 @@ class Level1 extends Phaser.Scene {
 
         
         // Award points for jumping on top of the barrel
-        this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
+        this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
         
-        this.fireball.onCollision(player);
+        //this.fireball.onCollision(player);
 
         //this.fireball.onCollision(player);
         if (barrel.isDestroyed()) {
