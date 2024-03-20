@@ -8,6 +8,9 @@ class AppleGame extends Phaser.Scene {
     this.load.image('shermie_basket', 'assets/shermie_basket.png');
     this.load.image('apple', 'assets/apple.png');
     this.load.audio('ding', 'assets/public_assets_coin.mp3');
+    this.load.spritesheet('basket',
+        'assets/shermie_basket_walk.png',
+        { frameWidth: 128, frameHeight: 128 });
   }
 
   create() {
@@ -27,13 +30,13 @@ class AppleGame extends Phaser.Scene {
     this.coinMusic = this.sound.add('ding');
 
     this.add.image(336,384,'orchard');
-    this.player = this.physics.add.image(630,713, 'shermie_basket').setScale(0.8);;
+    this.player = this.physics.add.sprite(630, 690, 'basket');
     this.player.setImmovable(true);
     this.player.body.allowGravity = false;
     this.player.setCollideWorldBounds(true);
     this.player.setSize(80,15).setOffset(10,70);
 
-    this.target = this.physics.add.image(0, 0, 'apple').setScale(0.9);;
+    this.target = this.physics.add.image(0, 0, 'apple').setScale(0.7);
     this.target.setMaxVelocity(0, 750);
     this.physics.add.overlap(this.target, this.player, this.score, null, this);
 
@@ -50,6 +53,34 @@ class AppleGame extends Phaser.Scene {
     });
 
     this.timeEvent = this.time.delayedCall(30000, this.gameOver, [], this);
+    
+    //animation
+    this.facing = true;
+    this.anims.create({
+      key: 'b_left',
+      frames: this.anims.generateFrameNumbers('basket', { start: 0, end: 2 }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+        key: 'b_faceLeft',
+        frames: [ { key: 'basket', frame: 0 } ],
+        frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'b_faceRight',
+        frames: [ { key: 'basket', frame: 3 } ],
+        frameRate: 20
+    });
+  
+    this.anims.create({
+        key: 'b_right',
+        frames: this.anims.generateFrameNumbers('basket', { start: 3, end: 5 }),
+        frameRate: 10,
+        repeat: -1
+    });
   }
 
   update() {
@@ -64,12 +95,22 @@ class AppleGame extends Phaser.Scene {
 
     if(left.isDown){
       this.player.setVelocityX(-this.playerSpeed);
+      this.player.anims.play('b_left', true);
+      this.facing = true;
     }
     else if (right.isDown){
       this.player.setVelocityX(this.playerSpeed);
+      this.player.anims.play('b_right', true);
+      this.facing = false;
     }
     else{
       this.player.setVelocityX(0);
+      if(this.facing){
+        this.player.anims.play('b_faceLeft');
+      }
+      else{
+        this.player.anims.play('b_faceRight');
+      }
     }
   }
   

@@ -8,6 +8,7 @@ class Intro extends Phaser.Scene{
     }
 
     create(){
+        this.add.image(336, 384, 'night');
         this.song = this.sound.add("song1");
         this.song.volume = 1;
         this.song.loop = true;
@@ -15,7 +16,7 @@ class Intro extends Phaser.Scene{
 
         // dialogue should pop up after a moment
         this.timedEvent = this.time.addEvent({
-            delay: 1000,
+            delay: 2000,
             callback: this.dialogueInit,
             callbackScope: this,
             loop: false

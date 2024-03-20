@@ -14,7 +14,6 @@ class MainMenu extends Phaser.Scene{
         this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
 
         // Level Entities
-        this.load.image('wolf', 'assets/wolf.png');
         this.load.image('platform', 'assets/platform.png');
         this.load.image('shermie', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
@@ -32,11 +31,18 @@ class MainMenu extends Phaser.Scene{
         this.load.audio('chiptune1', 'assets/chiptune1.mp3');
         this.load.audio('chiptune2', 'assets/chiptune2.mp3');
         this.load.audio('chiptune3', 'assets/chiptune3.mp3');
+        this.load.audio('chiptune4', 'assets/chiptune4.mp3');
         this.load.audio('song1', 'assets/song1.mp3');
         this.load.audio('song2', 'assets/song2.mp3');
+        this.load.audio('song3', 'assets/song3.mp3');
 
         // Level end marker
         this.load.image('flag', 'assets/flag.png');
+
+        //Interlude backgrounds
+        this.load.image('night', 'assets/shermie_bedroom_night.png');
+        this.load.image('day', 'assets/shermie_bedroom_day.png');
+
     }
 
     create(){
