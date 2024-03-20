@@ -14,7 +14,8 @@ class Level1 extends Phaser.Scene {
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('wolf', 'assets/wolf.png');
-        this.load.image('fireball', 'assets/fireball.png');
+        this.load.spritesheet('fireball', 'assets/fireball.png',
+        { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
