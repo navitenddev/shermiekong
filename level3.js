@@ -44,7 +44,7 @@ class Level3 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 40, 600);
+        this.player = new Player(this, 30, 670);
         var floor = this.physics.add.staticGroup();
 
         // Initialize moving platforms
@@ -228,7 +228,7 @@ class Level3 extends Phaser.Scene {
         if(this.platform8.x <= 24){
             this.platform8.setVelocityX(70);
         }
-        if(this.platform7.body.velocity.x == 0){
+        if(this.platform8.body.velocity.x == 0){
             this.platform7.setVelocityX(70);
         }
 
