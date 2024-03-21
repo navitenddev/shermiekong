@@ -6,7 +6,7 @@ class ShermieHero extends Phaser.Scene{
     preload(){
         //Shermie hero
         this.load.image('dialogue', 'assets/dialogue_box.png');
-        this.load.image('minigame1_bg', 'assets/minigame1-bg.png');
+        this.load.image('stage', 'assets/stage.png');
         this.load.image('bass', 'assets/bass.png');
         this.load.image('string', 'assets/string.png');
         this.load.image('noteline', 'assets/noteline.png');
@@ -73,7 +73,7 @@ class ShermieHero extends Phaser.Scene{
     }
 
     createBackground() {
-        this.add.image(400, 300, 'minigame1_bg');
+        this.add.image(336, 384, 'stage');
         this.add.image(672/2, 300, 'bass');
         this.add.image(245, 300, 'string');
         this.add.image(305, 300, 'string');
@@ -81,10 +81,10 @@ class ShermieHero extends Phaser.Scene{
         this.add.image(425, 300, 'string');
         //marks where player should hit notes
         this.add.image(400, 700, 'noteline');
-        this.add.image(400, 1150, 'lvl_default_bg');
+        this.add.image(336, 1150, 'lvl_default_bg');
 
         //animated background
-        this.shermieBass = this.add.sprite(70, 500, 'shermie_bass').setScale(0.8);
+        this.shermieBass = this.add.sprite(70, 450, 'shermie_bass').setScale(0.8);
         
         this.anims.create(
             {
