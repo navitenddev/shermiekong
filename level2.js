@@ -15,16 +15,35 @@ class Level2 extends Phaser.Scene {
         this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
+        const scoreFromLevel1 = this.game.gameState.scoringSystem.getScore();
+
+        console.log("score: "+ scoreFromLevel1);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel1);
+
         this.createBackground();
         this.createEntities();
-    }
 
+        this.song = this.sound.add("chiptune3");
+        this.song.loop = true;
+        this.song.volume = 1;
+        this.song.play();
+
+        this.game.gameState.scoringSystem = this.scoringSystem;
+
+    }
+    
     update() {
         this.player.handlePlayerMovement();
-
+        
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        
         this.brokenfloor.update();
         this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);
         this.physics.add.collider(this.player, this.brokenfloor2.sprite, fc2, null, this);
@@ -108,17 +127,21 @@ class Level2 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 40, 600);
+        const { previousHearts } = this.scene.settings.data;
+        console.log("prev: " + previousHearts);
+        this.player = new Player(this, 40, 600, previousHearts);
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
+        var spikes = this.physics.add.staticGroup();
+
         var x = 24;
         for (let i = 0; i < 12; i++){
             floor.create(x, 756, 'girder_blue');
             x = x + 48
         }
-        floor.create(600, 756, 'spikes');
-        floor.create(648, 756, 'spikes');
+        spikes.create(600, 756, 'spikes');
+        spikes.create(648, 756, 'spikes');
 
         // Starting platform
         floor.create(24, 669, 'girder_blue');
@@ -128,11 +151,11 @@ class Level2 extends Phaser.Scene {
         floor.create(216, 669, 'girder_blue');
 
         // Middle spikes
-        floor.create(264, 669, 'spikes');
-        floor.create(312, 669, 'spikes');
-        floor.create(360, 669, 'spikes');
-        floor.create(408, 669, 'spikes');
-        floor.create(456, 669, 'spikes');
+        spikes.create(264, 669, 'spikes');
+        spikes.create(312, 669, 'spikes');
+        spikes.create(360, 669, 'spikes');
+        spikes.create(408, 669, 'spikes');
+        spikes.create(456, 669, 'spikes');
 
         // Lower-right platforms
         floor.create(648, 669, 'girder_blue');
@@ -172,8 +195,8 @@ class Level2 extends Phaser.Scene {
         floor.create(408, 365, 'girder_blue');
         this.brokenfloor11 = new BrokenFloor(this, 360, 365);
 
-        floor.create(648, 365, 'spikes');
-        floor.create(600, 365, 'spikes');
+        spikes.create(648, 365, 'spikes');
+        spikes.create(600, 365, 'spikes');
         floor.create(552, 365, 'girder_blue');
 
         this.brokenfloor12 = new BrokenFloor(this, 648, 278);
@@ -201,6 +224,8 @@ class Level2 extends Phaser.Scene {
         floor.create(312, 162, 'girder_blue');
 
         this.physics.add.collider(this.player, floor);
+        // Set up collision between player and the spikes
+        this.physics.add.collider(this.player, spikes, this.handleCollision, null, this);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
@@ -219,10 +244,26 @@ class Level2 extends Phaser.Scene {
 
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        //level end marker
+        this.flag = this.physics.add.staticSprite(275, 118, 'flag');
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+
+    handleCollision() {
+        this.player.onCollision(spikes);
+    }
+
+    nextLevel(player, flag){
+        this.song.stop();
+        console.log("next: " + this.player.hearts);
+        this.scene.start("interlude2", { previousHearts: this.player.hearts });
+
     }
 }

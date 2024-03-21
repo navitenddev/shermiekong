@@ -16,24 +16,59 @@ class Level1 extends Phaser.Scene {
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
         this.load.image('jettpack', 'assets/jettpack.png');
+        this.load.image('shield', 'assets/shield.png');
+        this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
+        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
+        console.log("Creating Level1 scene...");
+        this.scoringSystem = new ScoringSystem(this);
         this.createBackground();
         this.createEntities();
+        
         // Set up collision between player and the barrel
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+
+        // Set up collision between player and the fireball
+        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
+
+        
+        this.song = this.sound.add("chiptune1");
+        this.song.loop = true;
+        this.song.volume = 0.8;
+        this.song.play();
+
+        // Access the scoring system from the Game class
+        this.game.gameState.scoringSystem = this.scoringSystem;
     }
 
     update() {
         this.player.handlePlayerMovement();
         this.barrel.update();
         this.fireball.update();
+        if (this.player.isClimbing) {
+            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        }
+        this.checkForJump();
     }
 
-    buildLevel() {
-        this.createBackground();
-        this.createEntities();
+    checkForJump() {
+        const verticalThreshold = 90;
+        const horizontalThreshold = 50;
+        // console.log("x: " + this.player.x);
+        // console.log("y: " + this.player.y);
+        // console.log("x2: " + this.barrel.x);
+        // console.log("y2: " + this.barrel.y);
+        if (this.player.cursors.up.isDown) {
+            if (
+                Math.abs(this.player.y - this.barrel.y) <= verticalThreshold &&
+                Math.abs(this.player.x - this.barrel.x) <= horizontalThreshold
+            ) {
+                // Increase points for jumping over the barrel
+                this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
+            }
+        }
     }
 
     createBackground() {
@@ -41,7 +76,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700);
+        this.player = new Player(this, 100, 700, 3);
         this.barrel = new Barrel(this, 750, 400);
         this.fireball = new Fireball(this, 750, 300);
 
@@ -119,17 +154,32 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
 
         // Create Jettpack powerup
-        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack'); // Adjust the position as needed
+        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack');
         this.jettpackPowerup.setScale(0.10);
         this.physics.add.collider(this.jettpackPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
-    }
 
-    handlePlayerClimbing() {
-        this.player.isClimbing = true;
-        this.player.playerClimbing();
+        // Create Shield power-up
+        this.shieldPowerup = this.physics.add.sprite(600, 600, 'shield');
+        this.shieldPowerup.setScale(0.15); // Adjust scale as needed
+        this.physics.add.collider(this.shieldPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Shield power-up
+        this.physics.add.overlap(this.player, this.shieldPowerup, this.collectShield, null, this);
+
+        // Create Destroy Barrel power-up
+        this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel');
+        this.destroyBarrelPowerup.setScale(0.15); // Adjust scale as needed
+        this.physics.add.collider(this.destroyBarrelPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Destroy Barrel power-up
+        this.physics.add.overlap(this.player, this.destroyBarrelPowerup, this.collectDestroyBarrelPowerup, null, this);
+
+        // Ending flag level transition
+        this.flag = this.physics.add.staticSprite(50, 205, 'flag');
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     collectJettpack(player, jettpack) {
@@ -140,6 +190,7 @@ class Level1 extends Phaser.Scene {
 
         // Timer for the powerup duration
         this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
         console.log('Jettpack collected!');
     }
 
@@ -147,6 +198,32 @@ class Level1 extends Phaser.Scene {
         player.hasJettpack = false;
         player.VelocityX = 200;
         player.VelocityY = 350;
+    }
+
+    collectShield(player, shield) {
+        // Disable the power-up temporarily
+        shield.disableBody(true, true);
+        
+        // Activate shield effect for player
+        player.hasShield = true;
+    
+        // Timer for shield duration
+        this.time.delayedCall(30000, this.deactivateShield, [player], this);
+        console.log('Shield collected!');
+    }
+
+    deactivateShield(player) {
+        player.hasShield = false;
+        console.log('Shield deactivated!');
+    }
+
+    collectDestroyBarrelPowerup(player, destroyBarrelPowerup) {
+        // Disable the power-up temporarily
+        destroyBarrelPowerup.disableBody(true, true);
+        
+        // Activate effect for destroying barrels
+        player.hasDestroyBarrelPowerup = true;
+        console.log('Destroy Barrel Power-up collected!');
     }
 
     handlePlayerClimbing() {
@@ -158,6 +235,24 @@ class Level1 extends Phaser.Scene {
         // Perform specific actions when the player collides with a barrel
         barrel.onCollision(player);
         player.onCollision(barrel);
-        this.fireball.onCollision(player);
+
+        
+        // Award points for jumping on top of the barrel
+        this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
+        
+        //this.fireball.onCollision(player);
+
+        //this.fireball.onCollision(player);
+        if (barrel.isDestroyed()) {
+            this.fireball.onCollision(player);
+        }
+
+    }
+
+    nextLevel(player, flag){
+        this.song.stop();
+        console.log("next: " + this.player.hearts);
+        this.scene.start("interlude1", { previousHearts: this.player.hearts });
+        //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
     }
 }
