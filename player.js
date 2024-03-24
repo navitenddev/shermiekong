@@ -83,6 +83,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.isClimbing = false;
             this.scene.physics.world.colliders._active[0].active = true;
         }
+
+        // Check if the player is above the ladder and wants to climb down
+        if (this.body.touching.down && !this.isClimbing && this.cursors.down.isDown) {
+            this.isClimbing = true;
+            this.scene.physics.world.colliders._active[0].active = false;
+        }
         
         if(this.hasJettpack) {
             this.VelocityX = 400;
