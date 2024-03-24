@@ -7,7 +7,7 @@ class AppleGame extends Phaser.Scene {
     this.load.image('orchard', 'assets/orchard.png');
     this.load.image('shermie_basket', 'assets/shermie_basket.png');
     this.load.image('apple', 'assets/apple.png');
-    this.load.audio('ding', 'assets/public_assets_coin.mp3');
+    this.load.audio('ding', 'assets/collect_sound.mp3');
     this.load.spritesheet('basket',
         'assets/shermie_basket_walk.png',
         { frameWidth: 128, frameHeight: 128 });
