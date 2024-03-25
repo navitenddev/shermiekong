@@ -19,7 +19,6 @@ class Level1 extends Phaser.Scene {
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
-        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
