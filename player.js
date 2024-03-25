@@ -13,6 +13,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
         this.hasJettpack = false;
+        this.addedVelocity = 0;
         this.hasShield = false;
         this.hasDestroyBarrelPowerup = false;
         this.VelocityX = 200;
@@ -95,8 +96,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.VelocityY = 400;
         }
         else {
-            this.VelocityX = 200;
-            this.VelocityY = 350;
+            this.VelocityX = 120;
+            this.VelocityY = 230;
         }
 
         if (this.cursors.left.isDown) {
@@ -112,6 +113,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         else {
             this.VelocityX = 0;
             this.setVelocityX(this.VelocityX);
+
+            // If player is on moving platform, add platform's velocity
+            if(this.onMovingPlatform) {
+                this.setVelocityX(this.VelocityX + this.addedVelocity);
+            }
+            // If else, set player velocity to 0
+            else{
+                this.VelocityX = 0;
+                this.setVelocityX(this.VelocityX);
+            }
             if(this.facing){
                 this.player.anims.play('faceLeft');
             }
