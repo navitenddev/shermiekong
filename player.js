@@ -96,8 +96,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.VelocityY = 400;
         }
         else {
-            this.VelocityX = 300;
-            this.VelocityY = 350;
+            this.VelocityX = 300; //120
+            this.VelocityY = 400; //230
         }
 
         if (this.cursors.left.isDown) {

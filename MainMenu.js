@@ -43,6 +43,7 @@ class MainMenu extends Phaser.Scene{
         //Interlude backgrounds
         this.load.image('night', 'assets/shermie_bedroom_night.png');
         this.load.image('day', 'assets/shermie_bedroom_day.png');
+        this.load.image('dialogue', 'assets/dialogue_box.png');
 
         //buttons
         this.load.image('main_menu_button', 'assets/main_menu_button.png');

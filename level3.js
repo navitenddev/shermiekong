@@ -31,6 +31,9 @@ class Level3 extends Phaser.Scene {
 
     createBackground() {
         this.add.image(400, 300, 'lvl_default_bg');
+        this.song = this.sound.add("chiptune4");
+        this.song.loop = true;
+        this.song.play();
     }
 
     // Updates player's horizontal movement speed to match the platform
