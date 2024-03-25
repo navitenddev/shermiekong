@@ -138,6 +138,7 @@ class AppleGame extends Phaser.Scene {
     if (this.points >= 10) {
       this.line = this.add.text(100, 620, "Yum! That's plenty of apples for today.");
       this.hearts += 1;
+      console.log("num hearts: " + this.hearts);
     } 
     else {
       this.line = this.add.text(100, 620, "Wish I could've picked a few more...");

@@ -47,7 +47,8 @@ class Level3 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 30, 670);
+        const { previousHearts } = this.scene.settings.data;
+        this.player = new Player(this, 30, 670, previousHearts);
         var floor = this.physics.add.staticGroup();
 
         // Initialize moving platforms
