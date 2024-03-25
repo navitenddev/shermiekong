@@ -41,7 +41,7 @@ class Interlude1 extends Phaser.Scene{
     levelTransition(skip){
         this.song.stop();
         if(skip){
-            this.scene.start("level2", { previousHearts: this.hearts });
+            this.scene.start("night1", { previousHearts: this.hearts });
         }
         else{
             this.scene.start("ShermieHero", { previousHearts: this.hearts });

@@ -268,7 +268,7 @@ class ShermieHero extends Phaser.Scene{
         this.line.setDepth(3);
         this.box = this.add.image(336, 600, "dialogue")
         .setInteractive()
-        .on('pointerdown', () => {this.scene.start("level2", { previousHearts: this.hearts })});
+        .on('pointerdown', () => {this.scene.start("night1", { previousHearts: this.hearts })});
     }
 
 
