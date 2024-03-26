@@ -16,6 +16,7 @@ class Level3 extends Phaser.Scene {
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('moving_platform', 'assets/moving_platform.png');
+        this.load.image('jettpack', 'assets/jettpack.png');
     }
 
     create() {
@@ -139,10 +140,36 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, floor);
         this.physics.add.collider(this.player, platforms);
 
+        // Create Jettpack powerup
+        this.jettpackPowerup = this.physics.add.sprite(330, 400, 'jettpack');
+        this.jettpackPowerup.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+
         //var ladders = this.physics.add.staticGroup();
         //this.physics.add.collider(ladders, floor);
         // Add an overlap event to detect when the player is on the ladder
         //this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+    }
+
+    collectJettpack(player, jettpack) {
+        // Disable the powerup temporarily
+        jettpack.disableBody(true, true);
+        
+        player.hasJettpack = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+        console.log('Jettpack collected!');
+    }
+
+    resetPlayerVelocity(player) {
+        player.hasJettpack = false;
+        player.VelocityX = 200;
+        player.VelocityY = 350;
     }
 
     // Determine behavior of each moving platform

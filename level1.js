@@ -15,7 +15,6 @@ class Level1 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
-        this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
         this.load.image('heart', 'assets/heart.png');
@@ -153,16 +152,8 @@ class Level1 extends Phaser.Scene {
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
 
-        // Create Jettpack powerup
-        this.jettpackPowerup = this.physics.add.sprite(300, 700, 'jettpack');
-        this.jettpackPowerup.setScale(0.10);
-        this.physics.add.collider(this.jettpackPowerup, floor);
-
-        // Add an overlap event to detect when the player collects the Jettpack
-        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
-
         // Create Shield power-up
-        this.shieldPowerup = this.physics.add.sprite(600, 600, 'shield');
+        this.shieldPowerup = this.physics.add.sprite(250, 300, 'shield');
         this.shieldPowerup.setScale(0.15); // Adjust scale as needed
         this.physics.add.collider(this.shieldPowerup, floor);
 
@@ -180,24 +171,6 @@ class Level1 extends Phaser.Scene {
         // Ending flag level transition
         this.flag = this.physics.add.staticSprite(50, 205, 'flag');
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
-    }
-
-    collectJettpack(player, jettpack) {
-        // Disable the powerup temporarily
-        jettpack.disableBody(true, true);
-        
-        player.hasJettpack = true;
-
-        // Timer for the powerup duration
-        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
-        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
-        console.log('Jettpack collected!');
-    }
-
-    resetPlayerVelocity(player) {
-        player.hasJettpack = false;
-        player.VelocityX = 200;
-        player.VelocityY = 350;
     }
 
     collectShield(player, shield) {
