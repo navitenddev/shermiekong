@@ -41,6 +41,11 @@ class Level1 extends Phaser.Scene {
 
         // Access the scoring system from the Game class
         this.game.gameState.scoringSystem = this.scoringSystem;
+
+        //pause button
+        this.add.image(600, 700, 'pause_button')
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     update() {
@@ -252,5 +257,10 @@ class Level1 extends Phaser.Scene {
         console.log("next: " + this.player.hearts);
         this.scene.start("interlude1", { previousHearts: this.player.hearts });
         //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }
