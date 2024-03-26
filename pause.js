@@ -28,7 +28,7 @@ class Pause extends Phaser.Scene{
         .on('pointerdown', () => {console.log('TODO: How to play screen')});
 
         if(this.game.sound.mute){
-            this.audioButton = this.add.image(672/2, 650, 'audio_off')
+            this.audioButton = this.add.image(672/2, 550, 'audio_off')
             .setInteractive()
             .on('pointerdown', () => {this.toggleAudio()});
         }
@@ -75,7 +75,7 @@ class Pause extends Phaser.Scene{
 
     goToMain(){
         this.game.sound.stopAll();
-        
+
         var scenes = ['level1', 'level2', 'level3', 
         'night1', 'night2', 
         'intro', 'interlude1', 'interlude2', 
