@@ -21,6 +21,12 @@ class Level3 extends Phaser.Scene {
     create() {
         this.createBackground();
         this.createEntities();
+
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     update() {
@@ -372,5 +378,10 @@ class Level3 extends Phaser.Scene {
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }

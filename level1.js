@@ -41,7 +41,8 @@ class Level1 extends Phaser.Scene {
         this.game.gameState.scoringSystem = this.scoringSystem;
 
         //pause button
-        this.add.image(600, 700, 'pause_button')
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {this.pause()});
     }

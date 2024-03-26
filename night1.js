@@ -26,6 +26,12 @@ class Night1 extends Phaser.Scene{
             loop: false
         });
 
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
+
     }
 
     dialogueInit(){
@@ -49,6 +55,11 @@ class Night1 extends Phaser.Scene{
                 this.scene.start('level2', { previousHearts: this.hearts });
                 break;
         }
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 
 }

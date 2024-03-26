@@ -27,6 +27,12 @@ class Interlude1 extends Phaser.Scene{
             loop: false
         });
 
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
+
     }
 
     dialogueInit(){
@@ -76,6 +82,11 @@ class Interlude1 extends Phaser.Scene{
                 .on('pointerdown', () => {this.levelTransition(false)});
                 break;
         }
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 
 }
