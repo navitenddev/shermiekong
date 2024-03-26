@@ -59,6 +59,14 @@ class ShermieHero extends Phaser.Scene{
             callbackScope: this,
             loop: false
         });
+
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
+
+        this.events.on('resume', () => {this.song.resume()});
     }
 
     update(){
@@ -271,5 +279,9 @@ class ShermieHero extends Phaser.Scene{
         .on('pointerdown', () => {this.scene.start("night1", { previousHearts: this.hearts })});
     }
 
-
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
+        this.song.pause();
+    }
 }

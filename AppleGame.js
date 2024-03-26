@@ -89,6 +89,12 @@ class AppleGame extends Phaser.Scene {
         frameRate: 10,
         repeat: -1
     });
+
+    //pause button
+    this.add.image(625, 40, 'pause_button')
+    .setScale(0.5)
+    .setInteractive()
+    .on('pointerdown', () => {this.pause()});
   }
 
   update() {
@@ -145,12 +151,18 @@ class AppleGame extends Phaser.Scene {
     }
     
     this.line.setDepth(3);
-        this.box = this.add.image(336, 600, "dialogue")
-        .setInteractive()
-        .on('pointerdown', () => {
-          this.sound.get('song3').stop();
-          this.scene.start("night2", { previousHearts: this.hearts });});
+    this.box = this.add.image(336, 600, "dialogue")
+      .setInteractive()
+      .on('pointerdown', () => {
+        this.sound.get('song3').stop();
+        this.scene.start("night2", { previousHearts: this.hearts });
+      });
       
+  }
+
+  pause(){
+    this.scene.launch('pause');
+    this.scene.pause();
   }
 }
 
