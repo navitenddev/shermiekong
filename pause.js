@@ -21,7 +21,7 @@ class Pause extends Phaser.Scene{
 
         this.add.image(672/2, 350, 'main_menu_button')
         .setInteractive()
-        .on('pointerdown', () => {this.scene.start('startScreen')});
+        .on('pointerdown', () => {this.goToMain()});
 
         this.add.image(672/2, 450, 'how_to_play')
         .setInteractive()
@@ -71,5 +71,23 @@ class Pause extends Phaser.Scene{
             .setInteractive()
             .on('pointerdown', () => {this.toggleAudio()});
         }
+    }
+
+    goToMain(){
+        this.game.sound.stopAll();
+        
+        var scenes = ['level1', 'level2', 'level3', 
+        'night1', 'night2', 
+        'intro', 'interlude1', 'interlude2', 
+        'ShermieHero', 'AppleGame'];
+
+        for(var i = 0; i < scenes.length; i++){
+            if(this.scene.isPaused(scenes[i])){
+                this.scene.stop(scenes[i]);
+            }
+        }
+        this.scene.start('startScreen');
+
+        this.scene.stop('pause');
     }
 }
