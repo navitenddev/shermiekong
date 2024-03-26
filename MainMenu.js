@@ -48,6 +48,7 @@ class MainMenu extends Phaser.Scene{
         //buttons
         this.load.image('main_menu_button', 'assets/main_menu_button.png');
         this.load.image('pause_button', 'assets/pause_button.png');
+        this.load.image('how_to_play', 'assets/how_to_play.png');
     }
 
     create(){

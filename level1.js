@@ -13,7 +13,6 @@ class Level1 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
-        this.load.image('wolf', 'assets/wolf.png');
         this.load.spritesheet('fireball', 'assets/fireball.png',
         { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
@@ -22,7 +21,6 @@ class Level1 extends Phaser.Scene {
     }
 
     create() {
-        console.log("Creating Level1 scene...");
         this.scoringSystem = new ScoringSystem(this);
         this.createBackground();
         this.createEntities();
