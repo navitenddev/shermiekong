@@ -7,13 +7,21 @@ class AppleGame extends Phaser.Scene {
     this.load.image('orchard', 'assets/orchard.png');
     this.load.image('shermie_basket', 'assets/shermie_basket.png');
     this.load.image('apple', 'assets/apple.png');
-    this.load.audio('ding', 'assets/public_assets_coin.mp3');
+    this.load.audio('ding', 'assets/collect_sound.mp3');
     this.load.spritesheet('basket',
         'assets/shermie_basket_walk.png',
         { frameWidth: 128, frameHeight: 128 });
   }
 
   create() {
+    const { previousHearts } = this.scene.settings.data;
+    if(previousHearts == undefined){
+      this.hearts = 3;
+    }
+    else{
+      this.hearts = previousHearts;
+    }
+
     this.player;
     this.cursors;
     this.playerSpeed = 500;
@@ -81,6 +89,12 @@ class AppleGame extends Phaser.Scene {
         frameRate: 10,
         repeat: -1
     });
+
+    //pause button
+    this.add.image(625, 40, 'pause_button')
+    .setScale(0.5)
+    .setInteractive()
+    .on('pointerdown', () => {this.pause()});
   }
 
   update() {
@@ -127,20 +141,28 @@ class AppleGame extends Phaser.Scene {
   };
 
   gameOver (){
-      if (game) {
-          game.scene.pause();
-          game.scene.remove("scene-game");
-          game.destroy();
-      }
-  
-      if (this.points >= 10) {
-          this.add.text(300, 300, "Win!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
-      } else {
-          this.add.text(100, 300, "Better luck next time!", {font: '40px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
-      }
-  
-      // gameEndScoreSpan.textContent = this.points;
-      // gameEndDiv.style.display = "flex";
+    if (this.points >= 10) {
+      this.line = this.add.text(100, 620, "Yum! That's plenty of apples for today.");
+      this.hearts += 1;
+      console.log("num hearts: " + this.hearts);
+    } 
+    else {
+      this.line = this.add.text(100, 620, "Wish I could've picked a few more...");
+    }
+    
+    this.line.setDepth(3);
+    this.box = this.add.image(336, 600, "dialogue")
+      .setInteractive()
+      .on('pointerdown', () => {
+        this.sound.get('song3').stop();
+        this.scene.start("night2", { previousHearts: this.hearts });
+      });
+      
+  }
+
+  pause(){
+    this.scene.launch('pause');
+    this.scene.pause();
   }
 }
 

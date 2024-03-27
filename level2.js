@@ -35,6 +35,11 @@ class Level2 extends Phaser.Scene {
 
         this.game.gameState.scoringSystem = this.scoringSystem;
 
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
     
     update() {
@@ -265,5 +270,10 @@ class Level2 extends Phaser.Scene {
         console.log("next: " + this.player.hearts);
         this.scene.start("interlude2", { previousHearts: this.player.hearts });
 
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }

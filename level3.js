@@ -21,6 +21,12 @@ class Level3 extends Phaser.Scene {
     create() {
         this.createBackground();
         this.createEntities();
+
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     update() {
@@ -31,6 +37,9 @@ class Level3 extends Phaser.Scene {
 
     createBackground() {
         this.add.image(400, 300, 'lvl_default_bg');
+        this.song = this.sound.add("chiptune4");
+        this.song.loop = true;
+        this.song.play();
     }
 
     // Updates player's horizontal movement speed to match the platform
@@ -44,7 +53,8 @@ class Level3 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 30, 670);
+        const { previousHearts } = this.scene.settings.data;
+        this.player = new Player(this, 30, 670, previousHearts);
         var floor = this.physics.add.staticGroup();
 
         // Initialize moving platforms
@@ -368,5 +378,10 @@ class Level3 extends Phaser.Scene {
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }

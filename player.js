@@ -96,8 +96,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.VelocityY = 400;
         }
         else {
-            this.VelocityX = 120;
-            this.VelocityY = 230;
+            this.VelocityX = 120; //120
+            this.VelocityY = 230; //230
         }
 
         if (this.cursors.left.isDown) {
@@ -131,7 +131,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
-        if (this.cursors.up.isDown && this.body.blocked.down) {
+        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.blocked.down) {
             this.setVelocityY(this.VelocityY * -1);
 
         }
@@ -170,24 +170,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
     handleGameOver() {
-        // Stop the current scene (this stops updates and rendering)
-        this.scene.scene.stop();
-    
-        // Display a game-over message or screen
         console.log('Game Over');
-        this.showGameOverMessage();
+        this.scene.song.stop();
+        this.scene.scene.start('GameOver');
     }
-    
-    showGameOverMessage() {
-        const gameOverText = this.scene.add.text(200, 200, 'Game Over', { fontSize: '32px', fill: '#fff' });
-        // Add any additional game-over message or screen logic here
-
-        // Doesnt work as of now!
-        this.scene.input.keyboard.once('keydown', (event) => {
-            this.scene.scene.restart(); // Restart the scene when a key is pressed
-        });
-    }
-    
     
     resetPlayerPosition() {
         // Customize this method to reset the player to the starting position
