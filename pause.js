@@ -15,15 +15,15 @@ class Pause extends Phaser.Scene{
         this.add.image(672/2, 768/2, 'pause_menu');
 
         this.add.image(672/2, 250, 'resume')
-        .setScale(0.8)
         .setInteractive()
         .on('pointerdown', () => {this.resumeGame()});
 
-        this.add.image(672/2, 350, 'main_menu_button')
+        this.add.image(672/2, 330, 'main_menu_button')
+        .setScale(0.7)
         .setInteractive()
         .on('pointerdown', () => {this.goToMain()});
 
-        this.add.image(672/2, 450, 'how_to_play')
+        this.add.image(672/2, 430, 'how_to_play')
         .setInteractive()
         .on('pointerdown', () => {console.log('TODO: How to play screen')});
 
