@@ -25,7 +25,7 @@ class Pause extends Phaser.Scene{
 
         this.add.image(672/2, 430, 'how_to_play')
         .setInteractive()
-        .on('pointerdown', () => {console.log('TODO: How to play screen')});
+        .on('pointerdown', () => {this.scene.launch('howTo')});
 
         if(this.game.sound.mute){
             this.audioButton = this.add.image(672/2, 550, 'audio_off')

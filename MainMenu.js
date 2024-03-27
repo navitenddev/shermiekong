@@ -55,13 +55,21 @@ class MainMenu extends Phaser.Scene{
         this.add.image(336, 200, "logo");
         this.add.image(330, 340, "shermie");
 
-        this.add.image(336, 470, "start")
-        .setScale(.8)
+        this.add.image(336, 450, "start")
+        .setScale(.5)
         .setInteractive()
         .on('pointerdown', () => {this.scene.start("intro")});
 
-        this.add.image(336, 600, "levels").setInteractive()
+        this.add.image(336, 523, "levels").setScale(.6).setInteractive()
         .on('pointerdown', () => {this.scene.start("LevelSelect")});
+
+        this.add.image(336, 600, "how_to_play")
+        .setScale(.8)
+        .setInteractive()
+        .on('pointerdown', () => {
+            this.scene.pause();
+            this.scene.launch("howTo");
+        });
 
         this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
