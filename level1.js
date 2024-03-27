@@ -29,12 +29,8 @@ class Level1 extends Phaser.Scene {
         this.createEntities();
         
         // Set up collision between player and the barrel
-        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+        //this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
-        // Set up collision between player and the fireball
-        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
-
-        
         this.song = this.sound.add("chiptune1");
         this.song.loop = true;
         this.song.volume = 0.8;
@@ -46,8 +42,9 @@ class Level1 extends Phaser.Scene {
 
     update() {
         this.player.handlePlayerMovement();
-        this.barrel.update();
-        this.fireball.update();
+        this.barrels.forEach(barrel => {
+            barrel.update();
+        });
         if (this.player.isClimbing) {
             this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
         }
@@ -78,8 +75,21 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700, 3);
-        this.barrel = new Barrel(this, 750, 400);
-        this.fireball = new Fireball(this, 750, 300);
+        this.barrel = new Barrel(this, 750, 300);
+    
+        this.barrels = [];
+        this.barrels.push(this.barrel);
+    
+        this.time.addEvent({
+            delay: 5000,
+            callback: () => {
+                let newBarrel = new Barrel(this, 150, 150);
+                this.barrels.push(newBarrel);
+                this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
+                this.physics.add.collider(newBarrel, floor);
+            },
+            loop: true
+        });
 
         var floor = this.physics.add.staticGroup();
         // 1st floor
@@ -237,13 +247,9 @@ class Level1 extends Phaser.Scene {
         barrel.onCollision(player);
         player.onCollision(barrel);
 
-        
         // Award points for jumping on top of the barrel
         this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
         
-        this.fireball.onCollision(player);
-
-        //this.fireball.onCollision(player);
         if (barrel.isDestroyed()) {
             this.fireball.onCollision(player);
         }
