@@ -19,9 +19,17 @@ class Level3 extends Phaser.Scene {
     }
 
     create() {
+        const scoreFromLevel2 = this.game.gameState.scoringSystem.getScore();
+
+        console.log("score: "+ scoreFromLevel2);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel2);
+
         this.createBackground();
         this.createEntities();
 
+        this.game.gameState.scoringSystem = this.scoringSystem;
+        
         //pause button
         this.add.image(625, 40, 'pause_button')
         .setScale(0.5)
