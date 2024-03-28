@@ -1,14 +1,18 @@
-class Intro extends Phaser.Scene{
+class Night1 extends Phaser.Scene{
     constructor(){
-        super("intro");
+        super("night1");
     }
     preload(){
         this.load.image('dialogue', 'assets/dialogue_box.png');
-        this.load.audio('song1', 'assets/song1.mp3');
     }
 
     create(){
+        const { previousHearts } = this.scene.settings.data;
+        console.log("interlude prev: " + previousHearts);
+        this.hearts = previousHearts;
+
         this.add.image(336, 384, 'night');
+
         this.song = this.sound.add("song1");
         this.song.volume = 1;
         this.song.loop = true;
@@ -16,7 +20,7 @@ class Intro extends Phaser.Scene{
 
         // dialogue should pop up after a moment
         this.timedEvent = this.time.addEvent({
-            delay: 2000,
+            delay: 1000,
             callback: this.dialogueInit,
             callbackScope: this,
             loop: false
@@ -27,13 +31,14 @@ class Intro extends Phaser.Scene{
         .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {this.pause()});
+
     }
 
     dialogueInit(){
         this.lineNum = 0;
-        this.line = this.add.text(100, 620, "<Click anywhere on the dialogue box to continue>");
+        this.line = this.add.text(100, 620, "What a day!");
         this.line.setDepth(3);
-        this.add.image(336, 600, "dialogue")
+        this.box = this.add.image(336, 600, "dialogue")
         .setInteractive()
         .on('pointerdown', () => {this.nextLine()});
     }
@@ -43,23 +48,11 @@ class Intro extends Phaser.Scene{
         this.lineNum += 1;
         switch(this.lineNum){
             case 1:
-                this.line = this.add.text(100, 620, "Wow, what a week!");
+                this.line = this.add.text(100, 620, "Well, better get some rest!");
                 break;
             case 2:
-                this.line = this.add.text(100, 620, "TGIF though, haha!");
-                break;
-            case 3:
-                this.line = this.add.text(100, 620, "Boy am I tired!"); 
-                break;
-            case 4:
-                this.line = this.add.text(100, 620, "And I have band practice tomorrow...");
-                break;
-            case 5:
-                this.line = this.add.text(100, 620, "Hm. Well, better get to bed.");
-                break;
-            case 6:
                 this.song.stop();
-                this.scene.start('level1');
+                this.scene.start('level2', { previousHearts: this.hearts });
                 break;
         }
     }
@@ -68,4 +61,5 @@ class Intro extends Phaser.Scene{
         this.scene.launch('pause');
         this.scene.pause();
     }
+
 }

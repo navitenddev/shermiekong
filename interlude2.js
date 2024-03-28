@@ -12,7 +12,9 @@ class Interlude2 extends Phaser.Scene{
         console.log("interlude prev: " + previousHearts);
         this.hearts = previousHearts;
 
-        this.song = this.sound.add("song1");
+        this.add.image(336, 384, 'day');
+
+        this.song = this.sound.add("song3");
         this.song.volume = 1;
         this.song.loop = true;
         this.song.play();
@@ -25,6 +27,11 @@ class Interlude2 extends Phaser.Scene{
             loop: false
         });
 
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     dialogueInit(){
@@ -37,10 +44,9 @@ class Interlude2 extends Phaser.Scene{
     }
 
     levelTransition(skip){
-        this.song.stop();
         if(skip){
-            this.add.text(20, 20, "Level 3 under construction. Go pick apples.");
-            //this.scene.start("level3", { previousHearts: this.hearts });
+            this.song.stop();
+            this.scene.start("night2", { previousHearts: this.hearts });
         }
         else{
             this.scene.start("AppleGame", { previousHearts: this.hearts });
@@ -75,6 +81,11 @@ class Interlude2 extends Phaser.Scene{
                 .on('pointerdown', () => {this.levelTransition(false)});
                 break;
         }
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 
 }

@@ -1,7 +1,7 @@
 // player.js
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y, initialHearts) {
+    constructor(scene, x, y, initialHearts = 3, speedX = 120, speedY = 230) {
         super(scene, x, y, 'player');
         this.scene = scene;  // Store the scene reference
         scene.add.existing(this);
@@ -13,10 +13,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.isClimbing = false;
         this.hasJettpack = false;
+        this.addedVelocity = 0;
         this.hasShield = false;
+        this.hasScoreMultiplier = false;
         this.hasDestroyBarrelPowerup = false;
-        this.VelocityX = 200;
-        this.VelocityY = 350;
+        this.defaultSpeedX = speedX;
+        this.defaultSpeedY = speedY;
+        this.VelocityX = speedX;
+        this.VelocityY = speedY;
         this.player = this;
         this.facing = true;
         //animations
@@ -47,7 +51,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         });
 
         this.gameOver = false; // Added game-over flag
-        this.hearts = initialHearts || 3; // Default to 3 hearts if no value provided
+        this.hearts = initialHearts; // Default to 3 hearts if no value provided
         this.createHearts(scene);
     }
 
@@ -100,8 +104,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.VelocityY = 400;
         }
         else {
-            this.VelocityX = 200;
-            this.VelocityY = 350;
+            this.VelocityX = this.defaultSpeedX; //120
+            this.VelocityY = this.defaultSpeedY; //230
         }
 
         if (this.cursors.left.isDown) {
@@ -117,6 +121,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         else {
             this.VelocityX = 0;
             this.setVelocityX(this.VelocityX);
+
+            // If player is on moving platform, add platform's velocity
+            if(this.onMovingPlatform) {
+                this.setVelocityX(this.VelocityX + this.addedVelocity);
+            }
+            // If else, set player velocity to 0
+            else{
+                this.VelocityX = 0;
+                this.setVelocityX(this.VelocityX);
+            }
             if(this.facing){
                 this.player.anims.play('faceLeft');
             }
@@ -125,7 +139,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
-        if (this.cursors.up.isDown && this.body.blocked.down) {
+        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.blocked.down) {
             this.setVelocityY(this.VelocityY * -1);
 
         }
@@ -153,7 +167,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 console.log('Player has destroy power-up');
                 otherEntity.destroy();
                 this.hasDestroyBarrelPowerup = false;
-                //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
+                this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
         else {
@@ -169,24 +183,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
     handleGameOver() {
-        // Stop the current scene (this stops updates and rendering)
-        this.scene.scene.stop();
-    
-        // Display a game-over message or screen
         console.log('Game Over');
-        this.showGameOverMessage();
+        this.scene.song.stop();
+        this.scene.scene.start('GameOver');
     }
-    
-    showGameOverMessage() {
-        const gameOverText = this.scene.add.text(200, 200, 'Game Over', { fontSize: '32px', fill: '#fff' });
-        // Add any additional game-over message or screen logic here
-
-        // Doesnt work as of now!
-        this.scene.input.keyboard.once('keydown', (event) => {
-            this.scene.scene.restart(); // Restart the scene when a key is pressed
-        });
-    }
-    
     
     resetPlayerPosition() {
         // Customize this method to reset the player to the starting position

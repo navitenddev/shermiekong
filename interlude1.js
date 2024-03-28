@@ -12,6 +12,8 @@ class Interlude1 extends Phaser.Scene{
         console.log("interlude prev: " + previousHearts);
         this.hearts = previousHearts;
 
+        this.add.image(336, 384, 'day');
+
         this.song = this.sound.add("song2");
         this.song.volume = 1;
         this.song.loop = true;
@@ -24,6 +26,12 @@ class Interlude1 extends Phaser.Scene{
             callbackScope: this,
             loop: false
         });
+
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
 
     }
 
@@ -39,7 +47,7 @@ class Interlude1 extends Phaser.Scene{
     levelTransition(skip){
         this.song.stop();
         if(skip){
-            this.scene.start("level2", { previousHearts: this.hearts });
+            this.scene.start("night1", { previousHearts: this.hearts });
         }
         else{
             this.scene.start("ShermieHero", { previousHearts: this.hearts });
@@ -74,6 +82,11 @@ class Interlude1 extends Phaser.Scene{
                 .on('pointerdown', () => {this.levelTransition(false)});
                 break;
         }
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 
 }

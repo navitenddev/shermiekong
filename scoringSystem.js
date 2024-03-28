@@ -6,7 +6,7 @@ class ScoringSystem {
         this.score = initialScore;
         //this.create();
 
-        this.scoreText = this.scene.add.text(672-150, 10, 'Score: ' + this.score, { fontSize: '40px', fill: '#ff0000' }).setOrigin(0.5, 0);
+        this.scoreText = this.scene.add.text(672/2, 10, 'Score: ' + this.score, { fontSize: '40px', fill: '#ff0000' }).setOrigin(0.5, 0);
         this.scoreText.setVisible(true);
         this.scoreText.setDepth(1); // Use a value that ensures it's above other elements
         this.scoreText.setScrollFactor(0);
@@ -17,6 +17,9 @@ class ScoringSystem {
     }     
     
     updateScore(points) {
+        if(this.scene.player.hasScoreMultiplier){
+            points *= 2;
+        }
         this.score += points;
         this.scoreText.setText('Score: ' + this.score);
     }
@@ -33,6 +36,16 @@ class ScoringSystem {
 
     awardPointsForCollectingJettpack() {
         const points = 100; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForDestroyingBarrel() {
+        const points = 30; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForCollectingScoreMultiplier() {
+        const points = 10; // Adjust the points as needed
         this.updateScore(points);
     }
 }

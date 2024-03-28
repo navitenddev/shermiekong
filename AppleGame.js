@@ -7,10 +7,21 @@ class AppleGame extends Phaser.Scene {
     this.load.image('orchard', 'assets/orchard.png');
     this.load.image('shermie_basket', 'assets/shermie_basket.png');
     this.load.image('apple', 'assets/apple.png');
-    this.load.audio('ding', 'assets/public_assets_coin.mp3');
+    this.load.audio('ding', 'assets/collect_sound.mp3');
+    this.load.spritesheet('basket',
+        'assets/shermie_basket_walk.png',
+        { frameWidth: 128, frameHeight: 128 });
   }
 
   create() {
+    const { previousHearts } = this.scene.settings.data;
+    if(previousHearts == undefined){
+      this.hearts = 3;
+    }
+    else{
+      this.hearts = previousHearts;
+    }
+
     this.player;
     this.cursors;
     this.playerSpeed = 500;
@@ -27,13 +38,13 @@ class AppleGame extends Phaser.Scene {
     this.coinMusic = this.sound.add('ding');
 
     this.add.image(336,384,'orchard');
-    this.player = this.physics.add.image(630,713, 'shermie_basket').setScale(0.8);;
+    this.player = this.physics.add.sprite(630, 690, 'basket');
     this.player.setImmovable(true);
     this.player.body.allowGravity = false;
     this.player.setCollideWorldBounds(true);
     this.player.setSize(80,15).setOffset(10,70);
 
-    this.target = this.physics.add.image(0, 0, 'apple').setScale(0.9);;
+    this.target = this.physics.add.image(0, 0, 'apple').setScale(0.7);
     this.target.setMaxVelocity(0, 750);
     this.physics.add.overlap(this.target, this.player, this.score, null, this);
 
@@ -50,6 +61,40 @@ class AppleGame extends Phaser.Scene {
     });
 
     this.timeEvent = this.time.delayedCall(30000, this.gameOver, [], this);
+    
+    //animation
+    this.facing = true;
+    this.anims.create({
+      key: 'b_left',
+      frames: this.anims.generateFrameNumbers('basket', { start: 0, end: 2 }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+        key: 'b_faceLeft',
+        frames: [ { key: 'basket', frame: 0 } ],
+        frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'b_faceRight',
+        frames: [ { key: 'basket', frame: 3 } ],
+        frameRate: 20
+    });
+  
+    this.anims.create({
+        key: 'b_right',
+        frames: this.anims.generateFrameNumbers('basket', { start: 3, end: 5 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    //pause button
+    this.add.image(625, 40, 'pause_button')
+    .setScale(0.5)
+    .setInteractive()
+    .on('pointerdown', () => {this.pause()});
   }
 
   update() {
@@ -64,12 +109,22 @@ class AppleGame extends Phaser.Scene {
 
     if(left.isDown){
       this.player.setVelocityX(-this.playerSpeed);
+      this.player.anims.play('b_left', true);
+      this.facing = true;
     }
     else if (right.isDown){
       this.player.setVelocityX(this.playerSpeed);
+      this.player.anims.play('b_right', true);
+      this.facing = false;
     }
     else{
       this.player.setVelocityX(0);
+      if(this.facing){
+        this.player.anims.play('b_faceLeft');
+      }
+      else{
+        this.player.anims.play('b_faceRight');
+      }
     }
   }
   
@@ -86,20 +141,28 @@ class AppleGame extends Phaser.Scene {
   };
 
   gameOver (){
-      if (game) {
-          game.scene.pause();
-          game.scene.remove("scene-game");
-          game.destroy();
-      }
-  
-      if (this.points >= 10) {
-          this.add.text(300, 300, "Win!", {font: '64px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
-      } else {
-          this.add.text(100, 300, "Better luck next time!", {font: '40px'}).setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
-      }
-  
-      // gameEndScoreSpan.textContent = this.points;
-      // gameEndDiv.style.display = "flex";
+    if (this.points >= 10) {
+      this.line = this.add.text(100, 620, "Yum! That's plenty of apples for today.");
+      this.hearts += 1;
+      console.log("num hearts: " + this.hearts);
+    } 
+    else {
+      this.line = this.add.text(100, 620, "Wish I could've picked a few more...");
+    }
+    
+    this.line.setDepth(3);
+    this.box = this.add.image(336, 600, "dialogue")
+      .setInteractive()
+      .on('pointerdown', () => {
+        this.sound.get('song3').stop();
+        this.scene.start("night2", { previousHearts: this.hearts });
+      });
+      
+  }
+
+  pause(){
+    this.scene.launch('pause');
+    this.scene.pause();
   }
 }
 

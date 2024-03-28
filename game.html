@@ -13,12 +13,18 @@
     <script src="intro.js" type="text/javascript"></script>
     <script src="interlude1.js" type="text/javascript"></script>
     <script src="interlude2.js" type="text/javascript"></script>
+    <script src="night1.js" type="text/javascript"></script>
+    <script src="night2.js" type="text/javascript"></script>
     <script src="level1.js" type="text/javascript"></script>
     <script src="level2.js" type="text/javascript"></script>
+    <script src="level3.js" type="text/javascript"></script>
     <script src="ShermieHero.js" type="text/javascript"></script>
     <script src="AppleGame.js" type="text/javascript"></script>
     <script src="LevelSelect.js" type="text/javascript"></script>
     <script src="MainMenu.js" type="text/javascript"></script>
+    <script src="pause.js" type="text/javascript"></script>
+    <script src="howto.js" type="text/javascript"></script>
+    <script src="gameover.js" type="text/javascript"></script>
     <script src="scoringSystem.js" type="text/javascript"></script>
     <style type="text/css">
         body {
@@ -43,7 +49,10 @@
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
         },
-        scene: [MainMenu, LevelSelect, Intro, Level1, Interlude1, Level2, ShermieHero, Interlude2, AppleGame]
+        scene: [MainMenu, HowTo, LevelSelect, Pause, GameOver, Intro, 
+                Level1, Interlude1, ShermieHero, Night1, 
+                Level2, Interlude2, AppleGame, Night2, 
+                Level3]
     };
     game = new Phaser.Game(config);
     if (!game.gameState) {
