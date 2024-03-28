@@ -1,7 +1,7 @@
 // player.js
 class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene, x, y, initialHearts) {
+    constructor(scene, x, y, initialHearts = 3, speedX = 120, speedY = 230) {
         super(scene, x, y, 'player');
         this.scene = scene;  // Store the scene reference
         scene.add.existing(this);
@@ -16,8 +16,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.addedVelocity = 0;
         this.hasShield = false;
         this.hasDestroyBarrelPowerup = false;
-        this.VelocityX = 200;
-        this.VelocityY = 350;
+        this.defaultSpeedX = speedX;
+        this.defaultSpeedY = speedY;
+        this.VelocityX = speedX;
+        this.VelocityY = speedY;
         this.player = this;
         this.facing = true;
         //animations
@@ -48,7 +50,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         });
 
         this.gameOver = false; // Added game-over flag
-        this.hearts = initialHearts || 3; // Default to 3 hearts if no value provided
+        this.hearts = initialHearts; // Default to 3 hearts if no value provided
         this.createHearts(scene);
     }
 
@@ -96,8 +98,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.VelocityY = 400;
         }
         else {
-            this.VelocityX = 120; //120
-            this.VelocityY = 230; //230
+            this.VelocityX = this.defaultSpeedX; //120
+            this.VelocityY = this.defaultSpeedY; //230
         }
 
         if (this.cursors.left.isDown) {
