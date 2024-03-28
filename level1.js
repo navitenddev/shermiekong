@@ -77,6 +77,8 @@ class Level1 extends Phaser.Scene {
         this.player = new Player(this, 100, 700, 3);
         this.barrel = new Barrel(this, 750, 300);
     
+        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+
         this.barrels = [];
         this.barrels.push(this.barrel);
     
@@ -244,11 +246,10 @@ class Level1 extends Phaser.Scene {
     
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
-        barrel.onCollision(player);
         player.onCollision(barrel);
 
         // Award points for jumping on top of the barrel
-        this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
+        //this.game.gameState.scoringSystem.awardPointsForJumpingOnBarrel();
         
         if (barrel.isDestroyed()) {
             this.fireball.onCollision(player);

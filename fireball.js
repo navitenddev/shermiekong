@@ -13,11 +13,6 @@ class Fireball extends Phaser.Physics.Arcade.Sprite {
         this.direction = -1; // -1 for left, 1 for right
     }
 
-    update() {
-        // Move the fireball
-        this.handleFireballMovement();
-    }
-
     handleFireballMovement() {
         this.body.setVelocityX(200 * this.direction);
         // Check if the fireball is touching a wall

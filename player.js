@@ -70,6 +70,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.heartsArray[i].visible = i < this.hearts;
         }
     }
+
+    loseHearts() {
+        this.hearts--;
+        this.updateHearts();
+    }
     
     playerClimbing() {
         if (this.isClimbing) {
@@ -127,17 +132,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onCollision(otherEntity) {
-
-        this.body.destroy();
-
-        console.log('Player hit by a barrel!');
-        
         if (otherEntity instanceof Barrel) {
             if(!this.hasDestroyBarrelPowerup)
             {
                 console.log('Player does not have destroy power-up');
                 if(!this.hasShield){
-                    this.hearts--; // Decrease player's health when colliding with a barrel
+                    this.player.loseHearts(); // Decrease player's health when colliding with a barrel
                     this.updateHearts();
             
                     if (this.hearts <= 0) {
@@ -154,6 +154,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 otherEntity.destroy();
                 this.hasDestroyBarrelPowerup = false;
                 //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
+            }
+        }
+        else {
+            if (this.y < otherEntity.y) {
+                // Player is above the spike, handle collision
+                this.loseHearts();
+                this.resetPlayerPosition();
+                if (this.hearts == 0) {
+                    this.handleGameOver();
+                }
             }
         }
     }
@@ -181,8 +191,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     resetPlayerPosition() {
         // Customize this method to reset the player to the starting position
         // For example, set the player's position to the initial coordinates
-        this.x = 100;
-        this.y = 700;
+        this.player.x = 100;
+        this.player.y = 700;
         
         // Additional reset logic, if needed
 

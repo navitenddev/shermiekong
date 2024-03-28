@@ -16,6 +16,7 @@ class Level2 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('heart', 'assets/heart.png');
+        this.load.image('fireball', 'assets/fireball.png');
     }
 
     create() {
@@ -39,7 +40,8 @@ class Level2 extends Phaser.Scene {
     
     update() {
         this.player.handlePlayerMovement();
-        
+        this.fireball.handleFireballMovement();
+
         if (this.player.isClimbing) {
             this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
         }
@@ -129,7 +131,9 @@ class Level2 extends Phaser.Scene {
     createEntities() {
         const { previousHearts } = this.scene.settings.data;
         console.log("prev: " + previousHearts);
+
         this.player = new Player(this, 40, 600, previousHearts);
+        this.fireball = new Fireball(this, 750, 150);
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
@@ -225,7 +229,7 @@ class Level2 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, floor);
         // Set up collision between player and the spikes
-        this.physics.add.collider(this.player, spikes, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
@@ -255,9 +259,12 @@ class Level2 extends Phaser.Scene {
         this.player.playerClimbing();
     }
 
-
     handleCollision() {
-        this.player.onCollision(spikes);
+        this.player.onCollision(this.fireball);
+    }
+
+    handleCollisionSpikes(player, spikes) {
+        player.onCollision(spikes);
     }
 
     nextLevel(player, flag){
