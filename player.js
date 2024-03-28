@@ -199,8 +199,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     resetPlayerPosition() {
         // Customize this method to reset the player to the starting position
         // For example, set the player's position to the initial coordinates
-        this.player.x = 100;
-        this.player.y = 700;
+        this.player.x = 30;
+        this.player.y = 670;
         
         // Additional reset logic, if needed
 
