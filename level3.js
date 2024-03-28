@@ -16,6 +16,7 @@ class Level3 extends Phaser.Scene {
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('moving_platform', 'assets/moving_platform.png');
+        this.load.image('score_multiplier', 'assets/score_multiplier.png');
         this.load.image('add_points', 'assets/add_points.png');
         this.load.image('add_points_2', 'assets/add_points.png');
         this.load.image('add_points_3', 'assets/add_points.png');
@@ -187,10 +188,34 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, floor);
         this.physics.add.collider(this.player, platforms);
 
+        // Create Score Multiplier powerup
+        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 400, 'score_multiplier');
+        this.scoreMultiplierPowerup.setScale(0.25);
+        this.physics.add.collider(this.scoreMultiplierPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Score Multiplier
+        this.physics.add.overlap(this.player, this.scoreMultiplierPowerup, this.collectScoreMultiplier, null, this);
+
         //var ladders = this.physics.add.staticGroup();
         //this.physics.add.collider(ladders, floor);
         // Add an overlap event to detect when the player is on the ladder
         //this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+    }
+
+    collectScoreMultiplier(player, scoreMultiplier) {
+        // Disable the powerup temporarily
+        scoreMultiplier.disableBody(true, true);
+        
+        player.hasScoreMultiplier = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerScoreMultiplier, [this.player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingScoreMultiplier();
+        console.log('Score Multiplier collected!');
+    }
+
+    resetPlayerScoreMultiplier(player) {
+        player.hasScoreMultiplier = false;
     }
 
     // Determine behavior of each moving platform

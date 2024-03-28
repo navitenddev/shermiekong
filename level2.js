@@ -16,6 +16,8 @@ class Level2 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('heart', 'assets/heart.png');
+        
+        this.load.image('jettpack', 'assets/jettpack.png');
     }
 
     create() {
@@ -250,9 +252,43 @@ class Level2 extends Phaser.Scene {
         // Add an overlap event to detect when the player is on the ladder
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
 
+        // Create Jettpack powerup
+        this.jettpackPowerup = this.physics.add.sprite(200, 600, 'jettpack');
+        this.jettpackPowerup.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
+
+        // Create Jettpack powerup
+        this.jettpackPowerup2 = this.physics.add.sprite(600, 400, 'jettpack');
+        this.jettpackPowerup2.setScale(0.10);
+        this.physics.add.collider(this.jettpackPowerup2, floor);
+
+        // Add an overlap event to detect when the player collects the Jettpack
+        this.physics.add.overlap(this.player, this.jettpackPowerup2, this.collectJettpack, null, this);
+
         //level end marker
         this.flag = this.physics.add.staticSprite(275, 118, 'flag');
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
+    }
+
+    collectJettpack(player, jettpack) {
+        // Disable the powerup temporarily
+        jettpack.disableBody(true, true);
+        
+        player.hasJettpack = true;
+
+        // Timer for the powerup duration
+        this.time.delayedCall(5000, this.resetPlayerVelocity, [this.player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+        console.log('Jettpack collected!');
+    }
+
+    resetPlayerVelocity(player) {
+        player.hasJettpack = false;
+        player.VelocityX = 200;
+        player.VelocityY = 350;
     }
 
     handlePlayerClimbing() {

@@ -17,6 +17,9 @@ class ScoringSystem {
     }     
     
     updateScore(points) {
+        if(this.scene.player.hasScoreMultiplier){
+            points *= 2;
+        }
         this.score += points;
         this.scoreText.setText('Score: ' + this.score);
     }
@@ -33,6 +36,16 @@ class ScoringSystem {
 
     awardPointsForCollectingJettpack() {
         const points = 100; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForDestroyingBarrel() {
+        const points = 30; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForCollectingScoreMultiplier() {
+        const points = 10; // Adjust the points as needed
         this.updateScore(points);
     }
 }

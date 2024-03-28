@@ -15,6 +15,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hasJettpack = false;
         this.addedVelocity = 0;
         this.hasShield = false;
+        this.hasScoreMultiplier = false;
         this.hasDestroyBarrelPowerup = false;
         this.defaultSpeedX = speedX;
         this.defaultSpeedY = speedY;
@@ -166,7 +167,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 console.log('Player has destroy power-up');
                 otherEntity.destroy();
                 this.hasDestroyBarrelPowerup = false;
-                //this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
+                this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
     }
