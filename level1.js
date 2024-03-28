@@ -158,8 +158,12 @@ class Level1 extends Phaser.Scene {
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(454, 700, 'ladder').setScale(0.6);
-        ladders.create(215, 487, 'ladder').setScale(0.6);
-        ladders.create(215, 511, 'ladder').setScale(0.6);
+        ladders.create(119, 600, 'ladder').setScale(0.5);
+        ladders.create(263, 487, 'ladder').setScale(0.6);
+        ladders.create(263, 511, 'ladder').setScale(0.6);
+        ladders.create(454, 500, 'ladder').setScale(0.6);
+        ladders.create(119, 395, 'ladder').setScale(0.5);
+        ladders.create(454, 295, 'ladder').setScale(0.6);
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
