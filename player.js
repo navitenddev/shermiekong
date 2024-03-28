@@ -74,6 +74,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.heartsArray[i].visible = i < this.hearts;
         }
     }
+
+    loseHearts() {
+        this.hearts--;
+        this.updateHearts();
+    }
     
     playerClimbing() {
         if (this.isClimbing) {
@@ -141,23 +146,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     onCollision(otherEntity) {
-
-        //this.body.destroy();
-
-        console.log('Player hit by a barrel!');
-        
         if (otherEntity instanceof Barrel) {
             if(!this.hasDestroyBarrelPowerup)
             {
                 console.log('Player does not have destroy power-up');
                 if(!this.hasShield){
-                    this.hearts--; // Decrease player's health when colliding with a barrel
+                    this.player.loseHearts(); // Decrease player's health when colliding with a barrel
                     this.updateHearts();
             
                     if (this.hearts <= 0) {
                         // Player is out of hearts, handle game over logic
                         this.handleGameOver();
                     } else {
+                        otherEntity.destroy();
                         // Player still has hearts, reset to starting position
                         this.resetPlayerPosition();
                     }
@@ -168,6 +169,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 otherEntity.destroy();
                 this.hasDestroyBarrelPowerup = false;
                 this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
+            }
+        }
+        else if (otherEntity.type == "spikes") {
+            if (this.y < otherEntity.y) {
+                // Player is above the spike, handle collision
+                this.loseHearts();
+                this.resetPlayerPosition();
+                if (this.hearts == 0) {
+                    this.handleGameOver();
+                }
+            }
+        }
+        else if (otherEntity.type == "fireball") {
+            this.resetPlayerPosition();
+            this.loseHearts();
+            if (this.hearts == 0) {
+                this.handleGameOver();
             }
         }
     }
@@ -181,8 +199,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     resetPlayerPosition() {
         // Customize this method to reset the player to the starting position
         // For example, set the player's position to the initial coordinates
-        this.x = 100;
-        this.y = 700;
+        this.player.x = 30;
+        this.player.y = 670;
         
         // Additional reset logic, if needed
 

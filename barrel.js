@@ -10,7 +10,7 @@ class Barrel extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
         this.body.setGravityY(300);
         // Add a property to keep track of the barrel's direction
-        this.direction = -1; // -1 for left, 1 for right
+        this.direction = 1; // -1 for left, 1 for right
 
         //animations
         this.barrel = this;

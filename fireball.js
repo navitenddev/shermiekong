@@ -27,13 +27,9 @@ class Fireball extends Phaser.Physics.Arcade.Sprite {
         });
     }
 
-    update() {
-        // Move the fireball
-        this.handleFireballMovement();
-    }
-
     handleFireballMovement() {
         this.body.setVelocityX(200 * this.direction);
+        this.body.setVelocityY(0);
         // Check if the fireball is touching a wall
         if (this.body.blocked.right) {
             this.direction = -1; // Change direction to left
@@ -45,13 +41,6 @@ class Fireball extends Phaser.Physics.Arcade.Sprite {
         }
         else{
             this.fireball.anims.play('f_right', true);
-        }
-    }
-
-    onCollision(otherEntity) {
-        if (otherEntity instanceof Player) {
-            // Player hit by fireball, destroy player
-            otherEntity.destroy();
         }
     }
 }

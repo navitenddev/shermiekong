@@ -70,6 +70,7 @@ class Level3 extends Phaser.Scene {
         const { previousHearts } = this.scene.settings.data;
         this.player = new Player(this, 30, 670, previousHearts);
         var floor = this.physics.add.staticGroup();
+        var spikes = this.physics.add.staticGroup();
 
         // Initialize moving platforms
         var platforms = this.physics.add.group({
@@ -105,8 +106,9 @@ class Level3 extends Phaser.Scene {
         // Bottom spikes
         var x = 24;
         for (let i = 0; i < 14; i++){
-            floor.create(x, 756, 'spikes');
-            x = x + 48
+            let spike = spikes.create(x, 756, 'spikes');
+            spike.type = "spikes";  // Add a custom property
+            x = x + 48;
         }
 
         // Lowest/starting platforms
@@ -196,10 +198,8 @@ class Level3 extends Phaser.Scene {
         // Add an overlap event to detect when the player collects the Score Multiplier
         this.physics.add.overlap(this.player, this.scoreMultiplierPowerup, this.collectScoreMultiplier, null, this);
 
-        //var ladders = this.physics.add.staticGroup();
-        //this.physics.add.collider(ladders, floor);
-        // Add an overlap event to detect when the player is on the ladder
-        //this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+        this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
+
     }
 
     collectScoreMultiplier(player, scoreMultiplier) {
@@ -441,6 +441,10 @@ class Level3 extends Phaser.Scene {
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+    handleCollisionSpikes(player, spikes) {
+        player.onCollision(spikes);
     }
 
     collectPoints(player, addPoints) {

@@ -13,10 +13,6 @@ class Level1 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
-        this.load.image('wolf', 'assets/wolf.png');
-        this.load.image('fireball', 'assets/fireball.png');
-        this.load.spritesheet('fireball', 'assets/fireball.png',
-        { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
@@ -26,14 +22,7 @@ class Level1 extends Phaser.Scene {
         this.scoringSystem = new ScoringSystem(this);
         this.createBackground();
         this.createEntities();
-        
-        // Set up collision between player and the barrel
-        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
-        // Set up collision between player and the fireball
-        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
-
-        
         this.song = this.sound.add("chiptune1");
         this.song.loop = true;
         this.song.volume = 0.8;
@@ -51,8 +40,9 @@ class Level1 extends Phaser.Scene {
 
     update() {
         this.player.handlePlayerMovement();
-        this.barrel.update();
-        this.fireball.update();
+        this.barrels.forEach(barrel => {
+            barrel.update();
+        });
         if (this.player.isClimbing) {
             this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
         }
@@ -83,8 +73,23 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700, 3, 200, 350);
-        this.barrel = new Barrel(this, 750, 400);
-        this.fireball = new Fireball(this, 750, 300);
+        this.barrel = new Barrel(this, 750, 300);
+    
+        this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
+
+        this.barrels = [];
+        this.barrels.push(this.barrel);
+    
+        this.time.addEvent({
+            delay: 5000,
+            callback: () => {
+                let newBarrel = new Barrel(this, 150, 150);
+                this.barrels.push(newBarrel);
+                this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
+                this.physics.add.collider(newBarrel, floor);
+            },
+            loop: true
+        });
 
         var floor = this.physics.add.staticGroup();
         // 1st floor
@@ -161,7 +166,7 @@ class Level1 extends Phaser.Scene {
 
         // Create Shield power-up
         this.shieldPowerup = this.physics.add.sprite(250, 300, 'shield');
-        this.shieldPowerup.setScale(0.15); // Adjust scale as needed
+        this.shieldPowerup.setScale(0.5); // Adjust scale as needed
         this.physics.add.collider(this.shieldPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Shield power-up
@@ -179,15 +184,15 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
-    collectShield(player, shield) {
+    collectShield(player, shieldPowerup) {
         // Disable the power-up temporarily
-        shield.disableBody(true, true);
+        shieldPowerup.disableBody(true, true);
         
         // Activate shield effect for player
         player.hasShield = true;
     
         // Timer for shield duration
-        this.time.delayedCall(30000, this.deactivateShield, [player], this);
+        this.time.delayedCall(10000, this.deactivateShield, [player], this);
         console.log('Shield collected!');
     }
 
@@ -212,19 +217,10 @@ class Level1 extends Phaser.Scene {
     
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
-        barrel.onCollision(player);
         player.onCollision(barrel);
 
-        
         // Award points for jumping on top of the barrel
         this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
-        
-        //this.fireball.onCollision(player);
-
-        //this.fireball.onCollision(player);
-        if (barrel.isDestroyed()) {
-            this.fireball.onCollision(player);
-        }
 
     }
 
