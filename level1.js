@@ -13,10 +13,6 @@ class Level1 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
-        this.load.image('wolf', 'assets/wolf.png');
-        this.load.image('fireball', 'assets/fireball.png');
-        this.load.spritesheet('fireball', 'assets/fireball.png',
-        { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
@@ -26,9 +22,6 @@ class Level1 extends Phaser.Scene {
         this.scoringSystem = new ScoringSystem(this);
         this.createBackground();
         this.createEntities();
-        
-        // Set up collision between player and the barrel
-        //this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
         this.song = this.sound.add("chiptune1");
         this.song.loop = true;
@@ -173,7 +166,7 @@ class Level1 extends Phaser.Scene {
 
         // Create Shield power-up
         this.shieldPowerup = this.physics.add.sprite(250, 300, 'shield');
-        this.shieldPowerup.setScale(0.15); // Adjust scale as needed
+        this.shieldPowerup.setScale(0.5); // Adjust scale as needed
         this.physics.add.collider(this.shieldPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Shield power-up
@@ -191,15 +184,15 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
-    collectShield(player, shield) {
+    collectShield(player, shieldPowerup) {
         // Disable the power-up temporarily
-        shield.disableBody(true, true);
+        shieldPowerup.disableBody(true, true);
         
         // Activate shield effect for player
         player.hasShield = true;
     
         // Timer for shield duration
-        this.time.delayedCall(30000, this.deactivateShield, [player], this);
+        this.time.delayedCall(10000, this.deactivateShield, [player], this);
         console.log('Shield collected!');
     }
 
@@ -228,10 +221,6 @@ class Level1 extends Phaser.Scene {
 
         // Award points for jumping on top of the barrel
         this.game.gameState.scoringSystem.awardPointsForJumpingBarrel();
-        
-        if (barrel.isDestroyed()) {
-            this.fireball.onCollision(player);
-        }
 
     }
 

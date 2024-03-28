@@ -16,7 +16,8 @@ class Level2 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('heart', 'assets/heart.png');
-        
+        this.load.spritesheet('fireball', 'assets/fireball.png',
+        { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
     }
 

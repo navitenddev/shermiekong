@@ -158,6 +158,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                         // Player is out of hearts, handle game over logic
                         this.handleGameOver();
                     } else {
+                        otherEntity.destroy();
                         // Player still has hearts, reset to starting position
                         this.resetPlayerPosition();
                     }
