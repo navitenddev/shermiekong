@@ -17,14 +17,33 @@ class Level3 extends Phaser.Scene {
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('moving_platform', 'assets/moving_platform.png');
         this.load.image('score_multiplier', 'assets/score_multiplier.png');
+        this.load.image('add_points', 'assets/add_points.png');
+        this.load.image('add_points_2', 'assets/add_points.png');
+        this.load.image('add_points_3', 'assets/add_points.png');
+        this.load.image('add_points_4', 'assets/add_points.png');
     }
 
     create() {
+        const scoreFromLevel2 = this.game.gameState.scoringSystem.getScore();
+
+        console.log("score: "+ scoreFromLevel2);
+        // Create and associate the scoring system with the scene, passing the score
+        this.scoringSystem = new ScoringSystem(this, scoreFromLevel2);
+
         this.createBackground();
         this.createEntities();
+
+        this.game.gameState.scoringSystem = this.scoringSystem;
+        
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     update() {
+        this.isTouchingAddPoints = false;
         this.player.handlePlayerMovement();
         this.player.onMovingPlatform = false;
         this.switchPlatformDirections();
@@ -32,6 +51,9 @@ class Level3 extends Phaser.Scene {
 
     createBackground() {
         this.add.image(400, 300, 'lvl_default_bg');
+        this.song = this.sound.add("chiptune4");
+        this.song.loop = true;
+        this.song.play();
     }
 
     // Updates player's horizontal movement speed to match the platform
@@ -45,7 +67,8 @@ class Level3 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 30, 670);
+        const { previousHearts } = this.scene.settings.data;
+        this.player = new Player(this, 30, 670, previousHearts);
         var floor = this.physics.add.staticGroup();
 
         // Initialize moving platforms
@@ -53,6 +76,31 @@ class Level3 extends Phaser.Scene {
             immovable: true,
             allowGravity: false
         });
+
+        this.addPoints = this.physics.add.sprite(300, 640, 'add_points').setScale(0.05);
+        this.addPoints.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints, floor);
+        this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
+
+        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points_2').setScale(0.05);
+        this.addPoints2.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints2, floor);
+        this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
+
+        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points_3').setScale(0.05);
+        this.addPoints3.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints3, floor);
+        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
+
+        this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points_4').setScale(0.05);
+        this.addPoints4.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints3, floor);
+        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
+
+
+        // var addPoints = this.physics.add.staticGroup();
+        // addPoints.create(100, 400, 'add_points').setScale(0.1);;
+        // addPoints.create(500, 500, 'add_points').setScale(0.1);;
 
         // Bottom spikes
         var x = 24;
@@ -393,5 +441,22 @@ class Level3 extends Phaser.Scene {
     handlePlayerClimbing() {
         this.player.isClimbing = true;
         this.player.playerClimbing();
+    }
+
+    collectPoints(player, addPoints) {
+        // if (this.isTouchingAddPoints) {
+        //     // Increase score only if not already touching the image
+        //     this.scoringSystem.awardPointsForCollectingJettpack();
+        //     this.isTouchingAddPoints = false; // Set flag to true to indicate collision
+        //     // Remove 'add_points' image
+        //     addPoints.destroy();
+        // }
+        addPoints.disableBody(true, true);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }

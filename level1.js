@@ -15,13 +15,14 @@ class Level1 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('wolf', 'assets/wolf.png');
         this.load.image('fireball', 'assets/fireball.png');
+        this.load.spritesheet('fireball', 'assets/fireball.png',
+        { frameWidth: 32, frameHeight: 24 });
+        this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
-        this.load.image('heart', 'assets/heart.png');
     }
 
     create() {
-        console.log("Creating Level1 scene...");
         this.scoringSystem = new ScoringSystem(this);
         this.createBackground();
         this.createEntities();
@@ -40,6 +41,12 @@ class Level1 extends Phaser.Scene {
 
         // Access the scoring system from the Game class
         this.game.gameState.scoringSystem = this.scoringSystem;
+
+        //pause button
+        this.add.image(625, 40, 'pause_button')
+        .setScale(0.5)
+        .setInteractive()
+        .on('pointerdown', () => {this.pause()});
     }
 
     update() {
@@ -75,7 +82,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700, 3);
+        this.player = new Player(this, 100, 700, 3, 200, 350);
         this.barrel = new Barrel(this, 750, 400);
         this.fireball = new Fireball(this, 750, 300);
 
@@ -162,7 +169,6 @@ class Level1 extends Phaser.Scene {
 
         // Create Destroy Barrel power-up
         this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel');
-        this.destroyBarrelPowerup.setScale(0.15); // Adjust scale as needed
         this.physics.add.collider(this.destroyBarrelPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Destroy Barrel power-up
@@ -227,5 +233,10 @@ class Level1 extends Phaser.Scene {
         console.log("next: " + this.player.hearts);
         this.scene.start("interlude1", { previousHearts: this.player.hearts });
         //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
+    }
+
+    pause(){
+        this.scene.launch('pause');
+        this.scene.pause();
     }
 }

@@ -6,7 +6,7 @@ class ScoringSystem {
         this.score = initialScore;
         //this.create();
 
-        this.scoreText = this.scene.add.text(672-150, 10, 'Score: ' + this.score, { fontSize: '40px', fill: '#ff0000' }).setOrigin(0.5, 0);
+        this.scoreText = this.scene.add.text(672/2, 10, 'Score: ' + this.score, { fontSize: '40px', fill: '#ff0000' }).setOrigin(0.5, 0);
         this.scoreText.setVisible(true);
         this.scoreText.setDepth(1); // Use a value that ensures it's above other elements
         this.scoreText.setScrollFactor(0);
