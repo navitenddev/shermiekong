@@ -95,8 +95,8 @@ class Level3 extends Phaser.Scene {
 
         this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points_4').setScale(0.05);
         this.addPoints4.body.allowGravity = false;
-        this.physics.add.collider(this.addPoints3, floor);
-        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
+        this.physics.add.collider(this.addPoints4, floor);
+        this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
 
 
         // var addPoints = this.physics.add.staticGroup();
@@ -302,7 +302,7 @@ class Level3 extends Phaser.Scene {
             this.platform8.setVelocityX(70);
         }
         if(this.platform8.body.velocity.x == 0){
-            this.platform7.setVelocityX(70);
+            this.platform8.setVelocityX(70);
         }
 
         // Platform 9 - Left stack top

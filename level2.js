@@ -141,7 +141,7 @@ class Level2 extends Phaser.Scene {
         const { previousHearts } = this.scene.settings.data;
         console.log("prev: " + previousHearts);
 
-        this.player = new Player(this, 80, 700, previousHearts);
+        this.player = new Player(this, 80, 620, previousHearts);
         this.fireball = new Fireball(this, 750, 150);
         this.fireball.type = "fireball";
         this.fireball2 = new Fireball(this, 0, 350);
@@ -277,7 +277,7 @@ class Level2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
 
         // Create Jettpack powerup
-        this.jettpackPowerup = this.physics.add.sprite(200, 600, 'jettpack');
+        this.jettpackPowerup = this.physics.add.sprite(230, 600, 'jettpack');
         this.jettpackPowerup.setScale(0.10);
         this.physics.add.collider(this.jettpackPowerup, floor);
 
