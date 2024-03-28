@@ -171,7 +171,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.game.gameState.scoringSystem.awardPointsForDestroyingBarrel();
             }
         }
-        else {
+        else if (otherEntity.type == "spikes") {
             if (this.y < otherEntity.y) {
                 // Player is above the spike, handle collision
                 this.loseHearts();
@@ -179,6 +179,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 if (this.hearts == 0) {
                     this.handleGameOver();
                 }
+            }
+        }
+        else if (otherEntity.type == "fireball") {
+            this.resetPlayerPosition();
+            this.loseHearts();
+            if (this.hearts == 0) {
+                this.handleGameOver();
             }
         }
     }

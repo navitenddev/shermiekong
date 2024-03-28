@@ -48,6 +48,8 @@ class Level2 extends Phaser.Scene {
     update() {
         this.player.handlePlayerMovement();
         this.fireball.handleFireballMovement();
+        this.fireball2.handleFireballMovement();
+        this.fireball3.handleFireballMovement();
 
         if (this.player.isClimbing) {
             this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
@@ -139,8 +141,13 @@ class Level2 extends Phaser.Scene {
         const { previousHearts } = this.scene.settings.data;
         console.log("prev: " + previousHearts);
 
-        this.player = new Player(this, 40, 600, previousHearts);
+        this.player = new Player(this, 80, 700, previousHearts);
         this.fireball = new Fireball(this, 750, 150);
+        this.fireball.type = "fireball";
+        this.fireball2 = new Fireball(this, 0, 350);
+        this.fireball2.type = "fireball";
+        this.fireball3 = new Fireball(this, 750, 700);
+        this.fireball3.type = "fireball";
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
@@ -151,8 +158,10 @@ class Level2 extends Phaser.Scene {
             floor.create(x, 756, 'girder_blue');
             x = x + 48
         }
-        spikes.create(600, 756, 'spikes');
-        spikes.create(648, 756, 'spikes');
+        let spike1 = spikes.create(600, 756, 'spikes');
+        spike1.type = "spikes";
+        let spike2 = spikes.create(648, 756, 'spikes');
+        spike2.type = "spikes";
 
         // Starting platform
         floor.create(24, 669, 'girder_blue');
@@ -162,11 +171,16 @@ class Level2 extends Phaser.Scene {
         floor.create(216, 669, 'girder_blue');
 
         // Middle spikes
-        spikes.create(264, 669, 'spikes');
-        spikes.create(312, 669, 'spikes');
-        spikes.create(360, 669, 'spikes');
-        spikes.create(408, 669, 'spikes');
-        spikes.create(456, 669, 'spikes');
+        let spike3 = spikes.create(264, 669, 'spikes');
+        spike3.type = "spikes";
+        let spike4 = spikes.create(312, 669, 'spikes');
+        spike4.type = "spikes";
+        let spike5 = spikes.create(360, 669, 'spikes');
+        spike5.type = "spikes";
+        let spike6 = spikes.create(408, 669, 'spikes');
+        spike6.type = "spikes";
+        let spike7 = spikes.create(456, 669, 'spikes');
+        spike7.type = "spikes";
 
         // Lower-right platforms
         floor.create(648, 669, 'girder_blue');
@@ -206,8 +220,11 @@ class Level2 extends Phaser.Scene {
         floor.create(408, 365, 'girder_blue');
         this.brokenfloor11 = new BrokenFloor(this, 360, 365);
 
-        spikes.create(648, 365, 'spikes');
-        spikes.create(600, 365, 'spikes');
+        let spike8 = spikes.create(648, 365, 'spikes');
+        spike8.type = "spikes";
+        let spike9 = spikes.create(600, 365, 'spikes');
+        spike9.type = "spikes";
+
         floor.create(552, 365, 'girder_blue');
 
         this.brokenfloor12 = new BrokenFloor(this, 648, 278);
@@ -237,6 +254,9 @@ class Level2 extends Phaser.Scene {
         this.physics.add.collider(this.player, floor);
         // Set up collision between player and the spikes
         this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
+        this.physics.add.collider(this.player, this.fireball, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.fireball2, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.fireball3, this.handleCollision, null, this);
 
         var ladders = this.physics.add.staticGroup();
         ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
@@ -300,8 +320,8 @@ class Level2 extends Phaser.Scene {
         this.player.playerClimbing();
     }
 
-    handleCollision() {
-        this.player.onCollision(this.fireball);
+    handleCollision(player, fireball) {
+        player.onCollision(fireball);
     }
 
     handleCollisionSpikes(player, spikes) {
