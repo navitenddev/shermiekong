@@ -78,22 +78,22 @@ class Level3 extends Phaser.Scene {
             allowGravity: false
         });
 
-        this.addPoints = this.physics.add.sprite(300, 640, 'add_points').setScale(0.05);
+        this.addPoints = this.physics.add.sprite(300, 640, 'add_points').setScale(0.5);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
 
-        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points_2').setScale(0.05);
+        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points_2').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
         this.physics.add.collider(this.addPoints2, floor);
         this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
 
-        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points_3').setScale(0.05);
+        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points_3').setScale(0.5);
         this.addPoints3.body.allowGravity = false;
         this.physics.add.collider(this.addPoints3, floor);
         this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
-        this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points_4').setScale(0.05);
+        this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points_4').setScale(0.5);
         this.addPoints4.body.allowGravity = false;
         this.physics.add.collider(this.addPoints4, floor);
         this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
@@ -191,8 +191,7 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
 
         // Create Score Multiplier powerup
-        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 400, 'score_multiplier');
-        this.scoreMultiplierPowerup.setScale(0.25);
+        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 400, 'score_multiplier');;
         this.physics.add.collider(this.scoreMultiplierPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Score Multiplier
