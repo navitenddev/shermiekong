@@ -15,6 +15,9 @@ class GameOver extends Phaser.Scene{
         this.add.image(336, 470, 'game_over');
         this.add.image(336, 470, "main_menu_button")
         .setInteractive()
-        .on('pointerdown', () => {this.scene.start("startScreen")});
+        .on('pointerdown', () => {
+            this.soundEffect.stop();
+            this.scene.start("startScreen");
+        });
     }
 }
