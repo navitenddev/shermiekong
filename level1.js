@@ -16,6 +16,9 @@ class Level1 extends Phaser.Scene {
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
+        this.load.image('add_points', 'assets/add_points.png');
+        this.load.image('add_points_2', 'assets/add_points.png');
+        this.load.image('add_points_3', 'assets/add_points.png');
     }
 
     create() {
@@ -74,6 +77,22 @@ class Level1 extends Phaser.Scene {
     createEntities() {
         this.player = new Player(this, 100, 700, 3, 200, 350);
         this.barrel = new Barrel(this, 750, 300);
+
+        //points
+        this.addPoints = this.physics.add.sprite(300, 640, 'add_points').setScale(0.05);
+        this.addPoints.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints, floor);
+        this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
+
+        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points_2').setScale(0.05);
+        this.addPoints2.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints2, floor);
+        this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
+
+        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points_3').setScale(0.05);
+        this.addPoints3.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints3, floor);
+        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
         var floor = this.physics.add.staticGroup();
         // 1st floor
@@ -236,6 +255,11 @@ class Level1 extends Phaser.Scene {
         //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
     }
 
+    collectPoints(player, addPoints) {
+        addPoints.disableBody(true, true);
+        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+    }
+    
     pause(){
         this.scene.launch('pause');
         this.scene.pause();
