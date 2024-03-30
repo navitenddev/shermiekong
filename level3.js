@@ -40,6 +40,10 @@ class Level3 extends Phaser.Scene {
         .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {this.pause()});
+
+        //next level flag
+        this.flag = this.physics.add.staticSprite(630, 205, 'flag'); //630, 205
+        this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
     update() {
@@ -52,6 +56,7 @@ class Level3 extends Phaser.Scene {
     createBackground() {
         this.add.image(400, 300, 'lvl_default_bg');
         this.song = this.sound.add("chiptune4");
+        this.song.volume = 0.8;
         this.song.loop = true;
         this.song.play();
     }
@@ -461,5 +466,10 @@ class Level3 extends Phaser.Scene {
     pause(){
         this.scene.launch('pause');
         this.scene.pause();
+    }
+
+    nextLevel(player, flag){
+        this.song.stop();
+        this.scene.start("end", { previousHearts: this.player.hearts });
     }
 }
