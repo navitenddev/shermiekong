@@ -449,7 +449,7 @@ class Level3 extends Phaser.Scene {
 
     collectPoints(player, addPoints) {
         addPoints.disableBody(true, true);
-        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+        this.game.gameState.scoringSystem.awardPointsForCollectingPoints();
     }
 
     pause(){
