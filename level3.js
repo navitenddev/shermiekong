@@ -18,9 +18,6 @@ class Level3 extends Phaser.Scene {
         this.load.image('moving_platform', 'assets/moving_platform.png');
         this.load.image('score_multiplier', 'assets/score_multiplier.png');
         this.load.image('add_points', 'assets/add_points.png');
-        this.load.image('add_points_2', 'assets/add_points.png');
-        this.load.image('add_points_3', 'assets/add_points.png');
-        this.load.image('add_points_4', 'assets/add_points.png');
     }
 
     create() {
@@ -88,17 +85,17 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
 
-        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points_2').setScale(0.5);
+        this.addPoints2 = this.physics.add.sprite(50, 500, 'add_points').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
         this.physics.add.collider(this.addPoints2, floor);
         this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
 
-        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points_3').setScale(0.5);
+        this.addPoints3 = this.physics.add.sprite(300, 200, 'add_points').setScale(0.5);
         this.addPoints3.body.allowGravity = false;
         this.physics.add.collider(this.addPoints3, floor);
         this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
-        this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points_4').setScale(0.5);
+        this.addPoints4 = this.physics.add.sprite(650, 300, 'add_points').setScale(0.5);
         this.addPoints4.body.allowGravity = false;
         this.physics.add.collider(this.addPoints4, floor);
         this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
