@@ -12,9 +12,12 @@ class GameOver extends Phaser.Scene{
         this.soundEffect = this.sound.add("game_over_sound");
         this.soundEffect.volume = 0.8;
         this.soundEffect.play();
-        this.add.image(336, 470, 'game_over');
-        this.add.image(336, 470, "main_menu_button")
+        this.add.image(336, 768/2, 'game_over');
+        this.add.image(336, 768/2, "main_menu_button")
         .setInteractive()
-        .on('pointerdown', () => {this.scene.start("startScreen")});
+        .on('pointerdown', () => {
+            this.soundEffect.stop();
+            this.scene.start("startScreen");
+        });
     }
 }

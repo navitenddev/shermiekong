@@ -2,7 +2,8 @@ class MainMenu extends Phaser.Scene{
     constructor(){
         super("startScreen");
     }
-    //note: may need to move these to individual load screens before levels
+    //note: Put assets that are used in multiple levels here (ex: hearts)
+    //so they do not need to be re-loaded
     preload() {
         //Shermie
         this.load.spritesheet('player',
@@ -12,10 +13,8 @@ class MainMenu extends Phaser.Scene{
 
         // Level Backgrounds
         this.load.image('lvl_default_bg', 'assets/lvl-default-bg.png');
-        this.load.image('lvl_1_bg', 'assets/lvl-1-bg.png');
 
         // Level Entities
-        this.load.image('platform', 'assets/platform.png');
         this.load.image('shermie', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
@@ -33,6 +32,7 @@ class MainMenu extends Phaser.Scene{
         this.load.audio('chiptune2', 'assets/chiptune2.mp3');
         this.load.audio('chiptune3', 'assets/chiptune3.mp3');
         this.load.audio('chiptune4', 'assets/chiptune4.mp3');
+        this.load.audio('chiptune5', 'assets/chiptune5.mp3');
         this.load.audio('song1', 'assets/song1.mp3');
         this.load.audio('song2', 'assets/song2.mp3');
         this.load.audio('song3', 'assets/song3.mp3');
