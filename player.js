@@ -14,6 +14,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.isClimbing = false;
         this.hasJettpack = false;
         this.addedVelocity = 0;
+        this.conveyorVelocity = 0;
         this.hasShield = false;
         this.hasScoreMultiplier = false;
         this.hasDestroyBarrelPowerup = false;
@@ -110,12 +111,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if (this.cursors.left.isDown) {
             this.facing = true; //take true = was last walking left and false = was last walking right
-            this.setVelocityX(this.VelocityX * -1);
+            this.setVelocityX(this.VelocityX * -1 + this.conveyorVelocity);
             this.player.anims.play('left', true);
         }
         else if (this.cursors.right.isDown) {
             this.facing = false;
-            this.setVelocityX(this.VelocityX);
+            this.setVelocityX(this.VelocityX + this.conveyorVelocity);
             this.player.anims.play('right', true);
         }
         else {
@@ -126,10 +127,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if(this.onMovingPlatform) {
                 this.setVelocityX(this.VelocityX + this.addedVelocity);
             }
-            // If else, set player velocity to 0
+            // If else, set player velocity to 0 or conveyor belt velocity
             else{
                 this.VelocityX = 0;
-                this.setVelocityX(this.VelocityX);
+                this.setVelocityX(this.VelocityX + this.conveyorVelocity);
             }
             if(this.facing){
                 this.player.anims.play('faceLeft');

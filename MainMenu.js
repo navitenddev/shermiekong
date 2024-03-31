@@ -33,6 +33,7 @@ class MainMenu extends Phaser.Scene{
         this.load.audio('chiptune2', 'assets/chiptune2.mp3');
         this.load.audio('chiptune3', 'assets/chiptune3.mp3');
         this.load.audio('chiptune4', 'assets/chiptune4.mp3');
+        this.load.audio('chiptune5', 'assets/chiptune5.mp3');
         this.load.audio('song1', 'assets/song1.mp3');
         this.load.audio('song2', 'assets/song2.mp3');
         this.load.audio('song3', 'assets/song3.mp3');
