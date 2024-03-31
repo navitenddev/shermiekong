@@ -448,15 +448,8 @@ class Level3 extends Phaser.Scene {
     }
 
     collectPoints(player, addPoints) {
-        // if (this.isTouchingAddPoints) {
-        //     // Increase score only if not already touching the image
-        //     this.scoringSystem.awardPointsForCollectingJettpack();
-        //     this.isTouchingAddPoints = false; // Set flag to true to indicate collision
-        //     // Remove 'add_points' image
-        //     addPoints.destroy();
-        // }
         addPoints.disableBody(true, true);
-        this.game.gameState.scoringSystem.awardPointsForCollectingJettpack();
+        this.game.gameState.scoringSystem.awardPointsForCollectingPoints();
     }
 
     pause(){

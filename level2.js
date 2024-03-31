@@ -19,6 +19,17 @@ class Level2 extends Phaser.Scene {
         this.load.spritesheet('fireball', 'assets/fireball.png',
         { frameWidth: 32, frameHeight: 24 });
         this.load.image('jettpack', 'assets/jettpack.png');
+        this.load.image('add_points', 'assets/add_points.png');
+        this.load.image('add_points_2', 'assets/add_points.png');
+        this.load.image('add_points_3', 'assets/add_points.png');
+        this.load.image('add_points_4', 'assets/add_points.png');
+        this.load.image('add_points_5', 'assets/add_points.png');
+        this.load.image('add_points_6', 'assets/add_points.png');
+        this.load.image('add_points_7', 'assets/add_points.png');
+        this.load.image('add_points_8', 'assets/add_points.png');
+        this.load.image('add_points_9', 'assets/add_points.png');
+        this.load.image('add_points_10', 'assets/add_points.png');
+        this.load.image('add_points_11', 'assets/add_points.png');
     }
 
     create() {
@@ -51,9 +62,9 @@ class Level2 extends Phaser.Scene {
         this.fireball2.handleFireballMovement();
         this.fireball3.handleFireballMovement();
 
-        if (this.player.isClimbing) {
-            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
-        }
+        // if (this.player.isClimbing) {
+        //     this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        // }
         
         this.brokenfloor.update();
         this.physics.add.collider(this.player, this.brokenfloor.sprite, fc1, null, this);
@@ -295,6 +306,62 @@ class Level2 extends Phaser.Scene {
         //level end marker
         this.flag = this.physics.add.staticSprite(275, 118, 'flag');
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
+
+        //points
+        this.addPoints = this.physics.add.sprite(220, 685, 'add_points').setScale(0.05);
+        this.addPoints.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints, floor);
+        this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
+
+        this.addPoints2 = this.physics.add.sprite(26, 685, 'add_points_2').setScale(0.05);
+        this.addPoints2.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints2, floor);
+        this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
+
+        this.addPoints3 = this.physics.add.sprite(500, 685, 'add_points_3').setScale(0.05);
+        this.addPoints3.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints3, floor);
+        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
+
+        this.addPoints4 = this.physics.add.sprite(648, 600, 'add_points_4').setScale(0.05);
+        this.addPoints4.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints4, floor);
+        this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
+
+        this.addPoints5 = this.physics.add.sprite(600, 516, 'add_points_5').setScale(0.05);
+        this.addPoints5.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints5, floor);
+        this.physics.add.overlap(this.player, this.addPoints5, this.collectPoints, null, this);
+
+        this.addPoints6 = this.physics.add.sprite(26, 470, 'add_points_6').setScale(0.05);
+        this.addPoints6.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints6, floor);
+        this.physics.add.overlap(this.player, this.addPoints6, this.collectPoints, null, this);
+
+        this.addPoints7 = this.physics.add.sprite(165, 385, 'add_points_7').setScale(0.05);
+        this.addPoints7.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints7, floor);
+        this.physics.add.overlap(this.player, this.addPoints7, this.collectPoints, null, this);
+
+        this.addPoints8 = this.physics.add.sprite(552, 300, 'add_points_8').setScale(0.05);
+        this.addPoints8.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints8, floor);
+        this.physics.add.overlap(this.player, this.addPoints8, this.collectPoints, null, this);
+
+        this.addPoints9 = this.physics.add.sprite(648, 210, 'add_points_9').setScale(0.05);
+        this.addPoints9.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints9, floor);
+        this.physics.add.overlap(this.player, this.addPoints9, this.collectPoints, null, this);
+
+        this.addPoints10 = this.physics.add.sprite(213, 180, 'add_points_10').setScale(0.05);
+        this.addPoints10.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints10, floor);
+        this.physics.add.overlap(this.player, this.addPoints10, this.collectPoints, null, this);
+
+        this.addPoints11 = this.physics.add.sprite(309, 180, 'add_points_11').setScale(0.05);
+        this.addPoints11.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints11, floor);
+        this.physics.add.overlap(this.player, this.addPoints11, this.collectPoints, null, this);
     }
 
     collectJettpack(player, jettpack) {
@@ -333,6 +400,11 @@ class Level2 extends Phaser.Scene {
         console.log("next: " + this.player.hearts);
         this.scene.start("interlude2", { previousHearts: this.player.hearts });
 
+    }
+
+    collectPoints(player, addPoints) {
+        addPoints.disableBody(true, true);
+        this.game.gameState.scoringSystem.awardPointsForCollectingPoints();
     }
 
     pause(){

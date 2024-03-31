@@ -39,7 +39,17 @@ class ScoringSystem {
         this.updateScore(points);
     }
 
+    awardPointsForCollectingPoints() {
+        const points = 100; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
     awardPointsForDestroyingBarrel() {
+        const points = 30; // Adjust the points as needed
+        this.updateScore(points);
+    }
+
+    awardPointsForCollectingPowerUps() {
         const points = 30; // Adjust the points as needed
         this.updateScore(points);
     }
