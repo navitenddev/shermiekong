@@ -15,6 +15,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
+        this.load.image('wall', 'assets/wall.jpeg');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
     }
 
@@ -142,6 +143,12 @@ class Level1 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
+        this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
+        this.physics.add.collider(this.player, this.wall);
+        this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
+        this.physics.add.collider(this.wall, floor);
+        this.wall.setCollideWorldBounds(true);
+
         this.barrels = [];
         this.barrels.push(this.barrel);
     
@@ -151,6 +158,7 @@ class Level1 extends Phaser.Scene {
                 let newBarrel = new Barrel(this, 150, 150);
                 this.barrels.push(newBarrel);
                 this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
+                this.physics.add.collider(newBarrel, this.wall, this.destroyBarrel, null, this);
                 this.physics.add.collider(newBarrel, floor);
             },
             loop: true
@@ -219,7 +227,9 @@ class Level1 extends Phaser.Scene {
         this.player.isClimbing = true;
         this.player.playerClimbing();
     }
-    
+    destroyBarrel(barrel) {
+        barrel.destroy();
+    }
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         player.onCollision(barrel);
