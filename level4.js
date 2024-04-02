@@ -17,14 +17,31 @@ class Level4 extends Phaser.Scene {
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('conveyor_left', 'assets/conveyor_left.png');
         this.load.image('conveyor_right', 'assets/conveyor_right.png');
-        this.load.image('conveyor_left_sheet', 'assets/conveyor_left_sheet.png');
-        this.load.image('conveyor_right_sheet', 'assets/conveyor_right_sheet.png');
+        this.load.spritesheet('conveyor_left_sheet', 'assets/conveyor_left_sheet.png',
+        {frameWidth: 50, frameHeight: 24});
+        this.load.spritesheet('conveyor_right_sheet', 'assets/conveyor_right_sheet.png', 
+        {frameWidth: 50, frameHeight: 24});
         this.load.image('heart', 'assets/heart.png');
         this.load.spritesheet('fireball', 'assets/fireball.png',
         { frameWidth: 32, frameHeight: 24 });
     }
 
     create() {
+        //animations
+        this.anims.create({
+            key: 'conveyor_left',
+            frames: this.anims.generateFrameNumbers('conveyor_left_sheet', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'conveyor_right',
+            frames: this.anims.generateFrameNumbers('conveyor_right_sheet', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
         const scoreFromLevel3 = this.game.gameState.scoringSystem.getScore();
 
         console.log("score: "+ scoreFromLevel3);
@@ -255,6 +272,42 @@ class Level4 extends Phaser.Scene {
         //this.physics.add.collider(ladders, floor);
         // Add an overlap event to detect when the player is on the ladder
         //this.physics.add.overlap(this.player, ladders, this.handlePlayerClimbing, null, this);
+
+        //left conveyors - 1, 2, 5-8, 13-30, 32
+        this.conveyor1.anims.play('conveyor_left', true);
+        this.conveyor2.anims.play('conveyor_left', true);
+        this.conveyor5.anims.play('conveyor_left', true);
+        this.conveyor6.anims.play('conveyor_left', true);
+        this.conveyor7.anims.play('conveyor_left', true);
+        this.conveyor8.anims.play('conveyor_left', true);
+        this.conveyor13.anims.play('conveyor_left', true);
+        this.conveyor14.anims.play('conveyor_left', true);
+        this.conveyor15.anims.play('conveyor_left', true);
+        this.conveyor16.anims.play('conveyor_left', true);
+        this.conveyor17.anims.play('conveyor_left', true);
+        this.conveyor18.anims.play('conveyor_left', true);
+        this.conveyor19.anims.play('conveyor_left', true);
+        this.conveyor20.anims.play('conveyor_left', true);
+        this.conveyor21.anims.play('conveyor_left', true);
+        this.conveyor22.anims.play('conveyor_left', true);
+        this.conveyor23.anims.play('conveyor_left', true);
+        this.conveyor24.anims.play('conveyor_left', true);
+        this.conveyor25.anims.play('conveyor_left', true);
+        this.conveyor26.anims.play('conveyor_left', true);
+        this.conveyor27.anims.play('conveyor_left', true);
+        this.conveyor28.anims.play('conveyor_left', true);
+        this.conveyor29.anims.play('conveyor_left', true);
+        this.conveyor30.anims.play('conveyor_left', true);
+        this.conveyor32.anims.play('conveyor_left', true);
+        //right conveyors - 3, 4, 9-12, 31
+        this.conveyor3.anims.play('conveyor_right', true);
+        this.conveyor4.anims.play('conveyor_right', true);
+        this.conveyor9.anims.play('conveyor_right', true);
+        this.conveyor10.anims.play('conveyor_right', true);
+        this.conveyor11.anims.play('conveyor_right', true);
+        this.conveyor12.anims.play('conveyor_right', true);
+        this.conveyor13.anims.play('conveyor_right', true);
+        this.conveyor31.anims.play('conveyor_right', true);
     }
 
     handleCollisionSpikes(player, spikes) {
