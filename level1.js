@@ -74,6 +74,7 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700, 3, 200, 350);
+        this.player.body.updateFromGameObject();
         this.barrel = new Barrel(this, 750, 300);
 
         var floor = this.physics.add.staticGroup();
@@ -165,13 +166,31 @@ class Level1 extends Phaser.Scene {
         });
 
         var ladders = this.physics.add.staticGroup();
-        ladders.create(454, 700, 'ladder').setScale(0.6);
-        ladders.create(119, 600, 'ladder').setScale(0.5);
-        ladders.create(263, 487, 'ladder').setScale(0.6);
-        ladders.create(263, 511, 'ladder').setScale(0.6);
-        ladders.create(454, 500, 'ladder').setScale(0.6);
-        ladders.create(119, 395, 'ladder').setScale(0.5);
-        ladders.create(454, 295, 'ladder').setScale(0.6);
+
+        let ladder = ladders.create(400, 675, 'ladder');
+        ladder.setScale(0.6);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(119, 590, 'ladder');
+        ladder.setScale(0.7);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(263, 463, 'ladder');
+        ladder.setScale(0.6);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(454, 470, 'ladder');
+        ladder.setScale(0.5);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(119, 385, 'ladder');
+        ladder.setScale(0.7);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(454, 266, 'ladder');
+        ladder.setScale(0.5);
+        ladder.body.updateFromGameObject();
+
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
