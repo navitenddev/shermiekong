@@ -69,6 +69,8 @@ class Level3 extends Phaser.Scene {
         // Initialize player and floor group
         const { previousHearts } = this.scene.settings.data;
         this.player = new Player(this, 30, 670, previousHearts);
+        this.player.currentLevel = 3
+        
         var floor = this.physics.add.staticGroup();
         var spikes = this.physics.add.staticGroup();
 
