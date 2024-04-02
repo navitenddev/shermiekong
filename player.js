@@ -181,6 +181,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         }
+        else if (otherEntity.type == "spikes_flipped") {
+            if (this.y > otherEntity.y) {
+                // Player is above the spike, handle collision
+                this.loseHearts();
+                this.resetPlayerPosition();
+                if (this.hearts == 0) {
+                    this.handleGameOver();
+                }
+            }
+        }
         else if (otherEntity.type == "fireball") {
             this.resetPlayerPosition();
             this.loseHearts();

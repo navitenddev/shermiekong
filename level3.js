@@ -140,11 +140,17 @@ class Level3 extends Phaser.Scene {
         this.platform9 = platforms.create(216, 492, 'moving_platform');
 
         // 3rd floor
-        floor.create(264, 490, 'spikes_flipped');
-        floor.create(312, 490, 'spikes_flipped');
-        floor.create(360, 490, 'spikes_flipped');
-        floor.create(408, 490, 'spikes_flipped');
-        floor.create(648, 490, 'spikes_flipped');
+        let spike = spikes.create(264, 490, 'spikes_flipped');
+        spike.type = "spikes_flipped";
+        spike = spikes.create(312, 490, 'spikes_flipped');
+        spike.type = "spikes_flipped";
+        spike = spikes.create(360, 490, 'spikes_flipped');
+        spike.type = "spikes_flipped";
+        spike = spikes.create(408, 490, 'spikes_flipped');
+        spike.type = "spikes_flipped";
+        spike = spikes.create(648, 490, 'spikes_flipped');
+        spike.type = "spikes_flipped";
+
         floor.create(264, 466, 'girder_green');
         floor.create(312, 466, 'girder_green');
         floor.create(360, 466, 'girder_green');
