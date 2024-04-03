@@ -75,6 +75,8 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700, 3, 200, 350);
+        this.player.currentLevel = 1;
+        
         this.player.body.updateFromGameObject();
         this.barrel = new Barrel(this, 750, 300);
 

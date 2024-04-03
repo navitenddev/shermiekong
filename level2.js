@@ -143,6 +143,8 @@ class Level2 extends Phaser.Scene {
         console.log("prev: " + previousHearts);
 
         this.player = new Player(this, 80, 620, previousHearts);
+        this.player.currentLevel = 2;
+        
         this.fireball = new Fireball(this, 750, 150);
         this.fireball.type = "fireball";
         this.fireball2 = new Fireball(this, 0, 350);
