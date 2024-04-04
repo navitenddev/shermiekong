@@ -76,7 +76,7 @@ class Level4 extends Phaser.Scene {
         this.add.image(400, 300, 'lvl_default_bg');
         this.song = this.sound.add("chiptune5");
         this.song.loop = true;
-        //this.song.play();
+        this.song.play();
     }
 
     // Updates player's horizontal movement speed to match the platform
@@ -238,6 +238,7 @@ class Level4 extends Phaser.Scene {
         this.flag = this.physics.add.staticSprite(575, 205, 'flag');
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
 
+        // Point collectibles
         this.addPoints = this.physics.add.sprite(24, 640, 'add_points').setScale(0.05);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
@@ -365,7 +366,6 @@ class Level4 extends Phaser.Scene {
         this.conveyor10.anims.play('conveyor_right', true);
         this.conveyor11.anims.play('conveyor_right', true);
         this.conveyor12.anims.play('conveyor_right', true);
-        this.conveyor13.anims.play('conveyor_right', true);
         this.conveyor31.anims.play('conveyor_right', true);
         this.conveyor33.anims.play('conveyor_right', true);
         this.conveyor34.anims.play('conveyor_right', true);
