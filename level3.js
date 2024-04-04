@@ -18,6 +18,7 @@ class Level3 extends Phaser.Scene {
         this.load.image('moving_platform', 'assets/moving_platform.png');
         this.load.image('score_multiplier', 'assets/score_multiplier.png');
         this.load.image('add_points', 'assets/add_points.png');
+        this.load.image('time_slowdown', 'assets/time_slowdown.png');
     }
 
     create() {
@@ -41,6 +42,7 @@ class Level3 extends Phaser.Scene {
         //next level flag
         this.flag = this.physics.add.staticSprite(630, 205, 'flag'); //630, 205
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
+        this.time.scale = 1;
     }
 
     update() {
@@ -201,7 +203,7 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
 
         // Create Score Multiplier powerup
-        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 400, 'score_multiplier');;
+        this.scoreMultiplierPowerup = this.physics.add.sprite(230, 550, 'score_multiplier');;
         this.physics.add.collider(this.scoreMultiplierPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Score Multiplier
@@ -209,6 +211,28 @@ class Level3 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
 
+        this.timeSlowdownPowerup = this.physics.add.sprite(330, 400, 'time_slowdown'); // Adjust position as needed
+        this.timeSlowdownPowerup.setScale(0.075); // Adjust scale as needed
+        this.physics.add.collider(this.timeSlowdownPowerup, floor);
+
+        // Add an overlap event to detect when the player collects the Time Slowdown power-up
+        this.physics.add.overlap(this.player, this.timeSlowdownPowerup, this.collectTimeSlowdownPowerup, null, this);
+    }
+
+    collectTimeSlowdownPowerup(player, timeSlowdownPowerup) {
+        // Disable the power-up temporarily
+        timeSlowdownPowerup.disableBody(true, true);
+        // Slow down time
+        this.time.scale = 0.5; // Adjust the time scale as needed (0.5 means time is slowed down to half)
+        // Timer for power-up duration
+        this.time.delayedCall(5000, this.restoreTimeScale, [], this); // Adjust the duration as needed (5000 milliseconds = 5 seconds)
+        console.log('Time Slowdown Power-up collected!');
+    }
+
+    restoreTimeScale() {
+        // Restore normal time scale
+        this.time.scale = 1; // Set time scale to 1 for normal speed
+        console.log('Time Slowdown ended.');
     }
 
     collectScoreMultiplier(player, scoreMultiplier) {
@@ -231,39 +255,39 @@ class Level3 extends Phaser.Scene {
     switchPlatformDirections(){
         // Platform 1 - Bottom-left
         if(this.platform1.x >= 312){
-            this.platform1.setVelocityX(-50);
+            this.platform1.setVelocityX(-50 * this.time.scale);
         }
         if(this.platform1.x <= 120){
-            this.platform1.setVelocityX(50);
+            this.platform1.setVelocityX(50 * this.time.scale);
         }
 
         // Platform 2 - Bottom-right
         if(this.platform2.x >= 552){
-            this.platform2.setVelocityX(-50);
+            this.platform2.setVelocityX(-50 * this.time.scale);
         }
         if(this.platform2.x <= this.platform1.x + 48){
-            this.platform2.setVelocityX(50);
+            this.platform2.setVelocityX(50 * this.time.scale);
         }
 
         // Platform 3 - Bottom-right elevator
         if(this.platform3.y >= 700){
-            this.platform3.setVelocityY(-100);
+            this.platform3.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform3.y <= 514){
-            this.platform3.setVelocityY(100);
+            this.platform3.setVelocityY(100 * this.time.scale);
         }
         if(this.platform3.body.velocity.y == 0){
-            this.platform3.setVelocityY(100);
+            this.platform3.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 4 - Diagonal spike elevator
         if(this.platform4.y >= 600){
-            this.platform4.setVelocityY(-50);
-            this.platform4.setVelocityX(-50);
+            this.platform4.setVelocityY(-50 * this.time.scale);
+            this.platform4.setVelocityX(-50 * this.time.scale);
         }
         if(this.platform4.y <= 514){
-            this.platform4.setVelocityY(50);
-            this.platform4.setVelocityX(50);
+            this.platform4.setVelocityY(50 * this.time.scale);
+            this.platform4.setVelocityX(50 * this.time.scale);
         }
         if(this.platform4.body.velocity.y == 0){
             this.platform4.x = 456;
@@ -272,177 +296,177 @@ class Level3 extends Phaser.Scene {
 
         // Platform 5 - Vertical spike elevator
         if(this.platform5.y >= 600){
-            this.platform5.setVelocityY(-30);
+            this.platform5.setVelocityY(-30 * this.time.scale);
         }
         if(this.platform5.y <= 514){
-            this.platform5.setVelocityY(30);
+            this.platform5.setVelocityY(30 * this.time.scale);
         }
         if(this.platform5.body.velocity.y == 0){
-            this.platform5.setVelocityY(30);
+            this.platform5.setVelocityY(30 * this.time.scale);
         }
 
         // Platform 6 - Left stack bottom
         if(this.platform6.x >= 168){
-            this.platform6.setVelocityX(-30);
+            this.platform6.setVelocityX(-30 * this.time.scale);
         }
         if(this.platform6.x <= 24){
-            this.platform6.setVelocityX(30);
+            this.platform6.setVelocityX(30 * this.time.scale);
         }
         if(this.platform6.body.velocity.x == 0){
-            this.platform6.setVelocityX(30);
+            this.platform6.setVelocityX(30 * this.time.scale);
         }
 
         // Platform 7 - Left stack low-middle
         if(this.platform7.x >= 168){
-            this.platform7.setVelocityX(-50);
+            this.platform7.setVelocityX(-50 * this.time.scale);
         }
         if(this.platform7.x <= 24){
-            this.platform7.setVelocityX(50);
+            this.platform7.setVelocityX(50 * this.time.scale);
         }
         if(this.platform7.body.velocity.x == 0){
-            this.platform7.setVelocityX(50);
+            this.platform7.setVelocityX(50 * this.time.scale);
         }
 
         // Platform 8 - Left stack high-middle
         if(this.platform8.x >= 216){
-            this.platform8.setVelocityX(-70);
+            this.platform8.setVelocityX(-70 * this.time.scale);
         }
         if(this.platform8.x <= 24){
-            this.platform8.setVelocityX(70);
+            this.platform8.setVelocityX(70 * this.time.scale);
         }
         if(this.platform8.body.velocity.x == 0){
-            this.platform8.setVelocityX(70);
+            this.platform8.setVelocityX(70 * this.time.scale);
         }
 
         // Platform 9 - Left stack top
         if(this.platform9.x >= 216){
-            this.platform9.setVelocityX(-90);
+            this.platform9.setVelocityX(-90 * this.time.scale);
         }
         if(this.platform9.x <= 24){
-            this.platform9.setVelocityX(90);
+            this.platform9.setVelocityX(90 * this.time.scale);
         }
         if(this.platform9.body.velocity.x == 0){
-            this.platform9.setVelocityX(90);
+            this.platform9.setVelocityX(90 * this.time.scale);
         }
 
         // Platform 10 - Fast 3rd floor platform
         if(this.platform10.x >= 552){
-            this.platform10.setVelocityX(-200);
+            this.platform10.setVelocityX(-200 * this.time.scale);
         }
         if(this.platform10.x <= 504){
-            this.platform10.setVelocityX(200);
+            this.platform10.setVelocityX(200 * this.time.scale);
         }
 
         // Platform 11 - 1st 4th floor platform
         if(this.platform11.x >= 552 && this.platform11.y >= 376){
             this.platform11.setVelocityY(0);
-            this.platform11.setVelocityX(-100);
+            this.platform11.setVelocityX(-100 * this.time.scale);
         }
         if(this.platform11.x <= 168 && this.platform11.y >= 376){
             this.platform11.setVelocityX(0);
-            this.platform11.setVelocityY(-100);
+            this.platform11.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform11.x <= 168 && this.platform11.y <= 351){
             this.platform11.setVelocityY(0);
-            this.platform11.setVelocityX(100);
+            this.platform11.setVelocityX(100 * this.time.scale);
         }
         if(this.platform11.x >= 552 && this.platform11.y <= 351){
             this.platform11.setVelocityX(0);
-            this.platform11.setVelocityY(100);
+            this.platform11.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 12 - 2nd 4th floor platform
         if(this.platform12.x >= 552 && this.platform12.y >= 376){
             this.platform12.setVelocityY(0);
-            this.platform12.setVelocityX(-100);
+            this.platform12.setVelocityX(-100 * this.time.scale);
         }
         if(this.platform12.x <= 168 && this.platform12.y >= 376){
             this.platform12.setVelocityX(0);
-            this.platform12.setVelocityY(-100);
+            this.platform12.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform12.x <= 168 && this.platform12.y <= 351){
             this.platform12.setVelocityY(0);
-            this.platform12.setVelocityX(100);
+            this.platform12.setVelocityX(100 * this.time.scale);
         }
         if(this.platform12.x >= 552 && this.platform12.y <= 351){
             this.platform12.setVelocityX(0);
-            this.platform12.setVelocityY(100);
+            this.platform12.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 13 - 3rd 4th floor platform
         if(this.platform13.x >= 552 && this.platform13.y >= 376){
             this.platform13.setVelocityY(0);
-            this.platform13.setVelocityX(-100);
+            this.platform13.setVelocityX(-100 * this.time.scale);
         }
         if(this.platform13.x <= 168 && this.platform13.y >= 376){
             this.platform13.setVelocityX(0);
-            this.platform13.setVelocityY(-100);
+            this.platform13.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform13.x <= 168 && this.platform13.y <= 351){
             this.platform13.setVelocityY(0);
-            this.platform13.setVelocityX(100);
+            this.platform13.setVelocityX(100 * this.time.scale);
         }
         if(this.platform13.x >= 552 && this.platform13.y <= 351){
             this.platform13.setVelocityX(0);
-            this.platform13.setVelocityY(100);
+            this.platform13.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 14 - 4th 4th floor platform
         if(this.platform14.x >= 552 && this.platform14.y >= 376){
             this.platform14.setVelocityY(0);
-            this.platform14.setVelocityX(-100);
+            this.platform14.setVelocityX(-100 * this.time.scale);
         }
         if(this.platform14.x <= 168 && this.platform14.y >= 376){
             this.platform14.setVelocityX(0);
-            this.platform14.setVelocityY(-100);
+            this.platform14.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform14.x <= 168 && this.platform14.y <= 351){
             this.platform14.setVelocityY(0);
-            this.platform14.setVelocityX(100);
+            this.platform14.setVelocityX(100 * this.time.scale);
         }
         if(this.platform14.x >= 552 && this.platform14.y <= 351){
             this.platform14.setVelocityX(0);
-            this.platform14.setVelocityY(100);
+            this.platform14.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 15 - Upper-left elevator
         if(this.platform15.y >= 379){
-            this.platform15.setVelocityY(-500);
+            this.platform15.setVelocityY(-500 * this.time.scale);
         }
         if(this.platform15.y <= 249){
-            this.platform15.setVelocityY(100);
+            this.platform15.setVelocityY(100 * this.time.scale);
         }
         if(this.platform15.body.velocity == 0){
             console.log(this.platform15.velocity);
-            this.platform15.setVelocityY(100);
+            this.platform15.setVelocityY(100 * this.time.scale);
         }
         if(this.platform15.body.velocity.y == 0){
-            this.platform15.setVelocityY(100);
+            this.platform15.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 16 - Top springboard
         if(this.platform16.y >= 225){
-            this.platform16.setVelocityY(-500);
+            this.platform16.setVelocityY(-500 * this.time.scale);
         }
         if(this.platform16.y <= 249){
-            this.platform16.setVelocityY(100);
+            this.platform16.setVelocityY(100 * this.time.scale);
         }
 
         // Platform 17 - Top-right elevator
         if(this.platform17.x <= 650 && this.platform17.y >= 440){
             this.platform17.setVelocityX(0);
-            this.platform17.setVelocityY(-100);
+            this.platform17.setVelocityY(-100 * this.time.scale);
         }
         if(this.platform17.x <= 650 && this.platform17.y <= 346){
-            this.platform17.setVelocityX(100);
+            this.platform17.setVelocityX(100 * this.time.scale);
             this.platform17.setVelocityY(0);
         }
         if(this.platform17.x >= 696 && this.platform17.y <= 346){
             this.platform17.setVelocityX(0);
-            this.platform17.setVelocityY(100);
+            this.platform17.setVelocityY(100 * this.time.scale);
         }
         if(this.platform17.x >= 696 && this.platform17.y >= 440){
-            this.platform17.setVelocityX(-100);
+            this.platform17.setVelocityX(-100 * this.time.scale);
             this.platform17.setVelocityY(0);
         }
     }
