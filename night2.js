@@ -35,7 +35,7 @@ class Night2 extends Phaser.Scene{
 
     dialogueInit(){
         this.lineNum = 0;
-        this.line = this.add.text(100, 620, "What a day!");
+        this.line = this.add.text(100, 620, "Wow, I'm tired!");
         this.line.setDepth(3);
         this.box = this.add.image(336, 600, "dialogue")
         .setInteractive()
@@ -50,6 +50,9 @@ class Night2 extends Phaser.Scene{
                 this.line = this.add.text(100, 620, "Nothing like a warm bed after a long day!");
                 break;
             case 2:
+                this.line = this.add.text(100, 620, "Wonder if I'll have another of those\nweird dreams...");
+                break;
+            case 3:
                 this.song.stop();
                 this.scene.start('level3', { previousHearts: this.hearts });
                 break;

@@ -15,7 +15,9 @@ class Level1 extends Phaser.Scene {
         this.load.image('ladder', 'assets/ladder.png');
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
+        this.load.image('wall', 'assets/wall.jpeg');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
+        this.load.image('add_points', 'assets/add_points.png');
     }
 
     create() {
@@ -43,9 +45,9 @@ class Level1 extends Phaser.Scene {
         this.barrels.forEach(barrel => {
             barrel.update();
         });
-        if (this.player.isClimbing) {
-            this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
-        }
+        // if (this.player.isClimbing) {
+        //     this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
+        // }
         this.checkForJump();
     }
 
@@ -73,6 +75,9 @@ class Level1 extends Phaser.Scene {
 
     createEntities() {
         this.player = new Player(this, 100, 700, 3, 200, 350);
+        this.player.currentLevel = 1;
+        
+        this.player.body.updateFromGameObject();
         this.barrel = new Barrel(this, 750, 300);
 
         var floor = this.physics.add.staticGroup();
@@ -142,6 +147,12 @@ class Level1 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
+        this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
+        this.physics.add.collider(this.player, this.wall);
+        this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
+        this.physics.add.collider(this.wall, floor);
+        this.wall.setCollideWorldBounds(true);
+
         this.barrels = [];
         this.barrels.push(this.barrel);
     
@@ -151,19 +162,38 @@ class Level1 extends Phaser.Scene {
                 let newBarrel = new Barrel(this, 150, 150);
                 this.barrels.push(newBarrel);
                 this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
+                this.physics.add.collider(newBarrel, this.wall, this.destroyBarrel, null, this);
                 this.physics.add.collider(newBarrel, floor);
             },
             loop: true
         });
 
         var ladders = this.physics.add.staticGroup();
-        ladders.create(454, 700, 'ladder').setScale(0.6);
-        ladders.create(119, 600, 'ladder').setScale(0.5);
-        ladders.create(263, 487, 'ladder').setScale(0.6);
-        ladders.create(263, 511, 'ladder').setScale(0.6);
-        ladders.create(454, 500, 'ladder').setScale(0.6);
-        ladders.create(119, 395, 'ladder').setScale(0.5);
-        ladders.create(454, 295, 'ladder').setScale(0.6);
+
+        let ladder = ladders.create(400, 675, 'ladder');
+        ladder.setScale(0.6);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(119, 590, 'ladder');
+        ladder.setScale(0.7);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(263, 463, 'ladder');
+        ladder.setScale(0.6);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(454, 470, 'ladder');
+        ladder.setScale(0.5);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(119, 385, 'ladder');
+        ladder.setScale(0.7);
+        ladder.body.updateFromGameObject();
+
+        ladder = ladders.create(454, 266, 'ladder');
+        ladder.setScale(0.5);
+        ladder.body.updateFromGameObject();
+
         this.physics.add.collider(ladders, floor);
 
         // Add an overlap event to detect when the player is on the ladder
@@ -187,6 +217,37 @@ class Level1 extends Phaser.Scene {
         // Ending flag level transition
         this.flag = this.physics.add.staticSprite(50, 205, 'flag');
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
+
+        //points
+        this.addPoints = this.physics.add.sprite(455, 680, 'add_points').setScale(0.5);
+        this.addPoints.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints, floor);
+        this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
+
+        this.addPoints2 = this.physics.add.sprite(120, 580, 'add_points').setScale(0.5);
+        this.addPoints2.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints2, floor);
+        this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
+
+        this.addPoints3 = this.physics.add.sprite(263, 460, 'add_points').setScale(0.5);
+        this.addPoints3.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints3, floor);
+        this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
+
+        this.addPoints4 = this.physics.add.sprite(120, 370, 'add_points').setScale(0.5);
+        this.addPoints4.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints4, floor);
+        this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
+
+        this.addPoints5 = this.physics.add.sprite(455, 265, 'add_points').setScale(0.5);
+        this.addPoints5.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints5, floor);
+        this.physics.add.overlap(this.player, this.addPoints5, this.collectPoints, null, this);
+
+        this.addPoints6 = this.physics.add.sprite(455, 475, 'add_points').setScale(0.5);
+        this.addPoints6.body.allowGravity = false;
+        this.physics.add.collider(this.addPoints6, floor);
+        this.physics.add.overlap(this.player, this.addPoints6, this.collectPoints, null, this);
     }
 
     collectShield(player, shieldPowerup) {
@@ -198,6 +259,7 @@ class Level1 extends Phaser.Scene {
     
         // Timer for shield duration
         this.time.delayedCall(10000, this.deactivateShield, [player], this);
+        this.game.gameState.scoringSystem.awardPointsForCollectingPowerUps();
         console.log('Shield collected!');
     }
 
@@ -212,6 +274,7 @@ class Level1 extends Phaser.Scene {
         
         // Activate effect for destroying barrels
         player.hasDestroyBarrelPowerup = true;
+        this.game.gameState.scoringSystem.awardPointsForCollectingPowerUps();
         console.log('Destroy Barrel Power-up collected!');
     }
 
@@ -219,7 +282,9 @@ class Level1 extends Phaser.Scene {
         this.player.isClimbing = true;
         this.player.playerClimbing();
     }
-    
+    destroyBarrel(barrel) {
+        barrel.destroy();
+    }
     handleCollision(player, barrel) {
         // Perform specific actions when the player collides with a barrel
         player.onCollision(barrel);
@@ -236,6 +301,11 @@ class Level1 extends Phaser.Scene {
         //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
     }
 
+    collectPoints(player, addPoints) {
+        addPoints.disableBody(true, true);
+        this.game.gameState.scoringSystem.awardPointsForCollectingPoints();
+    }
+    
     pause(){
         this.scene.launch('pause');
         this.scene.pause();

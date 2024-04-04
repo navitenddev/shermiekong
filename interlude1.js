@@ -62,7 +62,7 @@ class Interlude1 extends Phaser.Scene{
                 this.line = this.add.text(100, 620, "It was like I was in a retro video game of\nsome sort...");
                 break;
             case 2:
-                this.line = this.add.text(100, 620, "The machinations of the brain never cease to amaze.");
+                this.line = this.add.text(100, 620, "The machinations of the subconcious\nare so strange!");
                 break;
             case 3:
                 this.line = this.add.text(100, 620, "Now I gotta get to band practice."); 

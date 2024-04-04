@@ -161,7 +161,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     } else {
                         otherEntity.destroy();
                         // Player still has hearts, reset to starting position
-                        this.resetPlayerPosition();
+                        this.resetPlayerPosition(this.currentLevel);
                     }
                 }
             }
@@ -176,14 +176,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (this.y < otherEntity.y) {
                 // Player is above the spike, handle collision
                 this.loseHearts();
-                this.resetPlayerPosition();
+                this.resetPlayerPosition(this.currentLevel);
+                if (this.hearts == 0) {
+                    this.handleGameOver();
+                }
+            }
+        }
+        else if (otherEntity.type == "spikes_flipped") {
+            if (this.y > otherEntity.y) {
+                // Player is above the spike, handle collision
+                this.loseHearts();
+                this.resetPlayerPosition(this.currentLevel);
                 if (this.hearts == 0) {
                     this.handleGameOver();
                 }
             }
         }
         else if (otherEntity.type == "fireball") {
-            this.resetPlayerPosition();
+            this.resetPlayerPosition(this.currentLevel);
             this.loseHearts();
             if (this.hearts == 0) {
                 this.handleGameOver();
@@ -197,15 +207,29 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.scene.start('GameOver');
     }
     
-    resetPlayerPosition() {
+    resetPlayerPosition(level) {
         // Customize this method to reset the player to the starting position
-        // For example, set the player's position to the initial coordinates
-        this.player.x = 30;
-        this.player.y = 670;
-        
-        // Additional reset logic, if needed
-
-    }
+        // Set the player's position to different coordinates based on the level
+        console.log(level);
+        switch(level) {
+            case 1:
+                this.player.x = 100;
+                this.player.y = 700;
+                break;
+            case 2:
+                this.player.x = 80;
+                this.player.y = 620;
+                break;
+            case 3:
+                this.player.x = 30;
+                this.player.y = 670;
+                break;
+            // Add more cases as needed
+            default:
+                this.player.x = 30;
+                this.player.y = 670;
+        }
+    }    
     
   
     handleClimbing() {
