@@ -60,6 +60,8 @@ class MazeGame extends Phaser.Scene {
         .on('pointerdown', () => {this.pause()});
 
         this.player = new Player(this, 73, 155, 3, 200, 350);
+        // Hide the hearts display
+        this.player.heartsArray.forEach(heart => heart.setVisible(false));
         this.cursors = this.input.keyboard.createCursorKeys();
         this.player.setScale(0.17);  // Scale down the player
         this.player.setCollideWorldBounds(true);  // Add collider bounds with the game screen
