@@ -31,7 +31,7 @@ class Interlude3 extends Phaser.Scene{
         this.add.image(625, 40, 'pause_button')
         .setScale(0.5)
         .setInteractive()
-        .on('pointerdown', () => {this.pause()});
+        .on('pointerdown', () => {this.pause()}).setDepth(3);
     }
 
     dialogueInit(){

@@ -239,39 +239,38 @@ class Level4 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
 
         // Point collectibles
-        this.addPoints = this.physics.add.sprite(24, 640, 'add_points').setScale(0.05);
+        this.addPoints = this.physics.add.sprite(24, 640, 'add_points').setScale(0.5);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
 
-        this.addPoints2 = this.physics.add.sprite(24, 560, 'add_points').setScale(0.05);
+        this.addPoints2 = this.physics.add.sprite(24, 560, 'add_points').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
         this.physics.add.collider(this.addPoints2, floor);
         this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
 
-        this.addPoints3 = this.physics.add.sprite(480, 675, 'add_points').setScale(0.05);
+        this.addPoints3 = this.physics.add.sprite(480, 675, 'add_points').setScale(0.5);
         this.addPoints3.body.allowGravity = false;
         this.physics.add.collider(this.addPoints3, floor);
         this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
-        this.addPoints4 = this.physics.add.sprite(480, 340, 'add_points').setScale(0.05);
+        this.addPoints4 = this.physics.add.sprite(480, 340, 'add_points').setScale(0.5);
         this.addPoints4.body.allowGravity = false;
         this.physics.add.collider(this.addPoints4, floor);
         this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
 
-        this.addPoints5 = this.physics.add.sprite(24, 220, 'add_points').setScale(0.05);
+        this.addPoints5 = this.physics.add.sprite(24, 220, 'add_points').setScale(0.5);
         this.addPoints5.body.allowGravity = false;
         this.physics.add.collider(this.addPoints5, floor);
         this.physics.add.overlap(this.player, this.addPoints5, this.collectPoints, null, this);
 
-        this.addPoints6 = this.physics.add.sprite(24, 300, 'add_points').setScale(0.05);
+        this.addPoints6 = this.physics.add.sprite(24, 300, 'add_points').setScale(0.5);
         this.addPoints6.body.allowGravity = false;
         this.physics.add.collider(this.addPoints6, floor);
         this.physics.add.overlap(this.player, this.addPoints6, this.collectPoints, null, this);
 
         // Create Score Multiplier powerup
         this.scoreMultiplierPowerup = this.physics.add.sprite(150, 640, 'score_multiplier');
-        this.scoreMultiplierPowerup.setScale(0.25);
         this.physics.add.collider(this.scoreMultiplierPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Score Multiplier
