@@ -39,7 +39,7 @@ class Level3 extends Phaser.Scene {
         .on('pointerdown', () => {this.pause()});
 
         //next level flag
-        this.flag = this.physics.add.staticSprite(630, 205, 'flag'); //630, 205
+        this.flag = this.physics.add.staticSprite(630, 705, 'flag'); //630, 205
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
     }
 
@@ -467,6 +467,6 @@ class Level3 extends Phaser.Scene {
 
     nextLevel(player, flag){
         this.song.stop();
-        this.scene.start("end", { previousHearts: this.player.hearts });
+        this.scene.start("interlude3", { previousHearts: this.player.hearts });
     }
 }

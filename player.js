@@ -54,6 +54,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.gameOver = false; // Added game-over flag
         this.hearts = initialHearts; // Default to 3 hearts if no value provided
         this.createHearts(scene);
+
+        //hitbox alteration (box of size x, y)
+        this.setSize(110, 60);
     }
 
     createHearts(scene) {
