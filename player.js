@@ -173,7 +173,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
         else if (otherEntity.type == "spikes") {
-            if (this.y < otherEntity.y) {
+            if (this.body.touching.down) {
                 // Player is above the spike, handle collision
                 this.loseHearts();
                 this.resetPlayerPosition(this.currentLevel);
@@ -183,7 +183,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
         else if (otherEntity.type == "spikes_flipped") {
-            if (this.y > otherEntity.y) {
+            if (this.body.touching.up) {
                 // Player is above the spike, handle collision
                 this.loseHearts();
                 this.resetPlayerPosition(this.currentLevel);
@@ -224,6 +224,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.player.x = 30;
                 this.player.y = 670;
                 break;
+            case 4:
+                this.player.x = 30;
+                this.player.y = 724;
+                break;
             // Add more cases as needed
             default:
                 this.player.x = 30;
@@ -245,7 +249,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(200);
         }
         else {
-            this.setVelocityY(0);
+            this.setVelocityY(-13.5);
         }
 
         if (!this.cursors.up.isDown && !this.cursors.down.isDown){

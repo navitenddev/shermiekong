@@ -467,6 +467,6 @@ class Level3 extends Phaser.Scene {
 
     nextLevel(player, flag){
         this.song.stop();
-        this.scene.start("end", { previousHearts: this.player.hearts });
+        this.scene.start("level4", { previousHearts: this.player.hearts }); // Change to interlude 3 when available
     }
 }
