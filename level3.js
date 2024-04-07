@@ -413,7 +413,6 @@ class Level3 extends Phaser.Scene {
             this.platform15.setVelocityY(100);
         }
         if(this.platform15.body.velocity == 0){
-            console.log(this.platform15.velocity);
             this.platform15.setVelocityY(100);
         }
         if(this.platform15.body.velocity.y == 0){
