@@ -303,6 +303,7 @@ class Level2 extends Phaser.Scene {
         this.jettpackPowerup2 = this.physics.add.sprite(600, 400, 'jettpack');
         this.jettpackPowerup2.setScale(0.10);
         this.physics.add.collider(this.jettpackPowerup2, floor);
+        this.physics.add.collider(this.jettpackPowerup2, ladderFloor);
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup2, this.collectJettpack, null, this);
