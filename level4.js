@@ -13,6 +13,7 @@ class Level4 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder_purple', 'assets/girder_purple.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('ladder_tall', 'assets/ladder_tall.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('add_points', 'assets/add_points.png');
@@ -95,8 +96,10 @@ class Level4 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 30, 720);
+        this.player = new Player(this, 30, 724);
+        this.player.currentLevel = 4;
         var floor = this.physics.add.staticGroup();
+        var ladderFloor = this.physics.add.staticGroup();
         var spikes = this.physics.add.staticGroup();
 
         // Initialize conveyor belts
@@ -130,7 +133,7 @@ class Level4 extends Phaser.Scene {
         floor.create(648, 756, 'girder_purple');
 
         // 2nd floor
-        floor.create(648, 672, 'girder_purple');
+        ladderFloor.create(648, 672, 'girder_purple');
         this.conveyor7 = conveyors.create(600, 671, 'conveyor_left');
         this.conveyor8 = conveyors.create(552, 671, 'conveyor_left');
         this.conveyor9 = conveyors.create(408, 671, 'conveyor_right');
@@ -142,18 +145,18 @@ class Level4 extends Phaser.Scene {
         floor.create(24, 672, 'girder_purple');
 
         // 3rd floor
-        floor.create(312, 588, 'girder_purple');
+        ladderFloor.create(312, 588, 'girder_purple');
         this.conveyor11 = conveyors.create(360, 587, 'conveyor_right');
         this.conveyor12 = conveyors.create(408, 587, 'conveyor_right');
         this.conveyor13 = conveyors.create(552, 587, 'conveyor_left');
         this.conveyor14 = conveyors.create(600, 587, 'conveyor_left');
         floor.create(648, 588, 'girder_purple');
-        floor.create(72, 588, 'girder_purple');
-        floor.create(24, 588, 'girder_purple');
+        ladderFloor.create(72, 588, 'girder_purple');
+        ladderFloor.create(24, 588, 'girder_purple');
 
         // 4th floor
-        floor.create(648, 504, 'girder_purple');
-        floor.create(600, 504, 'girder_purple');
+        ladderFloor.create(648, 504, 'girder_purple');
+        ladderFloor.create(600, 504, 'girder_purple');
         floor.create(552, 504, 'girder_purple');
         this.conveyor15 = conveyors.create(504, 503, 'conveyor_left');
         this.conveyor16 = conveyors.create(456, 503, 'conveyor_left');
@@ -166,15 +169,15 @@ class Level4 extends Phaser.Scene {
         this.conveyor23 = conveyors.create(120, 503, 'conveyor_left');
         this.conveyor24 = conveyors.create(72, 503, 'conveyor_left');
         floor.create(24, 504, 'girder_purple');
-        var x = 72;
-        for (let i = 0; i < 10; i++){
+        var x = 120;
+        for (let i = 0; i < 9; i++){
             let spike = spikes.create(x, 444, 'spikes_flipped');
-            spike.type = "spikes";  // Add a custom property
+            spike.type = "spikes_flipped";
             x = x + 48;
         }
 
         // 5th floor
-        floor.create(24, 420, 'girder_purple');
+        ladderFloor.create(24, 420, 'girder_purple');
         this.conveyor25 = conveyors.create(72, 419, 'conveyor_left');
         this.conveyor26 = conveyors.create(120, 419, 'conveyor_left');
         this.conveyor27 = conveyors.create(168, 419, 'conveyor_left');
@@ -190,18 +193,24 @@ class Level4 extends Phaser.Scene {
         floor.create(648, 420, 'girder_purple');
         var x = 72;
         for (let i = 0; i < 8; i++){
+            if(i == 0){
+                let spike = spikes.create(x, 355, 'spikes_flipped');
+                spike.type = "spikes_flipped";
+                x = x + 48;
+                continue;
+            }
             if(i == 2 || i == 3 || i == 4){
                 x = x + 48;
                 continue;
             }
             let spike = spikes.create(x, 360, 'spikes_flipped');
-            spike.type = "spikes";  // Add a custom property
+            spike.type = "spikes_flipped";
             x = x + 48;
         }
 
         // 6th floor
-        floor.create(648, 336, 'girder_purple');
-        floor.create(600, 336, 'girder_purple');
+        ladderFloor.create(648, 336, 'girder_purple');
+        ladderFloor.create(600, 336, 'girder_purple');
         this.conveyor32 = conveyors.create(552, 335, 'conveyor_left');
         this.conveyor33 = conveyors.create(408, 335, 'conveyor_right');
         this.conveyor34 = conveyors.create(360, 335, 'conveyor_right');
@@ -218,20 +227,29 @@ class Level4 extends Phaser.Scene {
                 x = x - 48;
                 continue;
             }
-            floor.create(x, 249, 'girder_purple');
+            ladderFloor.create(x, 249, 'girder_purple');
             x = x - 48;
         }
 
         var ladders = this.physics.add.staticGroup();
-        ladders.create(648, 710, 'ladder').setScale(0.6, 0.6);
-        ladders.create(312, 626, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 542, 'ladder').setScale(0.6, 0.6);
-        ladders.create(72, 626, 'ladder').setScale(0.6, 0.6);
-        ladders.create(24, 458, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 374, 'ladder').setScale(0.6, 0.6);
-        ladders.create(334, 290, 'ladder').setScale(0.6, 0.6);
-        ladders.create(72, 290, 'ladder').setScale(0.6, 0.6);
+        let ladder = ladders.create(648, 703, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(312, 617, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 533, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(72, 617, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(24, 450, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 364, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(334, 280, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(72, 280, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
 
+        this.physics.add.collider(this.player, ladderFloor);
         this.physics.add.collider(this.player, floor);
 
         //level end marker
@@ -239,39 +257,39 @@ class Level4 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
 
         // Point collectibles
-        this.addPoints = this.physics.add.sprite(24, 640, 'add_points').setScale(0.05);
+        this.addPoints = this.physics.add.sprite(24, 640, 'add_points').setScale(0.5);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
 
-        this.addPoints2 = this.physics.add.sprite(24, 560, 'add_points').setScale(0.05);
+        this.addPoints2 = this.physics.add.sprite(24, 560, 'add_points').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
         this.physics.add.collider(this.addPoints2, floor);
         this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
 
-        this.addPoints3 = this.physics.add.sprite(480, 675, 'add_points').setScale(0.05);
+        this.addPoints3 = this.physics.add.sprite(480, 675, 'add_points').setScale(0.5);
         this.addPoints3.body.allowGravity = false;
         this.physics.add.collider(this.addPoints3, floor);
         this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
-        this.addPoints4 = this.physics.add.sprite(480, 340, 'add_points').setScale(0.05);
+        this.addPoints4 = this.physics.add.sprite(480, 340, 'add_points').setScale(0.5);
         this.addPoints4.body.allowGravity = false;
         this.physics.add.collider(this.addPoints4, floor);
         this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);
 
-        this.addPoints5 = this.physics.add.sprite(24, 220, 'add_points').setScale(0.05);
+        this.addPoints5 = this.physics.add.sprite(24, 220, 'add_points').setScale(0.5);
         this.addPoints5.body.allowGravity = false;
         this.physics.add.collider(this.addPoints5, floor);
         this.physics.add.overlap(this.player, this.addPoints5, this.collectPoints, null, this);
 
-        this.addPoints6 = this.physics.add.sprite(24, 300, 'add_points').setScale(0.05);
+        this.addPoints6 = this.physics.add.sprite(24, 300, 'add_points').setScale(0.5);
         this.addPoints6.body.allowGravity = false;
         this.physics.add.collider(this.addPoints6, floor);
         this.physics.add.overlap(this.player, this.addPoints6, this.collectPoints, null, this);
 
         // Create Score Multiplier powerup
         this.scoreMultiplierPowerup = this.physics.add.sprite(150, 640, 'score_multiplier');
-        this.scoreMultiplierPowerup.setScale(0.25);
+        this.scoreMultiplierPowerup.setScale(1);
         this.physics.add.collider(this.scoreMultiplierPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Score Multiplier
@@ -281,11 +299,12 @@ class Level4 extends Phaser.Scene {
         this.jettpackPowerup = this.physics.add.sprite(120, 210, 'jettpack');
         this.jettpackPowerup.setScale(0.10);
         this.physics.add.collider(this.jettpackPowerup, floor);
+        this.physics.add.collider(this.jettpackPowerup, ladderFloor);
 
         // Add an overlap event to detect when the player collects the Jettpack
         this.physics.add.overlap(this.player, this.jettpackPowerup, this.collectJettpack, null, this);
           
-        // Allow riding on horizontally-moving platforms
+        // Allow conveyors to alter player movement
         this.physics.add.overlap(this.player, this.conveyor1, this.rideOnLeftConveyor, null, this);
         this.physics.add.overlap(this.player, this.conveyor2, this.rideOnRightConveyor, null, this);
         this.physics.add.overlap(this.player, this.conveyor3, this.rideOnRightConveyor, null, this);
@@ -424,7 +443,7 @@ class Level4 extends Phaser.Scene {
     nextLevel(player, flag){
         this.song.stop();
         console.log("next: " + this.player.hearts);
-        this.scene.start("interlude4", { previousHearts: this.player.hearts });
+        this.scene.start("end", { previousHearts: this.player.hearts }); // Change to interlude 4 when available
     }
 
     pause(){
