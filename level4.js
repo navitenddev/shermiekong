@@ -152,11 +152,11 @@ class Level4 extends Phaser.Scene {
         this.conveyor14 = conveyors.create(600, 587, 'conveyor_left');
         floor.create(648, 588, 'girder_purple');
         ladderFloor.create(72, 588, 'girder_purple');
-        floor.create(24, 588, 'girder_purple');
+        ladderFloor.create(24, 588, 'girder_purple');
 
         // 4th floor
         ladderFloor.create(648, 504, 'girder_purple');
-        floor.create(600, 504, 'girder_purple');
+        ladderFloor.create(600, 504, 'girder_purple');
         floor.create(552, 504, 'girder_purple');
         this.conveyor15 = conveyors.create(504, 503, 'conveyor_left');
         this.conveyor16 = conveyors.create(456, 503, 'conveyor_left');
@@ -210,7 +210,7 @@ class Level4 extends Phaser.Scene {
 
         // 6th floor
         ladderFloor.create(648, 336, 'girder_purple');
-        floor.create(600, 336, 'girder_purple');
+        ladderFloor.create(600, 336, 'girder_purple');
         this.conveyor32 = conveyors.create(552, 335, 'conveyor_left');
         this.conveyor33 = conveyors.create(408, 335, 'conveyor_right');
         this.conveyor34 = conveyors.create(360, 335, 'conveyor_right');

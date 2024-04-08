@@ -170,7 +170,7 @@ class Level2 extends Phaser.Scene {
 
         // Starting platform
         ladderFloor.create(24, 669, 'girder_blue');
-        floor.create(72, 669, 'girder_blue');
+        ladderFloor.create(72, 669, 'girder_blue');
         this.brokenfloor = new BrokenFloor(this, 120, 669);
         this.brokenfloor2 = new BrokenFloor(this, 168, 669);
         floor.create(216, 669, 'girder_blue');
@@ -190,15 +190,15 @@ class Level2 extends Phaser.Scene {
         // Lower-right platforms
         floor.create(648, 669, 'girder_blue');
         this.brokenfloor3 = new BrokenFloor(this, 600, 669);
-        floor.create(552, 669, 'girder_blue');
+        ladderFloor.create(552, 669, 'girder_blue');
         ladderFloor.create(504, 669, 'girder_blue');
 
         ladderFloor.create(648, 582, 'girder_blue');
-        floor.create(600, 582, 'girder_blue');
+        ladderFloor.create(600, 582, 'girder_blue');
         
-        floor.create(648, 495, 'girder_blue');
+        ladderFloor.create(648, 495, 'girder_blue');
         ladderFloor.create(600, 495, 'girder_blue');
-        floor.create(552, 495, 'girder_blue');
+        ladderFloor.create(552, 495, 'girder_blue');
         floor.create(504, 495, 'girder_blue');
 
         this.brokenfloor4 = new BrokenFloor(this, 408, 495);
@@ -212,12 +212,12 @@ class Level2 extends Phaser.Scene {
         this.brokenfloor8 = new BrokenFloor(this, 216, 539);
 
         ladderFloor.create(24, 452, 'girder_blue');
-        floor.create(72, 452, 'girder_blue');
+        ladderFloor.create(72, 452, 'girder_blue');
         floor.create(168, 452, 'girder_blue');
 
-        floor.create(24, 365, 'girder_blue');
+        ladderFloor.create(24, 365, 'girder_blue');
         ladderFloor.create(168, 365, 'girder_blue');
-        floor.create(216, 365, 'girder_blue');
+        ladderFloor.create(216, 365, 'girder_blue');
         this.brokenfloor9 = new BrokenFloor(this, 264, 365);
 
         // Top-right platforms
@@ -237,7 +237,7 @@ class Level2 extends Phaser.Scene {
         ladderFloor.create(552, 278, 'girder_blue');
 
         ladderFloor.create(648, 191, 'girder_blue');
-        floor.create(600, 191, 'girder_blue');
+        ladderFloor.create(600, 191, 'girder_blue');
         floor.create(552, 191, 'girder_blue');
 
         // Top floor
@@ -253,7 +253,7 @@ class Level2 extends Phaser.Scene {
 
         // Top platform
         ladderFloor.create(216, 162, 'girder_blue');
-        floor.create(264, 162, 'girder_blue');
+        ladderFloor.create(264, 162, 'girder_blue');
         ladderFloor.create(312, 162, 'girder_blue');
 
         this.physics.add.collider(this.player, ladderFloor);

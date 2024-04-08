@@ -249,7 +249,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(200);
         }
         else {
-            this.setVelocityY(-13.5);
+            this.setVelocityY(-13);
         }
 
         if (!this.cursors.up.isDown && !this.cursors.down.isDown){

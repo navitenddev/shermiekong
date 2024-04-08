@@ -94,7 +94,7 @@ class Level1 extends Phaser.Scene {
         x = 600;
         y = 669;
         for (let i = 0; i < 13; i++){
-            if(i == 4){
+            if(i == 3 || i == 4 || i == 5){
                 ladderFloor.create(x, y, 'girder');
                 x = x - 48;
                 y = y - 3;
@@ -109,7 +109,7 @@ class Level1 extends Phaser.Scene {
         x = 72;
         y = 567;
         for (let i = 0; i < 13; i++){
-            if (i == 1){
+            if (i == 0 || i == 1 || i == 2){
                 ladderFloor.create(x, y, 'girder');
                 x = x + 48;
                 y = y - 3;
@@ -124,7 +124,7 @@ class Level1 extends Phaser.Scene {
         x = 600;
         y = 465;
         for (let i = 0; i < 13; i++){
-            if (i == 3 || i == 7){
+            if (i == 2 || i == 3 || i == 4 || i == 6 || i == 7 || i == 8){
                 ladderFloor.create(x, y, 'girder');
                 x = x - 48;
                 y = y - 3;
@@ -139,7 +139,7 @@ class Level1 extends Phaser.Scene {
         x = 72;
         y = 363;
         for (let i = 0; i < 13; i++){
-            if (i == 1){
+            if (i == 0 || i == 1 || i == 2){
                 ladderFloor.create(x, y, 'girder');
                 x = x + 48;
                 y = y - 3;
@@ -153,10 +153,11 @@ class Level1 extends Phaser.Scene {
         // 6th floor
         floor.create(600, 261, 'girder');
         floor.create(552, 258, 'girder');
-        floor.create(504, 255, 'girder');
+        ladderFloor.create(504, 255, 'girder');
         ladderFloor.create(456, 252, 'girder');
-        x = 408;
-        for (let i = 0; i < 9; i++){
+        ladderFloor.create(408, 249, 'girder');
+        x = 360;
+        for (let i = 0; i < 8; i++){
             floor.create(x, 249, 'girder');
             x = x - 48;
         }
@@ -192,7 +193,7 @@ class Level1 extends Phaser.Scene {
 
         var ladders = this.physics.add.staticGroup();
 
-        let ladder = ladders.create(408, 690, 'ladder_tall').setScale(0.62);
+        let ladder = ladders.create(408, 690, 'ladder_tall').setScale(0.65);
         ladder.body.updateFromGameObject();
 
         ladder = ladders.create(119, 590, 'ladder_tall').setScale(0.55);
