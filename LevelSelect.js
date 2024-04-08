@@ -33,5 +33,8 @@ class LevelSelect extends Phaser.Scene{
         .on('pointerdown', () => {
             this.sound.add("song3").play();
             this.scene.start("AppleGame")});
+        
+        this.add.text(20, 200, "Shermie's Maze").setInteractive()
+        .on('pointerdown', () => {this.scene.start("mazeGame")});
     }
 }
