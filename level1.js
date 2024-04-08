@@ -13,6 +13,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder', 'assets/girder.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('ladder_tall', 'assets/ladder_tall.png');
         this.load.image('jettpack', 'assets/jettpack.png');
         this.load.image('shield', 'assets/shield.png');
         this.load.image('wall', 'assets/wall.jpeg');
@@ -45,19 +46,12 @@ class Level1 extends Phaser.Scene {
         this.barrels.forEach(barrel => {
             barrel.update();
         });
-        // if (this.player.isClimbing) {
-        //     this.game.gameState.scoringSystem.awardPointsForClimbingLadder();
-        // }
         this.checkForJump();
     }
 
     checkForJump() {
         const verticalThreshold = 90;
         const horizontalThreshold = 50;
-        // console.log("x: " + this.player.x);
-        // console.log("y: " + this.player.y);
-        // console.log("x2: " + this.barrel.x);
-        // console.log("y2: " + this.barrel.y);
         if (this.player.cursors.up.isDown) {
             if (
                 Math.abs(this.player.y - this.barrel.y) <= verticalThreshold &&
@@ -81,6 +75,7 @@ class Level1 extends Phaser.Scene {
         this.barrel = new Barrel(this, 750, 300);
 
         var floor = this.physics.add.staticGroup();
+        var ladderFloor = this.physics.add.staticGroup();
         // 1st floor
         var x = 24;
         for (let i = 0; i < 7; i++){
@@ -99,6 +94,12 @@ class Level1 extends Phaser.Scene {
         x = 600;
         y = 669;
         for (let i = 0; i < 13; i++){
+            if(i == 4){
+                ladderFloor.create(x, y, 'girder');
+                x = x - 48;
+                y = y - 3;
+                continue;
+            }
             floor.create(x, y, 'girder');
             x = x - 48;
             y = y - 3;
@@ -108,6 +109,12 @@ class Level1 extends Phaser.Scene {
         x = 72;
         y = 567;
         for (let i = 0; i < 13; i++){
+            if (i == 1){
+                ladderFloor.create(x, y, 'girder');
+                x = x + 48;
+                y = y - 3;
+                continue;
+            }
             floor.create(x, y, 'girder');
             x = x + 48;
             y = y - 3;
@@ -117,6 +124,12 @@ class Level1 extends Phaser.Scene {
         x = 600;
         y = 465;
         for (let i = 0; i < 13; i++){
+            if (i == 3 || i == 7){
+                ladderFloor.create(x, y, 'girder');
+                x = x - 48;
+                y = y - 3;
+                continue;
+            }
             floor.create(x, y, 'girder');
             x = x - 48;
             y = y - 3;
@@ -126,6 +139,12 @@ class Level1 extends Phaser.Scene {
         x = 72;
         y = 363;
         for (let i = 0; i < 13; i++){
+            if (i == 1){
+                ladderFloor.create(x, y, 'girder');
+                x = x + 48;
+                y = y - 3;
+                continue;
+            }
             floor.create(x, y, 'girder');
             x = x + 48;
             y = y - 3;
@@ -135,15 +154,17 @@ class Level1 extends Phaser.Scene {
         floor.create(600, 261, 'girder');
         floor.create(552, 258, 'girder');
         floor.create(504, 255, 'girder');
-        floor.create(456, 252, 'girder');
+        ladderFloor.create(456, 252, 'girder');
         x = 408;
         for (let i = 0; i < 9; i++){
             floor.create(x, 249, 'girder');
             x = x - 48;
         }
 
+        this.physics.add.collider(this.player, ladderFloor);
         this.physics.add.collider(this.player, floor);
         this.physics.add.collider(this.barrel, floor);
+        this.physics.add.collider(this.barrel, ladderFloor);
 
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
@@ -164,34 +185,31 @@ class Level1 extends Phaser.Scene {
                 this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
                 this.physics.add.collider(newBarrel, this.wall, this.destroyBarrel, null, this);
                 this.physics.add.collider(newBarrel, floor);
+                this.physics.add.collider(newBarrel, ladderFloor);
             },
             loop: true
         });
 
         var ladders = this.physics.add.staticGroup();
 
-        let ladder = ladders.create(400, 675, 'ladder');
-        ladder.setScale(0.6);
+        let ladder = ladders.create(408, 690, 'ladder_tall').setScale(0.62);
         ladder.body.updateFromGameObject();
 
-        ladder = ladders.create(119, 590, 'ladder');
-        ladder.setScale(0.7);
+        ladder = ladders.create(119, 590, 'ladder_tall').setScale(0.55);
         ladder.body.updateFromGameObject();
 
-        ladder = ladders.create(263, 463, 'ladder');
-        ladder.setScale(0.6);
+        ladder = ladders.create(263, 463, 'ladder').setScale(0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(263, 511, 'ladder').setScale(0.6);
         ladder.body.updateFromGameObject();
 
-        ladder = ladders.create(454, 470, 'ladder');
-        ladder.setScale(0.5);
+        ladder = ladders.create(454, 488, 'ladder_tall').setScale(0.6);
         ladder.body.updateFromGameObject();
 
-        ladder = ladders.create(119, 385, 'ladder');
-        ladder.setScale(0.7);
+        ladder = ladders.create(119, 385, 'ladder_tall').setScale(0.55);
         ladder.body.updateFromGameObject();
 
-        ladder = ladders.create(454, 266, 'ladder');
-        ladder.setScale(0.5);
+        ladder = ladders.create(454, 285, 'ladder_tall').setScale(0.6);
         ladder.body.updateFromGameObject();
 
         this.physics.add.collider(ladders, floor);
@@ -219,22 +237,22 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
 
         //points
-        this.addPoints = this.physics.add.sprite(455, 680, 'add_points').setScale(0.5);
+        this.addPoints = this.physics.add.sprite(408, 690, 'add_points').setScale(0.5);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
 
-        this.addPoints2 = this.physics.add.sprite(120, 580, 'add_points').setScale(0.5);
+        this.addPoints2 = this.physics.add.sprite(120, 590, 'add_points').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
         this.physics.add.collider(this.addPoints2, floor);
         this.physics.add.overlap(this.player, this.addPoints2, this.collectPoints, null, this);
 
-        this.addPoints3 = this.physics.add.sprite(263, 460, 'add_points').setScale(0.5);
+        this.addPoints3 = this.physics.add.sprite(263, 480, 'add_points').setScale(0.5);
         this.addPoints3.body.allowGravity = false;
         this.physics.add.collider(this.addPoints3, floor);
         this.physics.add.overlap(this.player, this.addPoints3, this.collectPoints, null, this);
 
-        this.addPoints4 = this.physics.add.sprite(120, 370, 'add_points').setScale(0.5);
+        this.addPoints4 = this.physics.add.sprite(120, 380, 'add_points').setScale(0.5);
         this.addPoints4.body.allowGravity = false;
         this.physics.add.collider(this.addPoints4, floor);
         this.physics.add.overlap(this.player, this.addPoints4, this.collectPoints, null, this);

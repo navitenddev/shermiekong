@@ -201,7 +201,7 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
 
         // Create Score Multiplier powerup
-        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 400, 'score_multiplier');;
+        this.scoreMultiplierPowerup = this.physics.add.sprite(330, 430, 'score_multiplier');;
         this.physics.add.collider(this.scoreMultiplierPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Score Multiplier

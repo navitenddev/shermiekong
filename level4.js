@@ -13,6 +13,7 @@ class Level4 extends Phaser.Scene {
         this.load.image('player', 'assets/shermie.png');
         this.load.image('girder_purple', 'assets/girder_purple.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('ladder_tall', 'assets/ladder_tall.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('spikes_flipped', 'assets/spikes_flipped.png');
         this.load.image('add_points', 'assets/add_points.png');
@@ -231,14 +232,22 @@ class Level4 extends Phaser.Scene {
         }
 
         var ladders = this.physics.add.staticGroup();
-        ladders.create(648, 710, 'ladder').setScale(0.6, 0.6);
-        ladders.create(312, 626, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 543, 'ladder').setScale(0.6, 0.6);
-        ladders.create(72, 626, 'ladder').setScale(0.6, 0.6);
-        ladders.create(24, 460, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 374, 'ladder').setScale(0.6, 0.6);
-        ladders.create(334, 290, 'ladder').setScale(0.6, 0.6);
-        ladders.create(72, 290, 'ladder').setScale(0.6, 0.6);
+        let ladder = ladders.create(648, 703, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(312, 617, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 533, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(72, 617, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(24, 450, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 364, 'ladder_tall').setScale(0.55);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(334, 280, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(72, 280, 'ladder_tall').setScale(0.6);
+        ladder.body.updateFromGameObject();
 
         this.physics.add.collider(this.player, ladderFloor);
         this.physics.add.collider(this.player, floor);

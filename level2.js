@@ -14,6 +14,7 @@ class Level2 extends Phaser.Scene {
         this.load.image('girder_blue', 'assets/girder_blue.png');
         this.load.image('girder_blue_broken', 'assets/girder_blue_broken.png');
         this.load.image('ladder', 'assets/ladder.png');
+        this.load.image('ladder_tall', 'assets/ladder_tall.png');
         this.load.image('spikes', 'assets/spikes.png');
         this.load.image('heart', 'assets/heart.png');
         this.load.spritesheet('fireball', 'assets/fireball.png',
@@ -154,6 +155,7 @@ class Level2 extends Phaser.Scene {
 
         // Ground floor
         var floor = this.physics.add.staticGroup();
+        var ladderFloor = this.physics.add.staticGroup();
         var spikes = this.physics.add.staticGroup();
 
         var x = 24;
@@ -167,7 +169,7 @@ class Level2 extends Phaser.Scene {
         spike2.type = "spikes";
 
         // Starting platform
-        floor.create(24, 669, 'girder_blue');
+        ladderFloor.create(24, 669, 'girder_blue');
         floor.create(72, 669, 'girder_blue');
         this.brokenfloor = new BrokenFloor(this, 120, 669);
         this.brokenfloor2 = new BrokenFloor(this, 168, 669);
@@ -189,13 +191,13 @@ class Level2 extends Phaser.Scene {
         floor.create(648, 669, 'girder_blue');
         this.brokenfloor3 = new BrokenFloor(this, 600, 669);
         floor.create(552, 669, 'girder_blue');
-        floor.create(504, 669, 'girder_blue');
+        ladderFloor.create(504, 669, 'girder_blue');
 
-        floor.create(648, 582, 'girder_blue');
+        ladderFloor.create(648, 582, 'girder_blue');
         floor.create(600, 582, 'girder_blue');
         
         floor.create(648, 495, 'girder_blue');
-        floor.create(600, 495, 'girder_blue');
+        ladderFloor.create(600, 495, 'girder_blue');
         floor.create(552, 495, 'girder_blue');
         floor.create(504, 495, 'girder_blue');
 
@@ -209,12 +211,12 @@ class Level2 extends Phaser.Scene {
         floor.create(168, 539, 'girder_blue');
         this.brokenfloor8 = new BrokenFloor(this, 216, 539);
 
-        floor.create(24, 452, 'girder_blue');
+        ladderFloor.create(24, 452, 'girder_blue');
         floor.create(72, 452, 'girder_blue');
         floor.create(168, 452, 'girder_blue');
 
         floor.create(24, 365, 'girder_blue');
-        floor.create(168, 365, 'girder_blue');
+        ladderFloor.create(168, 365, 'girder_blue');
         floor.create(216, 365, 'girder_blue');
         this.brokenfloor9 = new BrokenFloor(this, 264, 365);
 
@@ -232,9 +234,9 @@ class Level2 extends Phaser.Scene {
 
         this.brokenfloor12 = new BrokenFloor(this, 648, 278);
         this.brokenfloor13 = new BrokenFloor(this, 600, 278);
-        floor.create(552, 278, 'girder_blue');
+        ladderFloor.create(552, 278, 'girder_blue');
 
-        floor.create(648, 191, 'girder_blue');
+        ladderFloor.create(648, 191, 'girder_blue');
         floor.create(600, 191, 'girder_blue');
         floor.create(552, 191, 'girder_blue');
 
@@ -250,10 +252,11 @@ class Level2 extends Phaser.Scene {
         this.brokenfloor15 = new BrokenFloor(this, 408, 249);
 
         // Top platform
-        floor.create(216, 162, 'girder_blue');
+        ladderFloor.create(216, 162, 'girder_blue');
         floor.create(264, 162, 'girder_blue');
-        floor.create(312, 162, 'girder_blue');
+        ladderFloor.create(312, 162, 'girder_blue');
 
+        this.physics.add.collider(this.player, ladderFloor);
         this.physics.add.collider(this.player, floor);
         // Set up collision between player and the spikes
         this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
@@ -262,17 +265,26 @@ class Level2 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.fireball3, this.handleCollision, null, this);
 
         var ladders = this.physics.add.staticGroup();
-        ladders.create(220, 710, 'ladder').setScale(0.6, 0.6);
-        ladders.create(26, 710, 'ladder').setScale(0.6, 0.6);
-        ladders.create(500, 710, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 623, 'ladder').setScale(0.6, 0.6);
-        ladders.create(600, 536, 'ladder').setScale(0.6, 0.6);
-        ladders.create(26, 495, 'ladder').setScale(0.6, 0.6);
-        ladders.create(165, 408, 'ladder').setScale(0.6, 0.6);
-        ladders.create(552, 321, 'ladder').setScale(0.6, 0.6);
-        ladders.create(648, 234, 'ladder').setScale(0.6, 0.6);
-        ladders.create(213, 205, 'ladder').setScale(0.6, 0.6);
-        ladders.create(309, 205, 'ladder').setScale(0.6, 0.6);
+        let ladder = ladders.create(24, 700, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(500, 700, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 613, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(600, 526, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(26, 485, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(165, 398, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(552, 311, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(648, 224, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(213, 195, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
+        ladder = ladders.create(309, 195, 'ladder_tall').setScale(0.6, 0.6);
+        ladder.body.updateFromGameObject();
 
         this.physics.add.collider(ladders, floor);
 
@@ -300,10 +312,12 @@ class Level2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
 
         //points
+        /*
         this.addPoints = this.physics.add.sprite(220, 685, 'add_points').setScale(0.5);
         this.addPoints.body.allowGravity = false;
         this.physics.add.collider(this.addPoints, floor);
         this.physics.add.overlap(this.player, this.addPoints, this.collectPoints, null, this);
+        */
 
         this.addPoints2 = this.physics.add.sprite(26, 685, 'add_points').setScale(0.5);
         this.addPoints2.body.allowGravity = false;
