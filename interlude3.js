@@ -58,7 +58,7 @@ class Interlude3 extends Phaser.Scene{
         }
         else{
             console.log("Maze minigame here");
-            //this.scene.start("AppleGame", { previousHearts: this.hearts });
+            this.scene.start("mazeGame", { previousHearts: this.hearts });
         }
     }
 
