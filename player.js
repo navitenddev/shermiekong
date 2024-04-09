@@ -216,8 +216,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         console.log(level);
         switch(level) {
             case 1:
-                this.player.x = 100;
-                this.player.y = 700;
+            //this spawns Shermie on a safe platform
+                this.player.x = 10;
+                this.player.y = 645;
+            //this spawn point was used when there was a visible wall to break barrels
+            //on the bottom floor
+                // this.player.x = 100;
+                // this.player.y = 700;
                 break;
             case 2:
                 this.player.x = 80;

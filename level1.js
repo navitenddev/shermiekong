@@ -68,7 +68,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700, 3, 200, 350);
+        this.player = new Player(this, 10, 645, 3, 200, 350);
         this.player.currentLevel = 1;
         
         this.player.body.updateFromGameObject();
@@ -169,11 +169,16 @@ class Level1 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
-        this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
-        this.physics.add.collider(this.player, this.wall);
-        this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
-        this.physics.add.collider(this.wall, floor);
-        this.wall.setCollideWorldBounds(true);
+        //to prevent players being spawn killed, Shermie spawns on an elevated girder
+        //and to keep the levels aesthetic, the wall is pure black so it's "invisible" and close
+        //to the world bounds.
+        floor.create(24, 700, 'girder');
+        //I've kept the old code here in case someone disagrees with my method
+        // this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
+        // this.physics.add.collider(this.player, this.wall);
+        // this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
+        // this.physics.add.collider(this.wall, floor);
+        // this.wall.setCollideWorldBounds(true);
 
         this.barrels = [];
         this.barrels.push(this.barrel);
