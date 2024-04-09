@@ -56,7 +56,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.createHearts(scene);
 
         //hitbox alteration (box of size x, y)
-        this.setSize(110, 60);
+        this.setSize(120, 60).setOffset(0, 20);
     }
 
     createHearts(scene) {

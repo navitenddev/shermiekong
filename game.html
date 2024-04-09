@@ -47,7 +47,7 @@
             default: 'arcade',
             arcade: {
                 gravity: { y: 500 },
-                debug: false
+                debug: true
             }
         },
         scale: {
@@ -57,7 +57,7 @@
         scene: [MainMenu, HowTo, LevelSelect, Pause, GameOver, Intro, 
                 Level1, Interlude1, ShermieHero, Night1, 
                 Level2, Interlude2, AppleGame, Night2, 
-                Level3, MazeGame, Level4, End]
+                Level3, Interlude3, MazeGame, Night3, Level4, End]
     };
     game = new Phaser.Game(config);
     if (!game.gameState) {

@@ -32,9 +32,10 @@ class LevelSelect extends Phaser.Scene{
         this.add.text(20, 200, "Shermie's Lunch Break").setInteractive()
         .on('pointerdown', () => {
             this.sound.add("song3").play();
-            this.scene.start("AppleGame")});
+            this.scene.start("AppleGame")}
+        );
         
-        this.add.text(20, 200, "Shermie's Maze").setInteractive()
+        this.add.text(20, 230, "Shermie's Maze").setInteractive()
         .on('pointerdown', () => {this.scene.start("mazeGame")});
     }
 }

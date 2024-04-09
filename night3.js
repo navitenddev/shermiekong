@@ -8,7 +8,7 @@ class Night3 extends Phaser.Scene{
 
     create(){
         const { previousHearts } = this.scene.settings.data;
-        console.log("interlude prev: " + previousHearts);
+        console.log("night3 prev: " + previousHearts);
         this.hearts = previousHearts;
 
         this.add.image(336, 384, 'night');
