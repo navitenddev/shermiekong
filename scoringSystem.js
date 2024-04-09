@@ -31,7 +31,7 @@ class ScoringSystem {
     
     awardPointsForClimbingLadder() {
         const points = 0; // Adjust the points as needed
-        this.updateScore(points);
+        //this.updateScore(points);
     }
 
     awardPointsForCollectingJettpack() {
