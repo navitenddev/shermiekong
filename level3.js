@@ -212,7 +212,6 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
 
         this.timeSlowdownPowerup = this.physics.add.sprite(330, 400, 'time_slowdown'); // Adjust position as needed
-        this.timeSlowdownPowerup.setScale(0.075); // Adjust scale as needed
         this.physics.add.collider(this.timeSlowdownPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Time Slowdown power-up
