@@ -30,7 +30,7 @@ class ScoringSystem {
     }
     
     awardPointsForClimbingLadder() {
-        const points = 20; // Adjust the points as needed
+        const points = 0; // Adjust the points as needed
         this.updateScore(points);
     }
 
