@@ -45,7 +45,7 @@ class Pause extends Phaser.Scene{
         var scenes = ['level1', 'level2', 'level3', 'level4',
         'night1', 'night2', 'night3', 
         'intro', 'interlude1', 'interlude2', 'interlude3',
-        'ShermieHero', 'AppleGame'];
+        'ShermieHero', 'AppleGame', 'mazeGame'];
 
         for(var i = 0; i < scenes.length; i++){
             if(this.scene.isPaused(scenes[i])){
@@ -79,7 +79,7 @@ class Pause extends Phaser.Scene{
         var scenes = ['level1', 'level2', 'level3', 'level4',
         'night1', 'night2', 'night3', 
         'intro', 'interlude1', 'interlude2', 'interlude3',
-        'ShermieHero', 'AppleGame'];
+        'ShermieHero', 'AppleGame', 'mazeGame'];
 
         for(var i = 0; i < scenes.length; i++){
             if(this.scene.isPaused(scenes[i])){
