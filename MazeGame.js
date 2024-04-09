@@ -165,12 +165,8 @@ class MazeGame extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
-        //this.song.stop();
+        this.sound.get('song3').stop();
         console.log("next: " + this.player.hearts);
-        // // Add a 6 second delay before starting the LevelSelect scene
-        // this.time.delayedCall(6000, () => {
-        //     this.scene.start("LevelSelect", { previousHearts: this.player.hearts });
-        // });
         this.hearts += 1;
         this.scene.start("night3", { previousHearts: this.hearts }); 
     }

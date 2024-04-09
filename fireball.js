@@ -25,6 +25,9 @@ class Fireball extends Phaser.Physics.Arcade.Sprite {
             frameRate: 5,
             repeat: -1
         });
+
+        //making the hitbox feel a bit more fair
+        this.setSize(20, 24);
     }
 
     handleFireballMovement() {

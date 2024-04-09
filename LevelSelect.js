@@ -36,6 +36,9 @@ class LevelSelect extends Phaser.Scene{
         );
         
         this.add.text(20, 230, "Shermie's Maze").setInteractive()
-        .on('pointerdown', () => {this.scene.start("mazeGame")});
+        .on('pointerdown', () => {
+            this.sound.add("song3").play();
+            this.scene.start("mazeGame");
+        });
     }
 }

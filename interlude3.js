@@ -15,7 +15,7 @@ class Interlude3 extends Phaser.Scene{
         this.background = this.add.image(336, 384, 'day');
 
         this.song = this.sound.add("song3");
-        this.song.volume = 1;
+        this.song.volume = 0.8;
         this.song.loop = true;
         this.song.play();
 
