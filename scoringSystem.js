@@ -25,7 +25,7 @@ class ScoringSystem {
     }
     
     awardPointsForJumpingBarrel() {
-        const points = 50; // Adjust the points as needed
+        const points = 0; // Adjust the points as needed
         this.updateScore(points);
     }
     
