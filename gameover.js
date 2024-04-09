@@ -10,7 +10,7 @@ class GameOver extends Phaser.Scene{
 
     create(){
         this.soundEffect = this.sound.add("game_over_sound");
-        this.soundEffect.volume = 0.8;
+        this.soundEffect.volume = 0.7;
         this.soundEffect.play();
         this.add.image(336, 768/2, 'game_over');
         this.add.image(336, 768/2, "main_menu_button")
