@@ -50,7 +50,7 @@ class Night3 extends Phaser.Scene{
                 this.line = this.add.text(100, 620, "Maybe I should start keeping a dream journal.");
                 break;
             case 2:
-                this.line = this.add.text(100, 620, "I've started looking forward to dreaming at night.");
+                this.line = this.add.text(100, 620, "I could make a hit browser game with\nthese ideas.");
                 break;
             case 3:
                 this.song.stop();

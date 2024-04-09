@@ -79,7 +79,7 @@ class Interlude3 extends Phaser.Scene{
                 this.line = this.add.text(100, 620, "Or it might just mean I stay up too\nlate playing video games.");
                 break;
             case 5:
-                this.line = this.add.text(100, 600, "Well, let's start the day off right and check\nthe mail for the morning paper.");
+                this.line = this.add.text(100, 620, "Well, let's start the day off right and check\nthe mail for the morning paper.");
                 break;
             case 6:
                 this.box.destroy();
@@ -92,10 +92,10 @@ class Interlude3 extends Phaser.Scene{
                 });
                 break;
             case 7:
-                this.line = this.add.text(100, 600, "...You know, the news probably isn't all that\ninteresting today.");
+                this.line = this.add.text(100, 620, "...You know, the news probably isn't all that\ninteresting today.");
                 break;
             case 8:
-                this.line = this.add.text(100, 600, "Oh come on Shermie! You going to let a little\nmaze get you down?");
+                this.line = this.add.text(100, 620, "Oh come on Shermie! You going to let a little\nmaze get you down?");
                 break;
             case 9:
                 this.box.destroy();

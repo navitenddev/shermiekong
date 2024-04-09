@@ -48,7 +48,7 @@ class Night1 extends Phaser.Scene{
         this.lineNum += 1;
         switch(this.lineNum){
             case 1:
-                this.line = this.add.text(100, 620, "Well, better get some rest!");
+                this.line = this.add.text(100, 620, "Time to go to bed!");
                 break;
             case 2:
                 this.song.stop();

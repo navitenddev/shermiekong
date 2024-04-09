@@ -70,7 +70,7 @@ class Interlude2 extends Phaser.Scene{
                 this.line = this.add.text(100, 620, "I could outside and grab a few\napples from the orchard...");
                 break;
             case 5:
-                this.line = this.add.text(100, 600, "...or just order pizza delivery.");
+                this.line = this.add.text(100, 620, "...or just order pizza delivery.");
                 break;
             case 6:
                 this.box.destroy();
