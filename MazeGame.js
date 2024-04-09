@@ -7,7 +7,7 @@ class MazeGame extends Phaser.Scene {
 
     preload() {
         // Load your assets here
-        this.load.image('background', 'assets/grass.jpeg');
+        this.load.image('background', 'assets/grass.png');
         this.load.image('player', 'assets/shermie.png');
         this.load.image('maze_barrier', 'assets/bush.png');
     }
@@ -165,7 +165,7 @@ class MazeGame extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
-        this.sound.get('song3').stop();
+        this.sound.get("song3").stop();
         console.log("next: " + this.player.hearts);
         this.hearts += 1;
         this.scene.start("night3", { previousHearts: this.hearts }); 
