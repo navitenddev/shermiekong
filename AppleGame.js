@@ -154,7 +154,7 @@ class AppleGame extends Phaser.Scene {
     this.box = this.add.image(336, 600, "dialogue")
       .setInteractive()
       .on('pointerdown', () => {
-        this.sound.get('song3').stop();
+        this.sound.get("song3").stop();
         this.scene.start("night2", { previousHearts: this.hearts });
       });
       
