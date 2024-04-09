@@ -7,6 +7,7 @@ class HowTo extends Phaser.Scene{
         this.load.image('how_to_play_screen', 'assets/how_to_play_screen.png');
         this.load.image('how_to_hero', 'assets/how_to_hero.png');
         this.load.image('how_to_apple', 'assets/how_to_apple.png');
+        this.load.image('how_to_maze', 'assets/maze_how_to.png');
         this.load.image('exit_button', 'assets/exit_button.png');
         this.load.image('next_button', 'assets/next_button.png');
     }
@@ -36,6 +37,12 @@ class HowTo extends Phaser.Scene{
                 break;
             case 2:
                 this.instruction = this.add.image(672/2, 768/2, 'how_to_apple');
+                break;    
+            case 3:
+                this.instruction = this.add.image(672/2, 768/2, 'how_to_maze');
+                break;
+            case 4:
+                this.handleExit();
                 break;
         }
     }
