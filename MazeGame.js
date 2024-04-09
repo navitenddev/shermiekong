@@ -169,6 +169,7 @@ class MazeGame extends Phaser.Scene {
         console.log("next: " + this.player.hearts);
         this.hearts += 1;
         this.scene.start("night3", { previousHearts: this.hearts }); 
+        this.scene.stop();
     }
 
     gameOver() {

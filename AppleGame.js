@@ -156,6 +156,7 @@ class AppleGame extends Phaser.Scene {
       .on('pointerdown', () => {
         this.sound.get("song3").stop();
         this.scene.start("night2", { previousHearts: this.hearts });
+        this.scene.stop();
       });
       
   }
