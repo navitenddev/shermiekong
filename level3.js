@@ -42,7 +42,7 @@ class Level3 extends Phaser.Scene {
         //next level flag
         this.flag = this.physics.add.staticSprite(630, 205, 'flag'); //630, 205
         //uncomment this to test tranistions easier
-        this.flag = this.physics.add.staticSprite(630, 705, 'flag'); 
+        //this.flag = this.physics.add.staticSprite(630, 705, 'flag'); 
         
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
         this.time.scale = 1;

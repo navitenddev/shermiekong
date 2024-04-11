@@ -165,7 +165,7 @@ class MazeGame extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
-        this.sound.get("song3").stop();
+        this.game.sound.stopAll();
         console.log("next: " + this.player.hearts);
         this.hearts += 1;
         this.scene.start("night3", { previousHearts: this.hearts }); 
