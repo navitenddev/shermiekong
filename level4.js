@@ -96,7 +96,8 @@ class Level4 extends Phaser.Scene {
 
     createEntities() {
         // Initialize player and floor group
-        this.player = new Player(this, 30, 724);
+        const { previousHearts } = this.scene.settings.data;
+        this.player = new Player(this, 30, 724, previousHearts);
         this.player.currentLevel = 4;
         var floor = this.physics.add.staticGroup();
         var ladderFloor = this.physics.add.staticGroup();

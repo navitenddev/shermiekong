@@ -41,6 +41,9 @@ class Level3 extends Phaser.Scene {
 
         //next level flag
         this.flag = this.physics.add.staticSprite(630, 205, 'flag'); //630, 205
+        //uncomment this to test tranistions easier
+        //this.flag = this.physics.add.staticSprite(630, 705, 'flag'); 
+        
         this.physics.add.overlap(this.player, this.flag, this.nextLevel, null, this);
         this.time.scale = 1;
     }
@@ -212,7 +215,6 @@ class Level3 extends Phaser.Scene {
         this.physics.add.collider(this.player, spikes, this.handleCollisionSpikes, null, this);
 
         this.timeSlowdownPowerup = this.physics.add.sprite(330, 400, 'time_slowdown'); // Adjust position as needed
-        this.timeSlowdownPowerup.setScale(0.075); // Adjust scale as needed
         this.physics.add.collider(this.timeSlowdownPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Time Slowdown power-up
@@ -492,6 +494,6 @@ class Level3 extends Phaser.Scene {
 
     nextLevel(player, flag){
         this.song.stop();
-        this.scene.start("level4", { previousHearts: this.player.hearts }); // Change to interlude 3 when available
+        this.scene.start("interlude3", { previousHearts: this.player.hearts });
     }
 }

@@ -43,9 +43,9 @@ class Pause extends Phaser.Scene{
         //fundamentally silly way to do it but I don't know how to access the scene manager.
         //that being said we dont need to pause the main menu or game over scenes
         var scenes = ['level1', 'level2', 'level3', 'level4',
-        'night1', 'night2', 
-        'intro', 'interlude1', 'interlude2', 
-        'ShermieHero', 'AppleGame'];
+        'night1', 'night2', 'night3', 
+        'intro', 'interlude1', 'interlude2', 'interlude3',
+        'ShermieHero', 'AppleGame', 'mazeGame'];
 
         for(var i = 0; i < scenes.length; i++){
             if(this.scene.isPaused(scenes[i])){
@@ -77,9 +77,9 @@ class Pause extends Phaser.Scene{
         this.game.sound.stopAll();
 
         var scenes = ['level1', 'level2', 'level3', 'level4',
-        'night1', 'night2', 
-        'intro', 'interlude1', 'interlude2', 
-        'ShermieHero', 'AppleGame'];
+        'night1', 'night2', 'night3', 
+        'intro', 'interlude1', 'interlude2', 'interlude3',
+        'ShermieHero', 'AppleGame', 'mazeGame'];
 
         for(var i = 0; i < scenes.length; i++){
             if(this.scene.isPaused(scenes[i])){

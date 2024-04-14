@@ -54,6 +54,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.gameOver = false; // Added game-over flag
         this.hearts = initialHearts; // Default to 3 hearts if no value provided
         this.createHearts(scene);
+
+        //hitbox alteration (box of size x, y)
+        this.setSize(120, 60).setOffset(0, 20);
     }
 
     createHearts(scene) {
@@ -61,7 +64,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.heartsArray = [];
         const heartSpacing = 40;
         for (let i = 0; i < this.hearts; i++) {
-            let heart = scene.add.image(20 + i * heartSpacing, 20, 'heart').setOrigin(0, 0);
+            let heart;
+            if(i < 3){
+                heart = scene.add.image(20 + i * heartSpacing, 20, 'heart').setOrigin(0, 0);
+            }
+            else{
+                heart = scene.add.image(20 + (i-3) * heartSpacing, 55, 'heart').setOrigin(0, 0);
+            }
+            
             heart.setScrollFactor(0);  // Make sure hearts stay in place when the camera moves
             heart.setScale(0.8);
             heart.setDisplaySize(50, 50); 
@@ -213,8 +223,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         console.log(level);
         switch(level) {
             case 1:
-                this.player.x = 100;
-                this.player.y = 700;
+            //this spawns Shermie on a safe platform
+                this.player.x = 10;
+                this.player.y = 645;
+            //this spawn point was used when there was a visible wall to break barrels
+            //on the bottom floor
+                // this.player.x = 100;
+                // this.player.y = 700;
                 break;
             case 2:
                 this.player.x = 80;

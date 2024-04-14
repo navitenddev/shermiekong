@@ -19,6 +19,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('wall', 'assets/wall.jpeg');
         this.load.image('destroy_barrel', 'assets/destroy_barrel.png');
         this.load.image('add_points', 'assets/add_points.png');
+        this.load.image('barrier', 'assets/barrier.png');
     }
 
     create() {
@@ -68,7 +69,7 @@ class Level1 extends Phaser.Scene {
     }
 
     createEntities() {
-        this.player = new Player(this, 100, 700, 3, 200, 350);
+        this.player = new Player(this, 10, 645, 3, 200, 350);
         this.player.currentLevel = 1;
         
         this.player.body.updateFromGameObject();
@@ -169,11 +170,19 @@ class Level1 extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.barrel, this.handleCollision, null, this);
 
-        this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
-        this.physics.add.collider(this.player, this.wall);
-        this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
-        this.physics.add.collider(this.wall, floor);
-        this.wall.setCollideWorldBounds(true);
+        //to prevent players being spawn killed, Shermie spawns on an elevated girder
+        //and to keep the levels aesthetic, the wall is pure black so it's "invisible" and close
+        //to the world bounds.
+        floor.create(24, 700, 'girder');
+        this.barrier = this.physics.add.sprite(0, 730,'barrier').setDepth(-1);
+        this.physics.add.overlap(this.barrel, this.barrier, this.destroyBarrel, null, this);
+        this.barrier.setCollideWorldBounds(true);
+        //I've kept the old code here in case someone disagrees with my method
+        // this.wall = this.physics.add.sprite(30, 700, 'wall').setScale(0.25);
+        // this.physics.add.collider(this.player, this.wall);
+        // this.physics.add.collider(this.barrel, this.wall, this.destroyBarrel, null, this);
+        // this.physics.add.collider(this.wall, floor);
+        // this.wall.setCollideWorldBounds(true);
 
         this.barrels = [];
         this.barrels.push(this.barrel);
@@ -184,7 +193,8 @@ class Level1 extends Phaser.Scene {
                 let newBarrel = new Barrel(this, 150, 150);
                 this.barrels.push(newBarrel);
                 this.physics.add.collider(this.player, newBarrel, this.handleCollision, null, this);
-                this.physics.add.collider(newBarrel, this.wall, this.destroyBarrel, null, this);
+                this.physics.add.collider(newBarrel, this.barrier, this.destroyBarrel, null, this);
+                //this.physics.add.collider(newBarrel, this.wall, this.destroyBarrel, null, this);
                 this.physics.add.collider(newBarrel, floor);
                 this.physics.add.collider(newBarrel, ladderFloor);
             },
@@ -227,7 +237,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.shieldPowerup, this.collectShield, null, this);
 
         // Create Destroy Barrel power-up
-        this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel');
+        this.destroyBarrelPowerup = this.physics.add.sprite(500, 600, 'destroy_barrel').setScale(0.5);
         this.physics.add.collider(this.destroyBarrelPowerup, floor);
 
         // Add an overlap event to detect when the player collects the Destroy Barrel power-up

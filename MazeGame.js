@@ -7,7 +7,7 @@ class MazeGame extends Phaser.Scene {
 
     preload() {
         // Load your assets here
-        this.load.image('background', 'assets/grass.jpeg');
+        this.load.image('background', 'assets/grass.png');
         this.load.image('player', 'assets/shermie.png');
         this.load.image('maze_barrier', 'assets/bush.png');
     }
@@ -165,14 +165,11 @@ class MazeGame extends Phaser.Scene {
     }
 
     nextLevel(player, flag){
-        //this.song.stop();
+        this.game.sound.stopAll();
         console.log("next: " + this.player.hearts);
-        this.gameOver();
-        // Add a 6 second delay before starting the LevelSelect scene
-        this.time.delayedCall(6000, () => {
-            this.scene.start("LevelSelect", { previousHearts: this.player.hearts });
-        });
-        //this.scene.start("level2", { previousHearts: this.player.hearts }); kept for reference
+        this.hearts += 1;
+        this.scene.start("night3", { previousHearts: this.hearts }); 
+        this.scene.stop();
     }
 
     gameOver() {

@@ -1,6 +1,6 @@
-class Night1 extends Phaser.Scene{
+class Night3 extends Phaser.Scene{
     constructor(){
-        super("night1");
+        super("night3");
     }
     preload(){
         this.load.image('dialogue', 'assets/dialogue_box.png');
@@ -8,12 +8,12 @@ class Night1 extends Phaser.Scene{
 
     create(){
         const { previousHearts } = this.scene.settings.data;
-        console.log("interlude prev: " + previousHearts);
+        console.log("night3 prev: " + previousHearts);
         this.hearts = previousHearts;
 
         this.add.image(336, 384, 'night');
 
-        this.song = this.sound.add("song1");
+        this.song = this.sound.add("song2");
         this.song.volume = 1;
         this.song.loop = true;
         this.song.play();
@@ -31,12 +31,11 @@ class Night1 extends Phaser.Scene{
         .setScale(0.5)
         .setInteractive()
         .on('pointerdown', () => {this.pause()});
-
     }
 
     dialogueInit(){
         this.lineNum = 0;
-        this.line = this.add.text(100, 620, "What a day!");
+        this.line = this.add.text(100, 620, "Time for my favorite part of the day...");
         this.line.setDepth(3);
         this.box = this.add.image(336, 600, "dialogue")
         .setInteractive()
@@ -48,11 +47,14 @@ class Night1 extends Phaser.Scene{
         this.lineNum += 1;
         switch(this.lineNum){
             case 1:
-                this.line = this.add.text(100, 620, "Time to go to bed!");
+                this.line = this.add.text(100, 620, "Maybe I should start keeping a dream journal.");
                 break;
             case 2:
+                this.line = this.add.text(100, 620, "I could make a hit browser game with\nthese ideas.");
+                break;
+            case 3:
                 this.song.stop();
-                this.scene.start('level2', { previousHearts: this.hearts });
+                this.scene.start('level4', { previousHearts: this.hearts });
                 break;
         }
     }
